@@ -25,3 +25,15 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+#How to deploy to github pages
+This project uses angular-cli-ghpages, so to deploy a new version you need to do:
+
+ng build --prod --base-href "https://<USERNAME>.github.io/<REPOSITORY_NAME>/"
+
+and after:
+npx ngh --dir=dist/<PROJECT_NAME>
+
+In my case:
+ng build --prod --base-href "https://victorcarvalhosp.github.io/minimalist-money-angular-6/"
+npx ngh --dir=dist/minimalist-money
