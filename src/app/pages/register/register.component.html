@@ -1,14 +1,20 @@
-<form [formGroup]="registerForm">
-  <p class="my-class">test</p>
-  <div>
-    <label>Email address</label>
-    <input type="email" formControlName="email" class="form-control">
+<div class="Aligner">
+  <div class="Aligner-item column-small">
+    <form [formGroup]="registerForm">
+      <p class="my-class">M-Mony</p>
+      <div>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email address" type="email" formControlName="email">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Password" type="password" formControlName="password">
+        </mat-form-field>
+        <label class="error">{{errorMessage}}</label>
+        <label class="success">{{successMessage}}</label>
+      </div>
+      <button class="full-width" type="submit" mat-flat-button (click)="tryRegister(registerForm.value)">Create account</button>
+    </form>
   </div>
-  <div >
-    <label>Password</label>
-    <input type="password" class="form-control" formControlName="password">
-    <label class="error">{{errorMessage}}</label>
-    <label class="success">{{successMessage}}</label>
-  </div>
-  <button type="submit" (click)="tryRegister(registerForm.value)">Register</button>
-</form>
+</div>
