@@ -5,11 +5,21 @@
       <div>
         <mat-form-field class="full-width">
           <input matInput placeholder="Email address" type="email" formControlName="email">
+          <mat-error *ngIf="registerForm.hasError('email') && !registerForm.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error>
+            {{ getError('email') }}
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="full-width">
-          <input matInput placeholder="Password" type="password" formControlName="password">
+          <input matInput placeholder="Password"  [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <mat-icon class="pointer" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-error>
+            {{ getError('password') }}
+          </mat-error>
         </mat-form-field>
         <label class="error">{{errorMessage}}</label>
         <label class="success">{{successMessage}}</label>

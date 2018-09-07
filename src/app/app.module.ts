@@ -14,14 +14,16 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {appRoutes} from "./app.routes";
 import {ReactiveFormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatInputModule} from "@angular/material";
+import {MatButtonModule, MatIconModule, MatInputModule} from "@angular/material";
+import {HomeComponent} from "./pages/home/home.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    HomeComponent
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,
@@ -33,7 +35,8 @@ import {MatButtonModule, MatInputModule} from "@angular/material";
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
