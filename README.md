@@ -1,6 +1,6 @@
 # MinimalistMoney
 
-Open Source Personal Finances Progressive Web App using Angular6 and firebase
+Personal Finances Progressive Web App using Angular6 and firebase
 https://victorcarvalhosp.github.io/minimalist-money-angular-6/
 
 ## Progress to v0.1
