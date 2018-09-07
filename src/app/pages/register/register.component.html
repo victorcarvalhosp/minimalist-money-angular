@@ -2,6 +2,7 @@
   <div class="Aligner-item column-small">
     <form [formGroup]="registerForm">
       <p class="my-class">M-Mony</p>
+      <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
       <div>
         <mat-form-field class="full-width">
           <input matInput placeholder="Email address" type="email" formControlName="email">
@@ -24,10 +25,9 @@
         <label class="error">{{errorMessage}}</label>
         <label class="success">{{successMessage}}</label>
       </div>
-      <button class="full-width" type="submit" mat-stroked-button (click)="tryRegister(registerForm.value)">Create account</button>
+      <button [disabled]="loading" class="full-width" type="submit" mat-stroked-button (click)="tryRegister(registerForm.value)">Create account</button>
       <p style="margin-block-end: 0px;margin-block-start: 3em;">Already have an account?</p>
       <button class="full-width" type="button" mat-button routerLink="/login">Log in</button>
-
     </form>
   </div>
 </div>

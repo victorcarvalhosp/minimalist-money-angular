@@ -16,10 +16,11 @@ import {IUser} from "../../models/credentials";
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  validations: Validations;
+  loading: boolean = false;
+  hidePassword = true;
   errorMessage: string = '';
   successMessage: string = '';
-  validations: Validations;
-  hidePassword = true;
 
   constructor(public authService: AuthService,
               private router: Router,
@@ -52,6 +53,7 @@ export class RegisterComponent implements OnInit {
   }
 
   tryRegister(value){
+    this.showLoading();
     this.authService.doRegister(value)
       .then(res => {
         const user: IUser = {
@@ -62,11 +64,21 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['../home'])
         this.errorMessage = "";
         this.successMessage = "Your account has been created";
+        this.hideLoading();
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
         this.successMessage = "";
+        this.hideLoading();
       })
+  }
+
+  private showLoading() {
+    this.loading = true;
+  }
+
+  private hideLoading() {
+    this.loading = false;
   }
 
   ngOnInit() {

@@ -14,7 +14,7 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
 import {appRoutes} from "./app.routes";
 import {ReactiveFormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatIconModule, MatInputModule} from "@angular/material";
+import {MatButtonModule, MatIconModule, MatInputModule, MatProgressBarModule} from "@angular/material";
 import {HomeComponent} from "./pages/home/home.component";
 
 @NgModule({
@@ -36,7 +36,8 @@ import {HomeComponent} from "./pages/home/home.component";
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,6 +17,6 @@ export class UserService {
   }
 
   createUser(authUid:string, user: IUser) {
-    this.usersCollection.doc(authUid).set(user);
+    this.usersCollection.doc(authUid).set(user, { merge: true });
   }
 }
