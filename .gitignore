@@ -39,4 +39,4 @@ testem.log
 Thumbs.db
 
 # Personal Firebase Tokens
-src/environments/firebase-credentials.ts
+src/environments/environment.credentials.ts

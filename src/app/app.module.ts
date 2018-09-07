@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {AngularFireModule} from "@angular/fire";
-import {firebaseCredentials} from "../environments/firebase-credentials";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireAuthModule} from "@angular/fire/auth";
 import {AngularFireStorageModule} from "@angular/fire/storage";
+import {environment} from "../environments/environment.credentials";
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import {AngularFireStorageModule} from "@angular/fire/storage";
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(firebaseCredentials),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule // imports firebase/storage only needed for storage features
