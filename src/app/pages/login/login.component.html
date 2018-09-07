@@ -24,7 +24,7 @@
         </mat-form-field>
         <mat-error>{{errorMessage}}</mat-error>
       </div>
-      <button [disabled]="loading" class="full-width" type="submit" mat-stroked-button (click)="tryLogin(loginForm.value)">Sign in</button>
+      <button [disabled]="loading" class="full-width" type="button" mat-stroked-button (click)="tryLogin(loginForm.value)">Sign in</button>
       <p style="margin-block-end: 0px;margin-block-start: 3em;">Don't have an account yet?</p>
       <button class="full-width" type="button" mat-button routerLink="/register">Sign up</button>
     </form>

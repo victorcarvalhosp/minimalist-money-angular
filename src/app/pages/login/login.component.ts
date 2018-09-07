@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private fb: FormBuilder, private db: AngularFirestore, private userService: UserService) {
     this.createForm();
-    this.authService.isAuthenticated();
   }
 
   createForm() {

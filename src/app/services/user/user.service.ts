@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs/index";
+import {Observable} from "rxjs";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {IUser} from "../../models/credentials";
 
@@ -16,7 +16,7 @@ export class UserService {
     this.users = this.usersCollection.valueChanges();
   }
 
-  createUser(authUid:string, user: IUser) {
-    this.usersCollection.doc(authUid).set(user, { merge: true });
+  createUser(user: IUser) {
+    return this.usersCollection.doc(user.uid).set(user);
   }
 }

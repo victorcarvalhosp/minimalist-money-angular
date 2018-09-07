@@ -1,5 +1,6 @@
 <p>
   home works?
+  {{authService.loggedInUser.uid | async}}
   {{authService.isAuthenticated()}}
 </p>
 <a (click)="doSignOut()">Sign out</a>

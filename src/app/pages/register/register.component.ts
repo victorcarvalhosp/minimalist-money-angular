@@ -4,7 +4,6 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {Validations} from "../../validators/validations";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {Observable} from "rxjs/index";
 import {UserService} from "../../services/user/user.service";
 import {IUser} from "../../models/credentials";
 
@@ -57,14 +56,19 @@ export class RegisterComponent implements OnInit {
     this.authService.doRegister(value)
       .then(res => {
         const user: IUser = {
+          uid: res.user.uid,
           email: res.user.email,
           creationDate: new Date()
         }
-        this.userService.createUser(res.user.uid, user);
-        this.router.navigate(['../home'])
-        this.errorMessage = "";
-        this.successMessage = "Your account has been created";
-        this.hideLoading();
+        this.userService.createUser(user).then(res => {
+          this.authService.doLogin(value).then(login => {
+            this.router.navigate(['../home']);
+            this.errorMessage = "";
+            this.successMessage = "Your account has been created";
+            this.hideLoading();
+          })
+        });
+
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
