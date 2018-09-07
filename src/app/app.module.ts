@@ -12,6 +12,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import {LoginComponent} from "./pages/login/login.component";
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import {appRoutes} from "./app.routes";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {appRoutes} from "./app.routes";
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
