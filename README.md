@@ -3,13 +3,13 @@
 Open Source Personal Finances Progressive Web App using Angular6 and firebase
 
 ## Progress to v0.1
-[]Landing Page
-[]Register User
-[]Login
-[]Create accounts
-[]Create categories
-[]Add income
-[]Add outcome
+- [ ] Landing Page
+- [ ] Register User
+- [ ] Login
+- [ ] Create accounts
+- [ ] Create categories
+- [ ] Add income
+- [ ] Add outcome
 
 
 
