@@ -1,4 +1,4 @@
-export const firebaseCredentials  = {
+export const firebaseCredentialsExample  = {
   firebase: {
     apiKey: 'YOUR_CREDENTIALS_HERE',
     authDomain: 'YOUR_CREDENTIALS_HERE',
