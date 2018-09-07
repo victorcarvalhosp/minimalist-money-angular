@@ -1,6 +1,17 @@
 # MinimalistMoney
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+Open Source Personal Finances Progressive Web App using Angular6 and firebase
+
+## Progress to v0.1
+[]Landing Page
+[]Register User
+[]Login
+[]Create accounts
+[]Create categories
+[]Add income
+[]Add outcome
+
+
 
 ## Development server
 
@@ -36,4 +47,4 @@ and after:
 
 In my case:
 `ng build --prod --base-href "https://victorcarvalhosp.github.io/minimalist-money-angular-6/"`
-`npx ngh --dir=dist/minimalist-money`
+and after `npx ngh --dir=dist/minimalist-money`
