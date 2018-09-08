@@ -19,6 +19,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {TransactionsComponent} from './pages/home/transactions/transactions.component';
 import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
 import { SettingsComponent } from './pages/home/settings/settings.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SettingsComponent } from './pages/home/settings/settings.component';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [],
   bootstrap: [AppComponent]
