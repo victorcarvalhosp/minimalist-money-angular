@@ -34,19 +34,7 @@
       "patterns": []
     }
   ],
-  "dataGroups": [
-    {
-      "name": "api",
-      "patterns": [
-        "https:\\/\\/myapi\\.org\\/api\\/.*"
-      ],
-      "strategy": "freshness",
-      "maxSize": 100,
-      "maxAge": 259200000,
-      "timeoutMs": 60000,
-      "version": 1
-    }
-  ],
+  "dataGroups": [],
   "hashTable": {
     "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
