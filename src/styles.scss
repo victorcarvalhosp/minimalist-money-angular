@@ -47,15 +47,20 @@ body {
   height: 60px;
 }
 
+#nav ul{
+  padding-inline-start: 0;
+}
+
 #nav ul li {
   float: left;
   list-style: none;
+  width: 120px;
+  text-align: center;
 }
 
 #nav ul li a {
   display: block;
   text-decoration: none;
-  padding: 0 10px;
 }
 
 .col {

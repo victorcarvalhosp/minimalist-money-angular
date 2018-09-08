@@ -22,8 +22,4 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
   }
 
-  addCategory() {
-    // this.categoriesService.addCategory();
-  }
-
 }

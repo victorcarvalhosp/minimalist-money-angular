@@ -1,8 +1,11 @@
-<div *ngFor="let c of categoriesService.categories | async">
-  <p>{{c.name}}</p>
+<div class="col" role="main">
+  <h4>Categories</h4>
+  <div *ngFor="let c of categoriesService.categories | async">
+    <p><span style="font-weight: bold" [ngStyle]="{'color': c.color}">#</span>{{c.name}}</p>
+  </div>
+  <br/>
+  <a class="pointer" (click)="doSignOut()">Sign out</a>
 </div>
-<p>
-  settings works!
-</p>
-<button type="button" (click)="addCategory()">Add</button>
-<a (click)="doSignOut()">Sign out</a>
+
+
+
