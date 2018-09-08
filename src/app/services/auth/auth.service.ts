@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {IUser} from "../../models/credentials";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserService} from "../user/user.service";
+import {CategoriesService} from "../categories/categories.service";
 
 
 @Injectable({
@@ -16,36 +17,36 @@ export class AuthService {
 
   loggedInUser: Observable<IUser | null>;
 
-  constructor( public afAuth: AngularFireAuth, private router: Router, private afs: AngularFirestore, private userService: UserService) {
+  constructor( public afAuth: AngularFireAuth, private router: Router, private afs: AngularFirestore) {
     this.loggedInUser = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
           console.log('return user');
-          return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges()
+          return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
         } else {
           console.log('return null');
           return of(null);
         }
       })
-    )
+    );
   }
 
-  doLogin(value){
+  doLogin(value) {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
         .then(res => {
           resolve(res);
-        }, err => reject(err))
-    })
+        }, err => reject(err));
+    });
   }
 
-  doRegister(value){
+  doRegister(value) {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
         .then(res => {
           resolve(res);
-        }, err => reject(err))
-    })
+        }, err => reject(err));
+    });
   }
 
   doSignOut(){
@@ -62,8 +63,8 @@ export class AuthService {
         } else {
           reject('No user logged in');
         }
-      })
-    })
+      });
+    });
   }
 
   isAuthenticated(): boolean{

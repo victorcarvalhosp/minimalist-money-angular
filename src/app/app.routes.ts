@@ -7,6 +7,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {AuthGuard} from './guards/auth.guard';
 import {TransactionsComponent} from './pages/home/transactions/transactions.component';
 import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
+import {SettingsComponent} from './pages/home/settings/settings.component';
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const appRoutes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
     {path: '', component: TransactionsComponent},
     {path: 'dashboard', component: DashboardComponent},
+    {path: 'settings', component: SettingsComponent},
   ]},
 ]
 

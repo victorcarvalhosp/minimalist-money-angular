@@ -1,0 +1,8 @@
+<div *ngFor="let c of categoriesService.categories | async">
+  <p>{{c.name}}</p>
+</div>
+<p>
+  settings works!
+</p>
+<button type="button" (click)="addCategory()">Add</button>
+<a (click)="doSignOut()">Sign out</a>

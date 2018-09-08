@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  tryRegister(value){
+  tryRegister(value) {
     this.showLoading();
     this.authService.doRegister(value)
       .then(res => {
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
             this.errorMessage = "";
             this.successMessage = "Your account has been created";
             this.hideLoading();
-          })
+          });
         });
 
       }, err => {
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
         this.errorMessage = err.message;
         this.successMessage = "";
         this.hideLoading();
-      })
+      });
   }
 
   private showLoading() {

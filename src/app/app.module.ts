@@ -18,6 +18,7 @@ import {MatButtonModule, MatIconModule, MatInputModule, MatProgressBarModule} fr
 import {HomeComponent} from './pages/home/home.component';
 import {TransactionsComponent} from './pages/home/transactions/transactions.component';
 import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
+import { SettingsComponent } from './pages/home/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
     LandingPageComponent,
     HomeComponent,
     TransactionsComponent,
-    DashboardComponent
+    DashboardComponent,
+    SettingsComponent
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,
