@@ -1,6 +1,34 @@
-<p>
-  home works?
-  {{authService.loggedInUser.uid | async}}
-  {{authService.isAuthenticated()}}
-</p>
-<a (click)="doSignOut()">Sign out</a>
+<header id="header" class="mat-elevation-z1">
+  <div class="container" style="height: 64px;">
+    <nav id="nav">
+      <ul>
+        <li><a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/home" class="pointer">Transactions</a></li>
+        <li><a routerLinkActive="active" routerLink="dashboard" class="pointer">Dashboard</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<section style="padding-top: 80px;">
+  <router-outlet></router-outlet>
+  <!--<div class="container">-->
+
+    <!--<div class="layout">-->
+      <!--<div  class="col col-main" role="main">-->
+        <!--<h1>Personal Finances App for minimalists</h1>-->
+        <!--<p>-->
+          <!--home works?-->
+          <!--{{authService.loggedInUser.uid | async}}-->
+          <!--{{authService.isAuthenticated()}}-->
+        <!--</p>-->
+        <!--<a (click)="doSignOut()">Sign out</a>-->
+      <!--</div>-->
+
+      <!--<p class="col col-complementary" role="complementary">-->
+        <!--<img src="assets/img/piggy.png" >-->
+      <!--</p>-->
+
+    <!--</div>-->
+  <!--</div>-->
+
+</section>
+
