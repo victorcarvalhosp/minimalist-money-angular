@@ -16,6 +16,10 @@ body {
   max-width: 650px;
 }
 
+.center-col{
+  margin: 0 auto;
+}
+
 .content {
   position: relative;
   padding-top: 80px;
@@ -54,7 +58,7 @@ body {
 #nav ul li {
   float: left;
   list-style: none;
-  width: 120px;
+  width: 100px;
   text-align: center;
 }
 
@@ -78,7 +82,9 @@ body {
 }
 
 /* Responsive: */
-
+.layout{
+  margin: 0 auto;
+}
 @media only screen and (min-width: 640px) {
   .layout {
     display: flex;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoriesService} from '../../../services/categories/categories.service';
 import {Observable} from 'rxjs';
-import {AuthService} from "../../../services/auth/auth.service";
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-settings',

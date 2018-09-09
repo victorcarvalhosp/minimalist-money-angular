@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {IUser} from '../../models/credentials';
 import {CategoriesService} from '../categories/categories.service';
 import {AccountsService} from '../accounts/accounts.service';
+import {TransactionsService} from "../transactions/transactions.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserService {
   users: Observable<any[]>;
   private usersCollection: AngularFirestoreCollection<any>;
 
-  constructor(private afs: AngularFirestore, private categoriesService: CategoriesService, private accountsService: AccountsService) {
+  constructor(private afs: AngularFirestore, private categoriesService: CategoriesService, private accountsService: AccountsService, private transactionsService: TransactionsService) {
     this.usersCollection = afs.collection<any>('users');
     this.users = this.usersCollection.valueChanges();
   }
@@ -23,6 +24,7 @@ export class UserService {
       const promises: Promise<any>[] = [];
       promises.push(this.categoriesService.addDefaultCategories());
       promises.push(this.accountsService.addDefaultAccounts());
+      promises.push(this.transactionsService.addDefaultTransactions());
       return Promise.all(promises);
     }, err => {
       console.log(err);

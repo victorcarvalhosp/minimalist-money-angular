@@ -20,6 +20,9 @@ import {TransactionsComponent} from './pages/home/transactions/transactions.comp
 import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
 import { SettingsComponent } from './pages/home/settings/settings.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { PeriodHeaderComponent } from './components/period-header/period-header.component';
+import { Component2Component } from './components/component2/component2.component';
+import {DateFnsModule} from "ngx-date-fns";
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     HomeComponent,
     TransactionsComponent,
     DashboardComponent,
-    SettingsComponent
+    SettingsComponent,
+    PeriodHeaderComponent,
+    Component2Component
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,
@@ -45,7 +50,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
+    DateFnsModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,8 @@
-<p>
-  transactions works!
-</p>
+<div class="center-col">
+  <app-period-header (periodLoaded)="handlePeriodLoaded($event)"></app-period-header>
+  <div class="col" role="main">
+    <div *ngFor="let t of transactionsService.transactions | async">
+      <p>{{t.name}} {{t.date.toDate() | date}}</p>
+    </div>
+  </div>
+</div>
