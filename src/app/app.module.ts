@@ -22,7 +22,8 @@ import { SettingsComponent } from './pages/home/settings/settings.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { PeriodHeaderComponent } from './components/period-header/period-header.component';
 import { Component2Component } from './components/component2/component2.component';
-import {DateFnsModule} from "ngx-date-fns";
+import {DateFnsModule} from 'ngx-date-fns';
+import {TransactionCircleColorDirective} from './directives/transaction-circle-color/transaction-circle-color.directive';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {DateFnsModule} from "ngx-date-fns";
     DashboardComponent,
     SettingsComponent,
     PeriodHeaderComponent,
-    Component2Component
+    Component2Component,
+    TransactionCircleColorDirective
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,

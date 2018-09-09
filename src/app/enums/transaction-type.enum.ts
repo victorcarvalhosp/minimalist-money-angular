@@ -15,3 +15,7 @@ export function getTransactionTypeLabel(transactionType: TransactionTypeEnum) {
     return 'Transfer';
   }
 }
+
+export function isIncome(transactionType: TransactionTypeEnum) {
+  return transactionType === TransactionTypeEnum.INCOME;
+}
