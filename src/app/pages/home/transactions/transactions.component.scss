@@ -11,7 +11,21 @@ app-transactions {
   .info{
     font-size: 11px;
     color: mat-color($gray-color);
+  }
+  .type{
+    font-size: 11px;
+    color: mat-color($gray-color);
+  }
 
+  .col-amount{
+    float: right;
+    min-width: 70px;
+  }
+  .amount{
+    float: right;
+  }
+  .amount span{
+    font-size: 11px;
   }
 
   .container-timeline ul {
@@ -27,6 +41,7 @@ app-transactions {
     height: 100%;
     position: absolute;
     border-left: 2px dashed  #DDDDDD;
+    left: 10px;
   }
   .container-timeline ul li {
     position: relative;
@@ -35,7 +50,7 @@ app-transactions {
   .container-timeline ul li > span {
     width: 2px;
     height: 100%;
-    left: -30px;
+    left: -20px;
     top: 0;
     position: absolute;
     padding-top: 5px;
@@ -76,16 +91,16 @@ app-transactions {
     margin-left: 10px;
     padding-bottom: 20px;
   }
-  .container-timeline div > div {
-    margin-top: 5px;
-  }
+  //.container-timeline div > div {
+  //  margin-top: 5px;
+  //}
   .container-timeline span.number {
     height: 100%;
   }
   .container-timeline span.number span {
     position: absolute;
     font-size: 10px;
-    left: -35px;
+    left: -20px;
     font-weight: bold;
   }
   .container-timeline span.number span:first-child {

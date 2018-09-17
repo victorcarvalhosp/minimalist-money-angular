@@ -2,20 +2,26 @@
   <app-period-header (periodLoaded)="handlePeriodLoaded($event)"></app-period-header>
 
 
-
-
-<p>{{(categoriesService.category | async)?.name}}</p>
+  <p>{{(categoriesService.category | async)?.name}}</p>
 
 
   <div class="col" role="main">
     <div class="container-timeline">
       <ul>
         <li *ngFor="let t of transactionsService.transactions | async">
-          <div>
-            <div class="title">{{t.name}}</div>
-            <div class="info">Let&apos;s make coolest things in css</div>
-            <div class="type">Presentation</div>
-          </div> <span [appTransactionCircleColor]="t" class="number"><span>{{t.date.toDate() | date: 'dd'}}</span></span>
+          <div class="row">
+            <div style="float: left" class="full-width">
+              <div class="title">{{t.name}}</div>
+              <div class="info">{{t.description}}</div>
+              <div class="type"><span *ngIf="t.category" style="font-weight: bold"
+                                      [ngStyle]="{'color': t.category?.color}">#</span>{{t.category?.name}}
+              </div>
+            </div>
+            <div class="col-amount">
+              <div class="amount">$ {{t.amount | onlyInteger }},<span >{{t.amount | onlyDecimalPart}}</span></div>
+            </div>
+          </div>
+          <span [appTransactionCircleColor]="t" class="number"><span>{{t.date.toDate() | date: 'dd'}}</span></span>
         </li>
       </ul>
     </div>

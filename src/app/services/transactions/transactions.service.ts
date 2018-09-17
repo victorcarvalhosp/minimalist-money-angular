@@ -22,7 +22,7 @@ export class TransactionsService {
     return this.authService.getCurrentUser()
       .then(user => {
         console.log('UID' + user.uid);
-        this.transactionsCollection = this.afs.collection<any>(`transactions/${user.uid}/user_transactions`);
+        this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`);
         this.transactions = this.transactionsCollection.valueChanges();
       }, err => {
         console.log(err);
@@ -34,7 +34,7 @@ export class TransactionsService {
     return this.authService.getCurrentUser()
       .then(user => {
         console.log('UID' + user.uid);
-        this.transactionsCollection = this.afs.collection<any>(`transactions/${user.uid}/user_transactions`,
+        this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`,
           ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
         this.transactions = this.transactionsCollection.valueChanges();
       }, err => {

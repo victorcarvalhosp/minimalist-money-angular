@@ -1,0 +1,12 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'onlyDecimalPart'
+})
+export class OnlyDecimalPartPipePipe implements PipeTransform {
+
+  transform(value: number, args?: any): any {
+    return ((value % 1) * 100).toFixed(0);
+  }
+
+}

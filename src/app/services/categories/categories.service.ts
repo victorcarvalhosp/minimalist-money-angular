@@ -25,7 +25,7 @@ export class CategoriesService {
     return this.authService.getCurrentUser()
       .then(user => {
         console.log('UID' + user.uid);
-        this.categoriesCollection = this.afs.collection<any>(`categories/${user.uid}/user_categories`);
+        this.categoriesCollection = this.afs.collection<any>(`users/${user.uid}/categories`);
         this.categories = this.categoriesCollection.valueChanges();
       }, err => {
         console.log(err);
@@ -40,7 +40,7 @@ export class CategoriesService {
     return this.authService.getCurrentUser()
       .then(user => {
         console.log('UID' + user.uid);
-        this.categoriesDoc = this.afs.doc(`categories/${user.uid}/user_categories/${categoryUid}`);
+        this.categoriesDoc = this.afs.doc(`users/${user.uid}/categories/${categoryUid}`);
         this.category = this.categoriesDoc.valueChanges();
       }, err => {
         console.log(err);
@@ -51,14 +51,14 @@ export class CategoriesService {
     //   console.log(res)
     //   return this.afs.doc<any>(`categories/${res.uid}/user_categories/${categoryUid}`).valueChanges();
     // }));
-    console.log('get category');
-       this.afs.doc<any>(`categories/JP1VKSxi3BX196Clk7eHr1rxmLn1/user_categories/${categoryUid}`).snapshotChanges().pipe(map(res => {
-
-        console.log(res);
-        return res.payload;
-      })).subscribe(res => {
-        console.log(res);
-       });
+    // console.log('get category');
+    //    this.afs.doc<any>(`JP1VKSxi3BX196Clk7eHr1rxmLn1/categories/${categoryUid}`).snapshotChanges().pipe(map(res => {
+    //
+    //     console.log(res);
+    //     return res.payload;
+    //   })).subscribe(res => {
+    //     console.log(res);
+    //    });
   }
 
   addDefaultCategories() {

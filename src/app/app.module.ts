@@ -24,6 +24,8 @@ import { PeriodHeaderComponent } from './components/period-header/period-header.
 import { Component2Component } from './components/component2/component2.component';
 import {DateFnsModule} from 'ngx-date-fns';
 import {TransactionCircleColorDirective} from './directives/transaction-circle-color/transaction-circle-color.directive';
+import { OnlyIntegerPipePipe } from './pipes/only-integer-pipe.pipe';
+import { OnlyDecimalPartPipePipe } from './pipes/only-decimal-part-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {TransactionCircleColorDirective} from './directives/transaction-circle-c
     SettingsComponent,
     PeriodHeaderComponent,
     Component2Component,
-    TransactionCircleColorDirective
+    TransactionCircleColorDirective,
+    OnlyIntegerPipePipe,
+    OnlyDecimalPartPipePipe
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,
