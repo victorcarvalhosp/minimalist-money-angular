@@ -4,7 +4,6 @@
   </button>
 </div>
 <h2 mat-dialog-title>{{form.value.type | transactionType}}</h2>
-
 <div mat-dialog-content>
   <form [formGroup]="form">
     <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>

@@ -92,6 +92,4 @@ export class RegisterComponent implements OnInit {
     const control = this.registerForm.get(name);
     return this.validations.getControlErrors(control);
   }
-
-
 }
