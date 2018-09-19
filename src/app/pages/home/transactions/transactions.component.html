@@ -1,6 +1,7 @@
 <div class="center-col">
+  <router-outlet></router-outlet>
+  <app-speed-dial-fab (action)="openDialogNewTransaction($event)"></app-speed-dial-fab>
   <app-period-header (periodLoaded)="handlePeriodLoaded($event)"></app-period-header>
-
 
   <p>{{(categoriesService.category | async)?.name}}</p>
 
@@ -9,7 +10,7 @@
     <div class="container-timeline">
       <ul>
         <li *ngFor="let t of transactionsService.transactions | async">
-          <div class="row">
+          <div class="row" (click)="showDetails(t)">
             <div style="float: left" class="full-width">
               <div class="title">{{t.name}}</div>
               <div class="info">{{t.description}}</div>
@@ -21,7 +22,7 @@
               <div class="amount">$ {{t.amount | onlyInteger }},<span >{{t.amount | onlyDecimalPart}}</span></div>
             </div>
           </div>
-          <span [appTransactionCircleColor]="t" class="number"><span>{{t.date.toDate() | date: 'dd'}}</span></span>
+          <span (click)="toggleRealized(t)" [appTransactionCircleColor]="t" class="number"><span>{{t.date | date: 'dd'}}</span></span>
         </li>
       </ul>
     </div>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth/auth.service";
-import {Router} from "@angular/router";
-import {Validations} from "../../validators/validations";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {UserService} from "../../services/user/user.service";
-import {IUser} from "../../models/credentials";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth/auth.service';
+import {Router} from '@angular/router';
+import {Validations} from '../../validators/validations';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {UserService} from '../../services/user/user.service';
+import {IUser} from '../../models/credentials';
 
 @Component({
   selector: 'app-register',
@@ -62,9 +62,9 @@ export class RegisterComponent implements OnInit {
         }
         this.userService.createUser(user).then(res => {
           this.authService.doLogin(value).then(login => {
-            this.router.navigate(['../home']);
-            this.errorMessage = "";
-            this.successMessage = "Your account has been created";
+            this.router.navigate(['../home/transactions']);
+            this.errorMessage = '';
+            this.successMessage = 'Your account has been created';
             this.hideLoading();
           });
         });
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
       }, err => {
         console.log(err);
         this.errorMessage = err.message;
-        this.successMessage = "";
+        this.successMessage = '';
         this.hideLoading();
       });
   }

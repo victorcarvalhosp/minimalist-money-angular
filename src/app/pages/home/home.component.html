@@ -1,16 +1,4 @@
-<header id="header" class="mat-elevation-z1">
-  <div class="container" style="height: 64px;">
-    <nav id="nav">
-      <ul>
-        <li><a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/home" class="pointer">Transactions</a>
-        </li>
-        <li><a routerLinkActive="active" routerLink="dashboard" class="pointer">Dashboard</a></li>
-        <li><a routerLinkActive="active" routerLink="settings" class="pointer">Settings</a></li>
-
-      </ul>
-    </nav>
-  </div>
-</header>
+<app-header [showBackButton]="homeService.showBackButton$"  ></app-header>
 <section style="padding-top: 65px;">
   <div class="container">
     <div class="layout">

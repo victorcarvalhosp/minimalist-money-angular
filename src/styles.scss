@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "variables.scss";
+
 
 html, body {
   height: 100%;
@@ -38,8 +40,8 @@ body {
 }
 
 #header h1 {
-  top: 0px;
-  margin: 0px;
+  top: 0;
+  margin: 0;
   text-transform: uppercase;
   font-size: 1.2em;
 }
@@ -95,8 +97,6 @@ body {
   display: flex;
 }
 
-
-
 .Aligner {
   display: flex;
   align-items: center;
@@ -117,3 +117,31 @@ body {
   cursor: pointer;
 }
 
+.top-left-icon{
+  margin-left: -20px !important;
+  cursor: pointer;
+  display: inline;
+  background: transparent;
+  border: 0;
+}
+
+.header-dialog{
+  p{
+    display: inline;
+  }
+}
+
+.mat-dialog-container {
+  padding-top: 0 !important;
+}
+
+.income-color{
+  color: $income-color;
+}
+
+.outcome-color {
+  color: $outcome-color
+}
+.transfer-color {
+  color: $transfer-color
+}

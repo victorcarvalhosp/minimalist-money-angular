@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {ITransaction} from '../../models/transaction';
-import {Observable} from 'rxjs/index';
+import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {TransactionTypeEnum} from '../../enums/transaction-type.enum';
 import {IPeriod} from '../../models/period';
+import {map} from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,19 +35,42 @@ export class TransactionsService {
     // REFACTOR THIS CODE ASAP, is Duplicating initializeDate() just with the query... I am sure there's a better way to do that
     return this.authService.getCurrentUser()
       .then(user => {
-        console.log('UID' + user.uid);
+        console.log('UID' + user.id);
         this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`,
           ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
-        this.transactions = this.transactionsCollection.valueChanges();
+        this.transactions = this.transactionsCollection.snapshotChanges().pipe(map(
+          changes => {
+            return changes.map(
+              a => {
+                const data = a.payload.doc.data() as ITransaction;
+                data.id = a.payload.doc.id;
+                data.date = a.payload.doc.get('date').toDate();
+                return data;
+              }
+            );
+          }
+          )
+        );
       }, err => {
         console.log(err);
       });
 
   }
 
-  addATransaction(account: ITransaction) {
-    return this.transactionsCollection.add(account);
+  addTransaction(transaction) {
+    this.transactionsCollection.add(transaction);
   }
+
+  saveTransaction(transaction: ITransaction) {
+    if (transaction.id) {
+      console.log('UPDATE');
+      return this.transactionsCollection.doc(transaction.id).update(transaction);
+    } else {
+      console.log('INSERT');
+      return this.transactionsCollection.add(transaction);
+    }
+  }
+
 
   addDefaultTransactions() {
     return this.initializeData().then(res => {
@@ -81,7 +106,7 @@ export class TransactionsService {
         },
       ];
       for (const c of defaultTransactions) {
-        promises.push(this.addATransaction(c));
+        promises.push(this.saveTransaction(c));
       }
       return promises;
     });

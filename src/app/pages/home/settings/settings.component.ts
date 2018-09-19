@@ -10,9 +10,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 })
 export class SettingsComponent implements OnInit {
 
-  categories: Observable<any[]>;
   constructor(public categoriesService: CategoriesService, public authService: AuthService) {
-    this.categories = this.categoriesService.categories;
   }
 
   doSignOut() {
