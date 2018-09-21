@@ -2,6 +2,9 @@
   <button mat-icon-button class="top-left-icon" mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
+  <button [disabled]="loading || !form.valid" class="top-right-icon" type="button" mat-button (click)="trySave(form.value)">
+    Save
+  </button>
 </div>
 <h2 mat-dialog-title>{{form.value.type | transactionType}}</h2>
 <div mat-dialog-content>
@@ -37,7 +40,7 @@
   </form>
 </div>
 
-<div mat-dialog-actions>
-  <button [disabled]="loading" class="full-width" type="button" mat-stroked-button (click)="trySave(form.value)">Save
-  </button>
-</div>
+<!--<div mat-dialog-actions>-->
+  <!--<button [disabled]="loading" class="full-width" type="button" mat-stroked-button (click)="trySave(form.value)">Save-->
+  <!--</button>-->
+<!--</div>-->

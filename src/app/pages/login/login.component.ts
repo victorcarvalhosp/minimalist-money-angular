@@ -54,8 +54,8 @@ export class LoginComponent implements OnInit {
     this.showLoading();
     this.authService.doLogin(value)
       .then(res => {
-        this.router.navigate(['../home'])
-        this.errorMessage = "";
+        this.router.navigate(['../home/transactions']);
+        this.errorMessage = '';
         this.hideLoading();
       }, err => {
         console.log(err);
