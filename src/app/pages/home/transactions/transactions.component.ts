@@ -30,6 +30,14 @@ export class TransactionsComponent implements OnInit {
     this.getCategory('123');
   }
 
+  openDialogIncome() {
+    this.openDialogNewTransaction(TransactionTypeEnum.INCOME);
+  }
+
+  openDialogOutcome() {
+    this.openDialogNewTransaction(TransactionTypeEnum.OUTCOME);
+  }
+
   openDialogNewTransaction(type: TransactionTypeEnum): void {
     const newTransaction: ITransaction = {
       id: '',

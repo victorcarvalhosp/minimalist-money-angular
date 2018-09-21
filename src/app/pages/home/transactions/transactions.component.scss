@@ -59,7 +59,7 @@ app-transactions {
     background: #DDDDDD;
   }
   /* Timeline circle */
-  .container-timeline ul li > span:before {
+  .container-timeline ul li > span.circle:before {
     content: "";
     width: 8px;
     height: 8px;

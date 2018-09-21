@@ -19,7 +19,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatMenuModule,
   MatNativeDateModule,
   MatProgressBarModule, MatSnackBarModule
 } from '@angular/material';
@@ -77,6 +77,7 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
     MatNativeDateModule,
     MatSnackBarModule,
     MatCheckboxModule,
+    MatMenuModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
