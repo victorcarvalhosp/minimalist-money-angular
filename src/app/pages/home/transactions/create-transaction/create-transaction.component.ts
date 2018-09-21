@@ -49,6 +49,8 @@ export class CreateTransactionComponent implements OnInit {
     );
   }
 
+
+
   getError(name: string) {
     const control = this.form.get(name);
     return this.validations.getControlErrors(control);
@@ -62,6 +64,14 @@ export class CreateTransactionComponent implements OnInit {
     this.loading = false;
   }
 
+
+  tryDelete(value) {
+    this.showLoading();
+    this.transactionsService.deleteTransaction(value);
+    this.hideLoading();
+    this.closeDialog();
+    this.openSnackBar('Transaction deleted!');
+  }
 
   trySave(value) {
     this.showLoading();
@@ -90,6 +100,10 @@ export class CreateTransactionComponent implements OnInit {
     this.snackBar.open(message, 'OK', {
       duration: 2000,
     });
+  }
+
+  seeValue(item) {
+    console.log(item);
   }
 
 }

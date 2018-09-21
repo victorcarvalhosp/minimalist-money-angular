@@ -71,6 +71,11 @@ export class TransactionsService {
     }
   }
 
+  deleteTransaction(transaction: ITransaction) {
+    if (transaction.id) {
+      return this.transactionsCollection.doc(transaction.id).delete();
+    }
+  }
 
   addDefaultTransactions() {
     return this.initializeData().then(res => {

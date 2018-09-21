@@ -18,6 +18,9 @@
           <span>Outcome</span>
         </button>
       </mat-menu>
+      <div *ngIf="(transactionsService.transactions | async)?.length === 0" align="center">
+        <p>No transactions yet in that month</p>
+      </div>
       <ul>
         <li *ngFor="let t of transactionsService.transactions | async">
           <div class="row" (click)="showDetails(t)">
