@@ -79,7 +79,7 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
     MatCheckboxModule,
     MatMenuModule,
     DateFnsModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [],
   bootstrap: [AppComponent]
