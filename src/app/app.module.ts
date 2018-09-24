@@ -15,13 +15,16 @@ import {appRoutes} from './app.routes';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCheckboxModule,
+  MatButtonModule,
+  MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
   MatIconModule,
-  MatInputModule, MatMenuModule,
+  MatInputModule,
+  MatMenuModule,
   MatNativeDateModule,
-  MatProgressBarModule, MatSnackBarModule
+  MatProgressBarModule,
+  MatSnackBarModule
 } from '@angular/material';
 import {HomeComponent} from './pages/home/home.component';
 import {TransactionsComponent} from './pages/home/transactions/transactions.component';
@@ -29,7 +32,6 @@ import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
 import {SettingsComponent} from './pages/home/settings/settings.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {PeriodHeaderComponent} from './components/period-header/period-header.component';
-import {Component2Component} from './components/component2/component2.component';
 import {DateFnsModule} from 'ngx-date-fns';
 import {TransactionCircleColorDirective} from './directives/transaction-circle-color/transaction-circle-color.directive';
 import {OnlyIntegerPipePipe} from './pipes/only-integer-pipe.pipe';
@@ -50,7 +52,6 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
     DashboardComponent,
     SettingsComponent,
     PeriodHeaderComponent,
-    Component2Component,
     TransactionCircleColorDirective,
     OnlyIntegerPipePipe,
     OnlyDecimalPartPipePipe,
