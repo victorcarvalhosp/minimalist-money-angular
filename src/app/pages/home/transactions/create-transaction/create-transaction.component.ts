@@ -5,6 +5,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Validations} from '../../../../validators/validations';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {TransactionsService} from '../../../../services/transactions/transactions.service';
+import {ICategory} from "../../../../models/category";
+import {CategoriesService} from "../../../../services/categories/categories.service";
 
 @Component({
   selector: 'app-create-transaction',
@@ -18,11 +20,14 @@ export class CreateTransactionComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
-              public transactionsService: TransactionsService, public snackBar: MatSnackBar) {
-    console.log(data);
+              public transactionsService: TransactionsService, public snackBar: MatSnackBar, public categoriesService: CategoriesService) {
+    console.log('CONSTRUCTOR CALLED');
     this.createForm();
-    this.form.patchValue(data);
+    this.form.patchValue(this.data);
+    console.log(this.data.category);
+    this.form.controls['category'].patchValue(this.data.category);
   }
+
 
   createForm() {
     this.form = this.fb.group({
@@ -31,9 +36,14 @@ export class CreateTransactionComponent implements OnInit {
       amount: ['', Validators.compose([Validators.required])],
       date: ['', Validators.compose([Validators.required])],
       type: ['', Validators.compose([Validators.required])],
+      category: ['', Validators.compose([Validators.required])],
       realized: [''],
     });
     this.createValidatorsMessages();
+  }
+
+  formValue() {
+    console.log(this.form);
   }
 
   private createValidatorsMessages() {
@@ -44,11 +54,13 @@ export class CreateTransactionComponent implements OnInit {
         },
         'amount': {
           'required': 'Amount is required.',
+        },
+        'category': {
+          'required': 'Category is required.',
         }
       }
     );
   }
-
 
 
   getError(name: string) {
@@ -79,7 +91,6 @@ export class CreateTransactionComponent implements OnInit {
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction Saved!');
-
     // this.transactionsService.saveTransaction(value).then(res => {
     //   console.log('res');
     // });
@@ -105,5 +116,17 @@ export class CreateTransactionComponent implements OnInit {
   seeValue(item) {
     console.log(item);
   }
+
+  setCategoryValueOnForm(value) {
+    this.form.get('category').setValue(value.value);
+  }
+
+  compareFn(x: ICategory, y: ICategory): boolean {
+    console.log(x);
+    console.log(y);
+    console.log('CALLED COMPARE FN');
+    return x && y ? x.id === y.id : x === y;
+  }
+
 
 }

@@ -5,6 +5,7 @@ import {AuthService} from '../auth/auth.service';
 import {ICategory} from '../../models/category';
 import {map, switchMap} from "rxjs/internal/operators";
 import {fromPromise} from "rxjs/internal/observable/fromPromise";
+import {ITransaction} from "../../models/transaction";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class CategoriesService {
 
   public category: Observable<ICategory>;
 
-  public categories: Observable<ICategory[]>;
+  public categories$: Observable<ICategory[]>;
   private categoriesCollection: AngularFirestoreCollection<ICategory>;
   private categoriesDoc: AngularFirestoreDocument<ICategory>;
 
@@ -26,7 +27,18 @@ export class CategoriesService {
       .then(user => {
         console.log('UID' + user.uid);
         this.categoriesCollection = this.afs.collection<any>(`users/${user.uid}/categories`);
-        this.categories = this.categoriesCollection.valueChanges();
+        this.categories$ = this.categoriesCollection.snapshotChanges().pipe(map(
+          changes => {
+            return changes.map(
+              a => {
+                const data = a.payload.doc.data() as ICategory;
+                data.id = a.payload.doc.id;
+                return data;
+              }
+            );
+          }
+          )
+        );
       }, err => {
         console.log(err);
       });
@@ -49,10 +61,10 @@ export class CategoriesService {
 
     // return fromPromise(this.authService.getCurrentUser()).pipe(switchMap(res => {
     //   console.log(res)
-    //   return this.afs.doc<any>(`categories/${res.uid}/user_categories/${categoryUid}`).valueChanges();
+    //   return this.afs.doc<any>(`categories$/${res.uid}/user_categories/${categoryUid}`).valueChanges();
     // }));
     // console.log('get category');
-    //    this.afs.doc<any>(`JP1VKSxi3BX196Clk7eHr1rxmLn1/categories/${categoryUid}`).snapshotChanges().pipe(map(res => {
+    //    this.afs.doc<any>(`JP1VKSxi3BX196Clk7eHr1rxmLn1/categories$/${categoryUid}`).snapshotChanges().pipe(map(res => {
     //
     //     console.log(res);
     //     return res.payload;
