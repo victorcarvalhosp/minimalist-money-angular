@@ -7,6 +7,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {TransactionsService} from '../../../../services/transactions/transactions.service';
 import {ICategory} from "../../../../models/category";
 import {CategoriesService} from "../../../../services/categories/categories.service";
+import {map, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-create-transaction',
@@ -17,6 +18,7 @@ export class CreateTransactionComponent implements OnInit {
   form: FormGroup;
   validations: Validations;
   loading: boolean = false;
+  categories: ICategory[];
 
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
@@ -24,8 +26,20 @@ export class CreateTransactionComponent implements OnInit {
     console.log('CONSTRUCTOR CALLED');
     this.createForm();
     this.form.patchValue(this.data);
-    console.log(this.data.category);
-    this.form.controls['category'].patchValue(this.data.category);
+    this.form.get('category').setValue(this.data.category);
+    // this.categoriesService.categories$.subscribe(categories => {
+    //   this.categories = categories;
+    //   // categories.forEach(c => {
+    //   //   if (c.id === this.data.category.id) {
+    //   //     console.log(c);
+    //   //     this.form.get('category').setValue(c);
+    //   //   }
+    //   // });
+    // });
+    // console.log(this.data.category);
+    // this.form.controls['category'].patchValue(this.data.category);
+    // console.log(this.form.controls['category'].value);
+    // this.form.patchValue({'category': this.data.category});
   }
 
 
@@ -113,20 +127,8 @@ export class CreateTransactionComponent implements OnInit {
     });
   }
 
-  seeValue(item) {
-    console.log(item);
+  compareIds(category1: ICategory, category2: ICategory): boolean {
+    return category1 && category2 ? category1.id === category2.id : category1 === category2;
   }
-
-  setCategoryValueOnForm(value) {
-    this.form.get('category').setValue(value.value);
-  }
-
-  compareFn(x: ICategory, y: ICategory): boolean {
-    console.log(x);
-    console.log(y);
-    console.log('CALLED COMPARE FN');
-    return x && y ? x.id === y.id : x === y;
-  }
-
-
 }
+

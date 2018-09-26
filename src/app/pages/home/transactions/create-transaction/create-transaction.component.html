@@ -2,7 +2,6 @@
   <button mat-icon-button class="top-left-icon" mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
-  <button (click)="formValue()"> Valor</button>
   <button [disabled]="loading || !form.valid" class="top-right-icon" type="button" mat-icon-button
           (click)="trySave(form.value)">
     <mat-icon>send</mat-icon>
@@ -37,32 +36,23 @@
       </mat-form-field>
     </div>
     <div>
-      <!--<select formControlName="category" [compareWith]="compareFn">-->
-        <!--<option [ngValue]="c" *ngFor="let c of categoriesService.categories$ | async"> {{c.name}}</option>-->
-      <!--</select>-->
-      <!-- HAS A BUG IN THAT COMPONENT THA NOT LOAD THE VALUE WHEN EDITING, WAITING FOR THEN FIX THAT
-       https://github.com/angular/material2/issues/10214-->
-      <mat-form-field>
-        <mat-select placeholder="Category" formGroupName="category" (selectionChange)="setCategoryValueOnForm($event)"
-                    [compareWith]="compareFn" >
-          <mat-option *ngFor="let c of categoriesService.categories$ | async" [value]="c">
-            {{c.name}}
+      <mat-form-field hintLabel="select one">
+        <mat-select placeholder="Category" formControlName="category"
+                    [compareWith]="compareIds">
+          <mat-option *ngFor="let c of (categoriesService.categories$ | async)" [value]="c">
+            {{ c.name }}
           </mat-option>
         </mat-select>
         <mat-error>
           {{ getError('category') }}
         </mat-error>
       </mat-form-field>
-      <!--{{form.get('category').value.name}}-->
-      <!--{{form.get('name').value}}-->
     </div>
     <div>
       <mat-checkbox formControlName="realized">Realized</mat-checkbox>
     </div>
   </form>
 </div>
-
-
 <div mat-dialog-actions>
   <button *ngIf="form.get('id').value !== ''" type="button" mat-icon-button (click)="tryDelete(form.value)"
           title="Delete transaction">
