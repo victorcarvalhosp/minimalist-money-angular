@@ -1,11 +1,9 @@
-<div class="col" role="main">
-  <h4>Categories</h4>
-  <div *ngFor="let c of categoriesService.categories$ | async">
-    <p><span style="font-weight: bold" [ngStyle]="{'color': c.color}">#</span>{{c.name}}</p>
-  </div>
-  <br/>
-  <a class="pointer" (click)="doSignOut()">Sign out</a>
-</div>
+<router-outlet></router-outlet>
+<mat-nav-list>
+    <mat-list-item (click)="goToCategories()"> Categories </mat-list-item>
+    <mat-list-item> Accounts </mat-list-item>
+    <mat-list-item (click)="doSignOut()"> Sign out </mat-list-item>
+  </mat-nav-list>
 
 
 

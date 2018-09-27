@@ -1,28 +1,15 @@
 <div class="center-col">
   <router-outlet></router-outlet>
   <!--<app-speed-dial-fab (action)="openDialogNewTransaction($event)"></app-speed-dial-fab>-->
-  <app-period-header (periodLoaded)="handlePeriodLoaded($event)"></app-period-header>
+  <app-transactions-header (periodLoaded)="handlePeriodLoaded($event)" (openIncomeDialog)="openDialogNewTransaction($event)" (openOutcomeDialog)="openDialogNewTransaction($event)"></app-transactions-header>
 
   <div class="col" role="main">
     <div class="container-timeline">
-      <button mat-icon-button [matMenuTriggerFor]="menu" style="margin-left: -8px;">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openDialogIncome()">
-          <mat-icon >add</mat-icon>
-          <span>Income</span>
-        </button>
-        <button mat-menu-item (click)="openDialogOutcome()">
-          <mat-icon>remove</mat-icon>
-          <span>Outcome</span>
-        </button>
-      </mat-menu>
       <div *ngIf="(transactionsService.transactions | async)?.length === 0" align="center">
         <p>No transactions yet in that month</p>
       </div>
       <ul>
-        <li *ngFor="let t of transactionsService.transactions | async">
+        <li  *ngFor="let t of transactionsService.transactions | async">
           <div class="row" (click)="showDetails(t)">
             <div style="float: left" class="full-width">
               <div class="title">{{t.name}}</div>

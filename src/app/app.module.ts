@@ -20,7 +20,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatListModule,
   MatMenuModule,
   MatNativeDateModule, MatOptionModule,
   MatProgressBarModule, MatSelectModule,
@@ -31,7 +31,6 @@ import {TransactionsComponent} from './pages/home/transactions/transactions.comp
 import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
 import {SettingsComponent} from './pages/home/settings/settings.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
-import {PeriodHeaderComponent} from './components/period-header/period-header.component';
 import {DateFnsModule} from 'ngx-date-fns';
 import {TransactionCircleColorDirective} from './directives/transaction-circle-color/transaction-circle-color.directive';
 import {OnlyIntegerPipePipe} from './pipes/only-integer-pipe.pipe';
@@ -40,6 +39,8 @@ import {CreateTransactionComponent} from './pages/home/transactions/create-trans
 import {HeaderComponent} from './pages/home/components/header/header.component';
 import {TransactionTypePipe} from './pipes/transaction-type/transaction-type.pipe';
 import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.component';
+import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
+import { TransactionsHeaderComponent } from './pages/home/transactions/transactions-header/transactions-header.component';
 
 @NgModule({
   declarations: [
@@ -51,14 +52,15 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
     TransactionsComponent,
     DashboardComponent,
     SettingsComponent,
-    PeriodHeaderComponent,
+    TransactionsHeaderComponent,
     TransactionCircleColorDirective,
     OnlyIntegerPipePipe,
     OnlyDecimalPartPipePipe,
     CreateTransactionComponent,
     HeaderComponent,
     TransactionTypePipe,
-    SpeedDialFabComponent
+    SpeedDialFabComponent,
+    CategoriesComponent,
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,
@@ -81,6 +83,7 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
     MatMenuModule,
     MatSelectModule,
     MatOptionModule,
+    MatListModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],

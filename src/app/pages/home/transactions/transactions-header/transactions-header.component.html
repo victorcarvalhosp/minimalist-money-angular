@@ -1,0 +1,37 @@
+<div class="center-col panel-sticky">
+  <div class="Aligner">
+    <div style="position: absolute;left: 8px;">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="handleOpenIncomeDialog()">
+          <mat-icon>add</mat-icon>
+          <span>Income</span>
+        </button>
+        <button mat-menu-item (click)="handleOpenOutcomeDialog()">
+          <mat-icon>remove</mat-icon>
+          <span>Outcome</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="Aligner" align="center">
+      <div>
+        <button mat-button (click)="handlePreviousMonth()">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+      </div>
+      <div class="period-name">
+        <p>{{period.datePeriod | date: 'MMM, y'}}</p>
+      </div>
+      <div>
+        <button mat-button (click)="handleNextMonth()">
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

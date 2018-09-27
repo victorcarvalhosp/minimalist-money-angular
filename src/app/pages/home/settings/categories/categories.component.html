@@ -1,0 +1,7 @@
+<div class="col" role="main">
+  <h4>Categories</h4>
+  <div *ngFor="let c of categoriesService.categories$ | async">
+    <p><span style="font-weight: bold" [ngStyle]="{'color': c.color}">#</span>{{c.name}}</p>
+  </div>
+  <br/>
+</div>

@@ -47,6 +47,10 @@ app-transactions {
     position: relative;
     margin-left: 30px;
   }
+
+  .container-timeline ul li:hover {
+    cursor: pointer;
+  }
   .container-timeline ul li > span {
     width: 2px;
     height: 100%;

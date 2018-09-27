@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PeriodHeaderComponent } from './period-header.component';
+import { CategoriesComponent } from './categories.component';
 
-describe('PeriodHeaderComponent', () => {
-  let component: PeriodHeaderComponent;
-  let fixture: ComponentFixture<PeriodHeaderComponent>;
+describe('CategoriesComponent', () => {
+  let component: CategoriesComponent;
+  let fixture: ComponentFixture<CategoriesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PeriodHeaderComponent ]
+      declarations: [ CategoriesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PeriodHeaderComponent);
+    fixture = TestBed.createComponent(CategoriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

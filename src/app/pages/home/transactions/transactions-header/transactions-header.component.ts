@@ -1,16 +1,24 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {IPeriod} from '../../models/period';
 import {AddMonthsPipe, LastDayOfMonthPipe, StartOfMonthPipe} from 'ngx-date-fns';
+import {IPeriod} from '../../../../models/period';
+import {TransactionTypeEnum} from '../../../../enums/transaction-type.enum';
 
 @Component({
-  selector: 'app-period-header',
-  templateUrl: './period-header.component.html',
-  styleUrls: ['./period-header.component.scss']
+  selector: 'app-transactions-header',
+  templateUrl: './transactions-header.component.html',
+  styleUrls: ['./transactions-header.component.scss']
 })
-export class PeriodHeaderComponent implements OnInit {
+export class TransactionsHeaderComponent implements OnInit {
 
   @Output()
   periodLoaded: EventEmitter<IPeriod> = new EventEmitter<IPeriod>();
+
+  @Output()
+  openIncomeDialog: EventEmitter<TransactionTypeEnum> = new EventEmitter<TransactionTypeEnum>();
+
+  @Output()
+  openOutcomeDialog: EventEmitter<TransactionTypeEnum> = new EventEmitter<TransactionTypeEnum>();
+
   period: IPeriod;
 
   constructor() {
@@ -24,7 +32,14 @@ export class PeriodHeaderComponent implements OnInit {
 
   handleNextMonth() {
     this.changeMonth(1);
+  }
 
+  handleOpenIncomeDialog() {
+    this.openIncomeDialog.emit(TransactionTypeEnum.INCOME);
+  }
+
+  handleOpenOutcomeDialog() {
+    this.openOutcomeDialog.emit(TransactionTypeEnum.OUTCOME);
   }
 
   handlePreviousMonth() {
