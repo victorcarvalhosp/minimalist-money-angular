@@ -1,7 +1,15 @@
-<div class="col" role="main">
-  <h4>Categories</h4>
-  <div *ngFor="let c of categoriesService.categories$ | async">
-    <p><span style="font-weight: bold" [ngStyle]="{'color': c.color}">#</span>{{c.name}}</p>
-  </div>
-  <br/>
+<h4>Categories</h4>
+<div>
+  <button mat-button (click)="openNewCategoryDialog()">
+    <mat-icon>add</mat-icon>
+    Create New Category
+  </button>
+</div>
+<div>
+  <mat-nav-list>
+    <mat-list-item (click)="openDialog(c)" *ngFor="let c of categoriesService.categories$ | async"><span
+      style="font-weight: bold"
+      [ngStyle]="{'color': c.color}">#</span>{{c.name}}
+    </mat-list-item>
+  </mat-nav-list>
 </div>

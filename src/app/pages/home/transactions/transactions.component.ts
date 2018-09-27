@@ -26,8 +26,6 @@ export class TransactionsComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsService: TransactionsService, public categoriesService: CategoriesService,
               public dialog: MatDialog, public snackBar: MatSnackBar) {
-    // this.category = this.getCategory('123')
-    this.getCategory('123');
   }
 
   openDialogNewTransaction(type: TransactionTypeEnum): void {
@@ -58,8 +56,7 @@ export class TransactionsComponent implements OnInit {
         } else {
           dialogRef.updateSize('50%');
         }
-      })
-    ;
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -74,10 +71,6 @@ export class TransactionsComponent implements OnInit {
     this.transactions = this.transactionsService.transactions;
   }
 
-  getCategory(categoryId: string) {
-    this.categoriesService.getCategory('2pToWGi9Brfi6hU34T3r');
-  }
-
   showDetails(transaction: ITransaction) {
     console.log('CLICK');
     // this.homeService.setShowBackButton(true);
@@ -90,7 +83,7 @@ export class TransactionsComponent implements OnInit {
   toggleRealized(transaction: ITransaction) {
     console.log('toogle realized');
     transaction.realized = !transaction.realized;
-    this.transactionsService.saveTransaction(transaction);
+    this.transactionsService.save(transaction);
     this.openSnackBar(transaction.realized ? 'Transaction Realized' : 'Transaction Canceled');
   }
 

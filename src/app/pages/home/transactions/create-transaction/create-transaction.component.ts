@@ -5,9 +5,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Validations} from '../../../../validators/validations';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {TransactionsService} from '../../../../services/transactions/transactions.service';
-import {ICategory} from "../../../../models/category";
-import {CategoriesService} from "../../../../services/categories/categories.service";
-import {map, switchMap} from "rxjs/operators";
+import {ICategory} from '../../../../models/category';
+import {CategoriesService} from '../../../../services/categories/categories.service';
 
 @Component({
   selector: 'app-create-transaction',
@@ -101,11 +100,11 @@ export class CreateTransactionComponent implements OnInit {
 
   trySave(value) {
     this.showLoading();
-    this.transactionsService.saveTransaction(value);
+    this.transactionsService.save(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction Saved!');
-    // this.transactionsService.saveTransaction(value).then(res => {
+    // this.transactionsService.save(value).then(res => {
     //   console.log('res');
     // });
   }

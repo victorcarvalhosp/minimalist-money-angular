@@ -41,6 +41,7 @@ import {TransactionTypePipe} from './pipes/transaction-type/transaction-type.pip
 import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.component';
 import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
 import { TransactionsHeaderComponent } from './pages/home/transactions/transactions-header/transactions-header.component';
+import { CreateCategoryComponent } from './pages/home/settings/categories/create-category/create-category.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { TransactionsHeaderComponent } from './pages/home/transactions/transacti
     TransactionTypePipe,
     SpeedDialFabComponent,
     CategoriesComponent,
+    CreateCategoryComponent
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,

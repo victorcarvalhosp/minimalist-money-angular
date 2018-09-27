@@ -61,7 +61,7 @@ export class TransactionsService {
     this.transactionsCollection.add(transaction);
   }
 
-  saveTransaction(transaction: ITransaction) {
+  save(transaction: ITransaction) {
     if (transaction.id) {
       console.log('UPDATE');
       return this.transactionsCollection.doc(transaction.id).update(transaction);
@@ -111,7 +111,7 @@ export class TransactionsService {
         },
       ];
       for (const c of defaultTransactions) {
-        promises.push(this.saveTransaction(c));
+        promises.push(this.save(c));
       }
       return promises;
     });

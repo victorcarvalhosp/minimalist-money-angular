@@ -48,6 +48,12 @@ export class CategoriesService {
     return this.categoriesCollection.add(category);
   }
 
+  delete(category: ICategory) {
+    if (category.id) {
+      return this.categoriesCollection.doc(category.id).delete();
+    }
+  }
+
   getCategory(categoryUid: string) {
     return this.authService.getCurrentUser()
       .then(user => {
@@ -71,6 +77,14 @@ export class CategoriesService {
     //   })).subscribe(res => {
     //     console.log(res);
     //    });
+  }
+
+  save(category: ICategory) {
+    if (category.id) {
+      return this.categoriesCollection.doc(category.id).update(category);
+    } else {
+      return this.categoriesCollection.add(category);
+    }
   }
 
   addDefaultCategories() {
