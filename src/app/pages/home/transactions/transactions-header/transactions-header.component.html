@@ -23,6 +23,9 @@
       </div>
       <div class="period-name">
         <p>{{period.datePeriod | date: 'MMM, y'}}</p>
+        <p>{{period.startDate | date: 'dd, MM'}}</p>
+        <p>{{period.endDate | date: 'dd, MM, HH:mm'}}</p>
+
       </div>
       <div>
         <button mat-button (click)="handleNextMonth()">

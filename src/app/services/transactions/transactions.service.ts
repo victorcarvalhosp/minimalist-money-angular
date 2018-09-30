@@ -36,6 +36,7 @@ export class TransactionsService {
     return this.authService.getCurrentUser()
       .then(user => {
         console.log('UID' + user.id);
+        console.log(period.endDate);
         this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`,
           ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
         this.transactions = this.transactionsCollection.snapshotChanges().pipe(map(
