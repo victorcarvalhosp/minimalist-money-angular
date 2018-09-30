@@ -37,9 +37,9 @@
     </div>
     <div>
       <mat-form-field hintLabel="select one">
-        <mat-select placeholder="Category" formControlName="category"
+        <mat-select placeholder="Category" formControlName="color"
                     [compareWith]="compareIds">
-          <mat-option *ngFor="let c of (categoriesService.categories$ | async)" [value]="c">
+          <mat-option *ngFor="let c of colors" [value]="color">
             {{ c.name }}
           </mat-option>
         </mat-select>

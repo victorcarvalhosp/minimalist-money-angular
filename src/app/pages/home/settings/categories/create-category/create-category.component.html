@@ -11,13 +11,19 @@
 <div mat-dialog-content>
   <form [formGroup]="form">
     <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+    <div class="row">
+      <app-color-picker formControlName="color" ></app-color-picker>
+      <div class="full-width">
+        <mat-form-field class="full-width">
+          <input cdkFocusRegionStart matInput placeholder="Category name" type="text" formControlName="name">
+          <mat-error>
+            {{ getError('name') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
     <div>
-      <mat-form-field class="full-width">
-        <input cdkFocusRegionStart matInput placeholder="Category name" type="text" formControlName="name">
-        <mat-error>
-          {{ getError('name') }}
-        </mat-error>
-      </mat-form-field>
+
     </div>
   </form>
 </div>

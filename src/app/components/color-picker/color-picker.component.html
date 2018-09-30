@@ -1,0 +1,11 @@
+<div class="color-component">
+  <mat-menu #colorSelect="matMenu" class="color-4-columns">
+      <span *ngFor="let c of colors" >
+        <input type="radio" name="color" id="{{c}}" [value]="c" (change)="onChange($event, c)" />
+        <label for="{{c}}"><span [ngStyle]="{background: c}"></span></label>
+      </span>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="colorSelect" [ngStyle]="{color: value}" >#
+  </button>
+</div>

@@ -42,6 +42,7 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
 import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
 import { TransactionsHeaderComponent } from './pages/home/transactions/transactions-header/transactions-header.component';
 import { CreateCategoryComponent } from './pages/home/settings/categories/create-category/create-category.component';
+import {ColorPickerComponent} from "./components/color-picker/color-picker.component";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { CreateCategoryComponent } from './pages/home/settings/categories/create
     TransactionTypePipe,
     SpeedDialFabComponent,
     CategoriesComponent,
-    CreateCategoryComponent
+    CreateCategoryComponent,
+    ColorPickerComponent
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Validations} from '../../../../../validators/validations';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
@@ -8,13 +8,15 @@ import {CategoriesService} from '../../../../../services/categories/categories.s
 @Component({
   selector: 'app-create-category',
   templateUrl: './create-category.component.html',
-  styleUrls: ['./create-category.component.scss']
+  styleUrls: ['./create-category.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CreateCategoryComponent implements OnInit {
 
   form: FormGroup;
   validations: Validations;
   loading: boolean = false;
+
 
   constructor(public dialogRef: MatDialogRef<CreateCategoryComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ICategory, private fb: FormBuilder,
@@ -27,6 +29,7 @@ export class CreateCategoryComponent implements OnInit {
     this.form = this.fb.group({
       id: [''],
       name: ['', Validators.compose([Validators.required])],
+      color: ['', Validators.compose([Validators.required])],
     });
     this.createValidatorsMessages();
   }
@@ -35,7 +38,10 @@ export class CreateCategoryComponent implements OnInit {
     this.validations = new Validations(
       {
         'name': {
-          'required': 'Transaction name is required.',
+          'required': 'Category name is required.',
+        },
+        'color': {
+          'required': 'Category color is required.',
         }
       }
     );

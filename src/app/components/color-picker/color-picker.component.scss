@@ -1,0 +1,55 @@
+.color-1-column {
+  max-width: 40px !important;
+}
+.color-2-columns {
+  max-width: 80px !important;
+}
+.color-3-columns {
+  max-width: 120px !important;
+}
+.color-4-columns {
+  max-width: 160px !important;
+}
+.color-component {
+  .mat-button {
+    padding: 16px 0;
+    font-size: 32px;
+  }
+}
+input[type="radio"] {
+  display: none;
+  &:checked + label {
+    span {
+      border: 2px solid rgba(0, 0, 0, .2);
+    }
+    //@each $name, $value in $colors {
+    //  .#{$name} {
+    //    border: 2px solid darken($value, 25%);
+    //  }
+    //}
+    // !@each
+  }
+  // !&:checked + label
+}
+
+//
+label {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  margin-right: 4px;
+
+  cursor: pointer;
+  &:hover {
+    span {
+      border: 2px solid rgba(0, 0, 0, .2);
+    }
+  }
+  span {
+    border: 2px solid rgba(0, 0, 0, .0);
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform .2s ease-in-out;
+  }
+}
