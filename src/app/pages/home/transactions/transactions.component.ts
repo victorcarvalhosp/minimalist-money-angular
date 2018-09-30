@@ -66,7 +66,6 @@ export class TransactionsComponent implements OnInit {
   }
 
   handlePeriodLoaded(period) {
-    console.log('period loaded');
     this.transactionsService.getTransactionsByDate(period);
     this.transactions = this.transactionsService.transactions;
   }

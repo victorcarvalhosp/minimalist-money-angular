@@ -28,11 +28,8 @@ export class TransactionsHeaderComponent implements OnInit {
   private setStartAndEndDates() {
     this.period.endDate = new LastDayOfMonthPipe().transform(this.period.datePeriod);
     this.period.endDate = new Date(this.period.endDate.getFullYear(), this.period.endDate.getMonth(),
-      this.period.endDate.getDate(), 23, 59,59,59);
-    console.log('datatata');
-    console.log(this.period.endDate);
+    this.period.endDate.getDate(), 23, 59,59,59);
     this.period.startDate = new StartOfMonthPipe().transform(this.period.datePeriod);
-
   }
 
   handleNextMonth() {

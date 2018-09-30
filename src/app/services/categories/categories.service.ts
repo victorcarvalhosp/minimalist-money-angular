@@ -25,7 +25,6 @@ export class CategoriesService {
   private initializeData() {
     return this.authService.getCurrentUser()
       .then(user => {
-        console.log('UID' + user.uid);
         this.categoriesCollection = this.afs.collection<any>(`users/${user.uid}/categories`);
         this.categories$ = this.categoriesCollection.snapshotChanges().pipe(map(
           changes => {

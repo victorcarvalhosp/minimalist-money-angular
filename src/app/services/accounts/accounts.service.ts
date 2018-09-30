@@ -20,7 +20,6 @@ export class AccountsService {
   private initializeData() {
     return this.authService.getCurrentUser()
       .then(user => {
-        console.log('UID' + user.uid);
         this.accountsCollection = this.afs.collection<any>(`users/${user.uid}/accounts`);
         this.accounts = this.accountsCollection.valueChanges();
       }, err => {

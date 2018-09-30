@@ -1,0 +1,22 @@
+import { Injectable } from '@angular/core';
+import {SwUpdate} from "@angular/service-worker";
+import {MatSnackBar} from "@angular/material";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UpdateSwService {
+
+  constructor(private swUpdate: SwUpdate, private snackbar: MatSnackBar) {
+    console.log('verificar SW');
+    this.swUpdate.available.subscribe(evt => {
+      const snack = this.snackbar.open('Update Available', 'Reload');
+
+      snack
+        .onAction()
+        .subscribe(() => {
+          window.location.reload();
+        });
+    });
+  }
+}

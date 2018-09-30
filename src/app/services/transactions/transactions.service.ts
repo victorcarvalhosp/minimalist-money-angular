@@ -23,7 +23,6 @@ export class TransactionsService {
   private initializeData() {
     return this.authService.getCurrentUser()
       .then(user => {
-        console.log('UID' + user.uid);
         this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`);
         this.transactions = this.transactionsCollection.valueChanges();
       }, err => {
