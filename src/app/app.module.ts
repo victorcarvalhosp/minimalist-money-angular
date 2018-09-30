@@ -42,7 +42,8 @@ import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.
 import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
 import { TransactionsHeaderComponent } from './pages/home/transactions/transactions-header/transactions-header.component';
 import { CreateCategoryComponent } from './pages/home/settings/categories/create-category/create-category.component';
-import {ColorPickerComponent} from "./components/color-picker/color-picker.component";
+import {ColorPickerComponent} from './components/color-picker/color-picker.component'
+import {CurrencyPipe} from "@angular/common";
 
 @NgModule({
   declarations: [

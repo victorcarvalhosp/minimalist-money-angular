@@ -29,23 +29,23 @@
     </div>
     <div>
       <mat-form-field class="full-width">
-        <input placeholder="Date" matInput [matDatepicker]="myDatepicker" formControlName="date" (keydown)="false"
-               (click)="myDatepicker.open()">
-        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #myDatepicker touchUi="true"></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field hintLabel="select one">
-        <mat-select placeholder="Category" formControlName="color"
-                    [compareWith]="compareIds">
-          <mat-option *ngFor="let c of colors" [value]="color">
-            {{ c.name }}
+        <mat-select placeholder="Category" formControlName="category"
+                    [compareWith]="compareIds" >
+          <mat-option *ngFor="let c of (categoriesService.categories$ | async)" [value]="c">
+            <span [ngStyle]="{color: c.color}" ># </span>{{ c.name }}
           </mat-option>
         </mat-select>
         <mat-error>
           {{ getError('category') }}
         </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="full-width">
+        <input placeholder="Date" matInput [matDatepicker]="myDatepicker" formControlName="date" (keydown)="false"
+               (click)="myDatepicker.open()">
+        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #myDatepicker touchUi="{{isMobile}}"></mat-datepicker>
       </mat-form-field>
     </div>
     <div>

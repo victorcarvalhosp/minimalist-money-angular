@@ -7,6 +7,8 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {TransactionsService} from '../../../../services/transactions/transactions.service';
 import {ICategory} from '../../../../models/category';
 import {CategoriesService} from '../../../../services/categories/categories.service';
+import {AppService} from "../../../../services/app/app.service";
+import {CurrencyPipe} from "@angular/common";
 
 @Component({
   selector: 'app-create-transaction',
@@ -18,27 +20,17 @@ export class CreateTransactionComponent implements OnInit {
   validations: Validations;
   loading: boolean = false;
   categories: ICategory[];
+  isMobile: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
-              public transactionsService: TransactionsService, public snackBar: MatSnackBar, public categoriesService: CategoriesService) {
+              public transactionsService: TransactionsService, public snackBar: MatSnackBar,
+              public categoriesService: CategoriesService, private appService: AppService, private currencyPipe: CurrencyPipe) {
     console.log('CONSTRUCTOR CALLED');
+    this.isMobile = this.appService.isMobile;
     this.createForm();
     this.form.patchValue(this.data);
     this.form.get('category').setValue(this.data.category);
-    // this.categoriesService.categories$.subscribe(categories => {
-    //   this.categories = categories;
-    //   // categories.forEach(c => {
-    //   //   if (c.id === this.data.category.id) {
-    //   //     console.log(c);
-    //   //     this.form.get('category').setValue(c);
-    //   //   }
-    //   // });
-    // });
-    // console.log(this.data.category);
-    // this.form.controls['category'].patchValue(this.data.category);
-    // console.log(this.form.controls['category'].value);
-    // this.form.patchValue({'category': this.data.category});
   }
 
 
@@ -53,10 +45,6 @@ export class CreateTransactionComponent implements OnInit {
       realized: [''],
     });
     this.createValidatorsMessages();
-  }
-
-  formValue() {
-    console.log(this.form);
   }
 
   private createValidatorsMessages() {
@@ -89,7 +77,6 @@ export class CreateTransactionComponent implements OnInit {
     this.loading = false;
   }
 
-
   tryDelete(value) {
     this.showLoading();
     this.transactionsService.deleteTransaction(value);
@@ -116,8 +103,9 @@ export class CreateTransactionComponent implements OnInit {
   ngOnInit() {
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  transformAmount(element: any){
+    this.form.value.color = this.currencyPipe.transform(this.form.value.color, 'USD');
+    element.target.value = this.form.value.color;
   }
 
   openSnackBar(message: string) {

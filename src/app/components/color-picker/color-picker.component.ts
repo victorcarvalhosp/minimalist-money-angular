@@ -1,11 +1,5 @@
-import {Component, Input, OnInit, Output, forwardRef, ElementRef, ViewChild} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, RadioControlValueAccessor} from '@angular/forms';
-
-const customValueProvider = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => ColorPickerComponent),
-  multi: true
-};
+import {Component, forwardRef, OnInit, ViewEncapsulation} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'app-color-picker',
@@ -15,7 +9,8 @@ const customValueProvider = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => ColorPickerComponent),
     multi: true
-  }]
+  }],
+  encapsulation: ViewEncapsulation.None
 })
 export class ColorPickerComponent implements OnInit, ControlValueAccessor {
 
@@ -53,7 +48,6 @@ export class ColorPickerComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnChange(fn: any) {
-    console.log(fn);
     this.propagateChange = fn;
   }
 
