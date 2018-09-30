@@ -44,6 +44,7 @@ import { TransactionsHeaderComponent } from './pages/home/transactions/transacti
 import { CreateCategoryComponent } from './pages/home/settings/categories/create-category/create-category.component';
 import {ColorPickerComponent} from './components/color-picker/color-picker.component'
 import {CurrencyPipe} from "@angular/common";
+import {NgxCurrencyModule} from "ngx-currency";
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import {CurrencyPipe} from "@angular/common";
     MatSelectModule,
     MatOptionModule,
     MatListModule,
+    NgxCurrencyModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],

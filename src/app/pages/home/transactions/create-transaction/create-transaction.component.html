@@ -21,7 +21,7 @@
     </div>
     <div>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Amount" type="text" formControlName="amount">
+        <input currencyMask  matInput placeholder="Amount" type="text" formControlName="amount">
         <mat-error>
           {{ getError('amount') }}
         </mat-error>

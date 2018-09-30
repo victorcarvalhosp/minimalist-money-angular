@@ -8,7 +8,6 @@ import {TransactionsService} from '../../../../services/transactions/transaction
 import {ICategory} from '../../../../models/category';
 import {CategoriesService} from '../../../../services/categories/categories.service';
 import {AppService} from "../../../../services/app/app.service";
-import {CurrencyPipe} from "@angular/common";
 
 @Component({
   selector: 'app-create-transaction',
@@ -25,7 +24,7 @@ export class CreateTransactionComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
               public transactionsService: TransactionsService, public snackBar: MatSnackBar,
-              public categoriesService: CategoriesService, private appService: AppService, private currencyPipe: CurrencyPipe) {
+              public categoriesService: CategoriesService, private appService: AppService) {
     console.log('CONSTRUCTOR CALLED');
     this.isMobile = this.appService.isMobile;
     this.createForm();
@@ -101,11 +100,6 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  transformAmount(element: any){
-    this.form.value.color = this.currencyPipe.transform(this.form.value.color, 'USD');
-    element.target.value = this.form.value.color;
   }
 
   openSnackBar(message: string) {

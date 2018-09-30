@@ -30,6 +30,7 @@
     "date-fns": "^1.29.0",
     "firebase": "^5.4.2",
     "hammerjs": "^2.0.8",
+    "ngx-currency": "^1.5.0",
     "ngx-date-fns": "^2.0.2",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
