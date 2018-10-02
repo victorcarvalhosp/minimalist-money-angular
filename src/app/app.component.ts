@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {UpdateSwService} from "./services/update-sw.service";
+import {UpdateSwService} from './services/update-sw.service';
+import {AuthService} from "./services/auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,14 @@ import {UpdateSwService} from "./services/update-sw.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private updateSw: UpdateSwService) {
+  constructor(private updateSw: UpdateSwService, private authService: AuthService, private router: Router) {
+    this.authService.getCurrentUser().then(user => {
+      if (user) {
+        this.router.navigate(['home', 'transactions']);
+      }
+    }, (err) => {
+      console.log('user not logged in');
+    });
     console.log('APP COMPONENT');
   }
 }
