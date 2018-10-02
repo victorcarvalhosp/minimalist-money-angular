@@ -272,6 +272,10 @@ Apache License
  See the License for the specific language governing permissions and
  limitations under the License.
 
+firebase@5.4.2
+Apache-2.0
+Apache-2.0
+
 hammerjs@2.0.8
 MIT
 The MIT License (MIT)
@@ -295,10 +299,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-firebase@5.4.2
-Apache-2.0
-Apache-2.0
 
 @firebase/polyfill@0.3.3
 Apache-2.0
