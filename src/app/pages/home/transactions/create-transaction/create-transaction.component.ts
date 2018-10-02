@@ -8,6 +8,7 @@ import {TransactionsService} from '../../../../services/transactions/transaction
 import {ICategory} from '../../../../models/category';
 import {CategoriesService} from '../../../../services/categories/categories.service';
 import {AppService} from "../../../../services/app/app.service";
+import {AccountsService} from "../../../../services/accounts/accounts.service";
 
 @Component({
   selector: 'app-create-transaction',
@@ -24,7 +25,7 @@ export class CreateTransactionComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
               public transactionsService: TransactionsService, public snackBar: MatSnackBar,
-              public categoriesService: CategoriesService, private appService: AppService) {
+              public categoriesService: CategoriesService, public accountsService: AccountsService, private appService: AppService) {
     console.log('CONSTRUCTOR CALLED');
     this.isMobile = this.appService.isMobile;
     this.createForm();
@@ -41,6 +42,7 @@ export class CreateTransactionComponent implements OnInit {
       date: ['', Validators.compose([Validators.required])],
       type: ['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
+      account: ['', Validators.compose([Validators.required])],
       realized: [''],
     });
     this.createValidatorsMessages();
@@ -108,8 +110,8 @@ export class CreateTransactionComponent implements OnInit {
     });
   }
 
-  compareIds(category1: ICategory, category2: ICategory): boolean {
-    return category1 && category2 ? category1.id === category2.id : category1 === category2;
+  compareIds(item1: any, item2: any): boolean {
+    return item1 && item2 ? item1.id === item2.id : item1 === item2;
   }
 }
 

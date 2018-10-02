@@ -19,20 +19,39 @@
         </mat-error>
       </mat-form-field>
     </div>
+    <div class="row">
+        <mat-form-field class="full-width" style="padding-right: 20px;">
+          <input currencyMask matInput placeholder="Amount" type="text" formControlName="amount">
+          <mat-error>
+            {{ getError('amount') }}
+          </mat-error>
+        </mat-form-field>
+      <div style="padding-top: 16px;">
+        <mat-checkbox formControlName="realized">Realized</mat-checkbox>
+      </div>
+    </div>
     <div>
       <mat-form-field class="full-width">
-        <input currencyMask  matInput placeholder="Amount" type="text" formControlName="amount">
+        <mat-select placeholder="Category" formControlName="account"
+                    [compareWith]="compareIds">
+          <mat-option *ngFor="let a of (accountsService.accounts$ | async)" [value]="a">
+            {{ a.name }}
+          </mat-option>
+        </mat-select>
         <mat-error>
-          {{ getError('amount') }}
+          {{ getError('category') }}
         </mat-error>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field class="full-width">
         <mat-select placeholder="Category" formControlName="category"
-                    [compareWith]="compareIds" >
+                    [compareWith]="compareIds">
+          <mat-select-trigger>
+            <span [ngStyle]="{color: form.value.category?.color}">#</span>{{form.value.category.name}}
+          </mat-select-trigger>
           <mat-option *ngFor="let c of (categoriesService.categories$ | async)" [value]="c">
-            <span [ngStyle]="{color: c.color}" ># </span>{{ c.name }}
+            <span [ngStyle]="{color: c.color}"># </span>{{ c.name }}
           </mat-option>
         </mat-select>
         <mat-error>
@@ -47,9 +66,6 @@
         <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #myDatepicker touchUi="{{isMobile}}"></mat-datepicker>
       </mat-form-field>
-    </div>
-    <div>
-      <mat-checkbox formControlName="realized">Realized</mat-checkbox>
     </div>
   </form>
 </div>
