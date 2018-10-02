@@ -16,7 +16,10 @@ export class SettingsComponent implements OnInit {
 
   goToCategories() {
     this.router.navigate(['home/categories']);
+  }
 
+  goToAccounts() {
+    this.router.navigate(['home/accounts']);
   }
 
   doSignOut() {

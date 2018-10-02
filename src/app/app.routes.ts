@@ -11,6 +11,8 @@ import {SettingsComponent} from './pages/home/settings/settings.component';
 import {CreateTransactionComponent} from './pages/home/transactions/create-transaction/create-transaction.component';
 import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
 import {CreateCategoryComponent} from './pages/home/settings/categories/create-category/create-category.component';
+import {AccountsComponent} from "./pages/home/settings/accounts/accounts.component";
+import {CreateAccountComponent} from "./pages/home/settings/accounts/create-account/create-account.component";
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
@@ -24,12 +26,13 @@ export const appRoutes: Routes = [
         ]
       },
       {path: 'dashboard', component: DashboardComponent},
-      {path: 'settings', component: SettingsComponent, children: [
-          {path: 'categories', component: CategoriesComponent}
-        ]},
+      {path: 'settings', component: SettingsComponent},
       {path: 'categories', component: CategoriesComponent, children: [
           {path: 'new', component: CreateCategoryComponent}
         ]},
+      {path: 'accounts', component: AccountsComponent, children: [
+          {path: 'new', component: CreateAccountComponent}
+        ]}
     ]
   },
 ];

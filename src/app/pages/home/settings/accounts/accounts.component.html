@@ -1,0 +1,13 @@
+<h4>Accounts</h4>
+<div>
+  <button mat-button (click)="openNewAccountDialog()">
+    <mat-icon>add</mat-icon>
+    Create New Account
+  </button>
+</div>
+<div>
+  <mat-nav-list>
+    <mat-list-item (click)="openDialog(c)" *ngFor="let c of accountsService.accounts$ | async">{{c.name}}
+    </mat-list-item>
+  </mat-nav-list>
+</div>

@@ -45,6 +45,8 @@ import { CreateCategoryComponent } from './pages/home/settings/categories/create
 import {ColorPickerComponent} from './components/color-picker/color-picker.component'
 import {CurrencyPipe} from "@angular/common";
 import {NgxCurrencyModule} from "ngx-currency";
+import { AccountsComponent } from './pages/home/settings/accounts/accounts.component';
+import { CreateAccountComponent } from './pages/home/settings/accounts/create-account/create-account.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import {NgxCurrencyModule} from "ngx-currency";
     SpeedDialFabComponent,
     CategoriesComponent,
     CreateCategoryComponent,
-    ColorPickerComponent
+    ColorPickerComponent,
+    AccountsComponent,
+    CreateAccountComponent
   ],
   imports: [
     AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,

@@ -1,0 +1,33 @@
+<div style="height:32px; width:auto">
+  <button mat-icon-button class="top-left-icon" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <button [disabled]="loading || !form.valid" class="top-right-icon" type="button" mat-icon-button
+          (click)="trySave(form.value)">
+    <mat-icon>send</mat-icon>
+  </button>
+</div>
+<h2 mat-dialog-title>Account</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+    <div class="row">
+      <div class="full-width">
+        <mat-form-field class="full-width">
+          <input cdkFocusRegionStart matInput placeholder="Account name" type="text" formControlName="name">
+          <mat-error>
+            {{ getError('name') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button *ngIf="form.get('id').value !== ''" type="button" mat-icon-button (click)="tryDelete(form.value)"
+          title="Delete account">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
