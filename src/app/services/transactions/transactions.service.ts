@@ -14,7 +14,7 @@ import {map} from 'rxjs/operators';
 export class TransactionsService {
 
 
-  public transactions: Observable<ITransaction[]>;
+  public transactions$: Observable<ITransaction[]>;
   private transactionsCollection: AngularFirestoreCollection<ITransaction>;
 
   constructor(private afs: AngularFirestore, private authService: AuthService) {
@@ -24,37 +24,45 @@ export class TransactionsService {
     return this.authService.getCurrentUser()
       .then(user => {
         this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`);
-        this.transactions = this.transactionsCollection.valueChanges();
+        this.transactions$ = this.transactionsCollection.valueChanges();
       }, err => {
         console.log(err);
       });
   }
 
-  getTransactionsByDate(period: IPeriod) {
-    // REFACTOR THIS CODE ASAP, is Duplicating initializeDate() just with the query... I am sure there's a better way to do that
-    return this.authService.getCurrentUser()
-      .then(user => {
-        console.log('UID' + user.id);
-        console.log(period.endDate);
-        this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`,
-          ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
-        this.transactions = this.transactionsCollection.snapshotChanges().pipe(map(
-          changes => {
-            return changes.map(
-              a => {
-                const data = a.payload.doc.data() as ITransaction;
-                data.id = a.payload.doc.id;
-                data.date = a.payload.doc.get('date').toDate();
-                return data;
-              }
-            );
-          }
-          )
-        );
-      }, err => {
-        console.log(err);
-      });
+  getTransactionsByDate(period: IPeriod): Promise<ITransaction[]> {
+    return new Promise((resolve, reject) => {
+      return this.authService.getCurrentUser()
+        .then(user => {
+          this.transactionsCollection = this.getTransactionsCollectionByDate(user, period);
+          this.transactions$ = this.getTransactionsWithIds();
+          this.transactions$.subscribe(value => {
+            resolve(value);
+          });
+        }, err => {
+          console.log(err);
+        });
+    });
+  }
 
+  private getTransactionsWithIds(): Observable<ITransaction[]> {
+    return this.transactionsCollection.snapshotChanges().pipe(map(
+      changes => {
+        return changes.map(
+          a => {
+            const data = a.payload.doc.data() as ITransaction;
+            data.id = a.payload.doc.id;
+            data.date = a.payload.doc.get('date').toDate();
+            return data;
+          }
+        );
+      })
+    );
+  }
+
+  private getTransactionsCollectionByDate(user, period: IPeriod): AngularFirestoreCollection<ITransaction> {
+    return this.afs.collection<any>(`users/${user.uid}/transactions`,
+      ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
   }
 
   addTransaction(transaction) {

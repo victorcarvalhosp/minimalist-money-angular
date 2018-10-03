@@ -1,4 +1,4 @@
-export class IAccount {
-  id?: string;
-  name: string;
+export class IAccountAmountAggregation {
+  date: Date;
+  amount: number;
 }

@@ -1,4 +1,8 @@
 {
+  "name": "functions",
+  "scripts": {
+    "build": "./node_modules/.bin/tslint -p tslint.json && ./node_modules/.bin/tsc"
+  },
   "hosting": {
     "public": "dist/minimalist-money",
     "ignore": [
@@ -11,6 +15,13 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix functions run build",
+      "npm --prefix \"%RESOURCE_DIR%\" run lint",
+      "npm --prefix \"%RESOURCE_DIR%\" run build"
     ]
   }
 }

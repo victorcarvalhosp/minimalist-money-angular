@@ -24,6 +24,7 @@ export class AccountsComponent implements OnInit {
   openNewAccountDialog() {
     const category: IAccount = {
       name: '',
+      totals: []
     };
     this.openDialog(category);
   }

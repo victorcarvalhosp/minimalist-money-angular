@@ -23,22 +23,24 @@ export class AccountsService {
   private initializeData() {
     return this.authService.getCurrentUser()
       .then(user => {
-        this.accountsCollection = this.afs.collection<any>(`users/${user.uid}/accounts`);
-        this.accounts$ = this.accountsCollection.snapshotChanges().pipe(map(
-          changes => {
-            return changes.map(
-              a => {
-                const data = a.payload.doc.data() as IAccount;
-                data.id = a.payload.doc.id;
-                return data;
-              }
-            );
-          }
-          )
-        );
+        this.populateAccounts(user);
       }, err => {
         console.log(err);
       });
+  }
+
+  private getAccountsWithIds(): Observable<IAccount[]> {
+    return this.accountsCollection.snapshotChanges().pipe(map(
+      changes => {
+        return changes.map(
+          a => {
+            const data = a.payload.doc.data() as IAccount;
+            data.id = a.payload.doc.id;
+            return data;
+          }
+        );
+      })
+    );
   }
 
   addAccount(account: IAccount) {
@@ -49,6 +51,26 @@ export class AccountsService {
     if (account.id) {
       return this.accountsCollection.doc(account.id).delete();
     }
+  }
+
+  getAccounts(): Promise<IAccount[]> {
+    return new Promise((resolve, reject) => {
+      return this.authService.getCurrentUser()
+        .then(user => {
+          this.populateAccounts(user);
+          this.accounts$.subscribe(value => {
+            resolve(value);
+          });
+        }, err => {
+          console.log(err);
+        });
+    });
+  }
+
+
+  private populateAccounts(user) {
+    this.accountsCollection = this.afs.collection<any>(`users/${user.uid}/accounts`);
+    this.accounts$ = this.getAccountsWithIds();
   }
 
   getAccount(accountUid: string) {
@@ -76,6 +98,7 @@ export class AccountsService {
       const defaultAccounts: IAccount[] = [
         {
           name: 'Money',
+          totals: []
         }
       ];
       for (const c of defaultAccounts) {

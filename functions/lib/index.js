@@ -40,7 +40,7 @@ exports.updateTotalsWhenNewTransaction = functions.firestore
     // });
 });
 // export const updateTotals = functions.firestore
-//   .document(`users/{userId}/transactions/{transactionId}`)
+//   .document(`users/{userId}/transactions$/{transactionId}`)
 //   .onWrite((change, context) => {
 //     // Get an object with the current document value.
 //     // If the document does not exist, it has been deleted.
