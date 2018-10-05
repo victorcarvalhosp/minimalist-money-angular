@@ -7,7 +7,7 @@
 </div>
 <div>
   <mat-nav-list>
-    <mat-list-item (click)="openDialog(c)" *ngFor="let c of categoriesService.categories$ | async"><span
+    <mat-list-item (click)="openDialog(c)" *ngFor="let c of categoriesStore.categories | async"><span
       style="font-weight: bold"
       [ngStyle]="{'color': c.color}">#</span>{{c.name}}
     </mat-list-item>

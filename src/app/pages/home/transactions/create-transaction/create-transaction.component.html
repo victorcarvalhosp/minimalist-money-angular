@@ -39,7 +39,7 @@
           </mat-option>
         </mat-select>
         <mat-error>
-          {{ getError('category') }}
+          {{ getError('account') }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -50,7 +50,7 @@
           <mat-select-trigger>
             <span [ngStyle]="{color: form.value.category?.color}">#</span>{{form.value.category?.name}}
           </mat-select-trigger>
-          <mat-option *ngFor="let c of (categoriesService.categories$ | async)" [value]="c">
+          <mat-option *ngFor="let c of (categoriesStore.categories | async)" [value]="c">
             <span [ngStyle]="{color: c.color}"># </span>{{ c.name }}
           </mat-option>
         </mat-select>

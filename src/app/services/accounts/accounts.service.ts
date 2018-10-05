@@ -3,7 +3,8 @@ import {Observable} from 'rxjs/index';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {IAccount} from '../../models/account';
-import {map} from "rxjs/operators";
+import {map} from 'rxjs/operators';
+import {IUser} from '../../models/credentials';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,12 @@ export class AccountsService {
     this.initializeData();
   }
 
-  private initializeData() {
+  public initializeData() {
     return this.authService.getCurrentUser()
       .then(user => {
-        this.populateAccounts(user);
+        console.log('populate accounts');
+        this.accountsCollection = this.afs.collection<any>(`users/${user.uid}/accounts`);
+        this.accounts$ = this.getAccountsWithIds();
       }, err => {
         console.log(err);
       });
@@ -68,7 +71,7 @@ export class AccountsService {
   }
 
 
-  private populateAccounts(user) {
+  private populateAccounts(user: IUser) {
     this.accountsCollection = this.afs.collection<any>(`users/${user.uid}/accounts`);
     this.accounts$ = this.getAccountsWithIds();
   }

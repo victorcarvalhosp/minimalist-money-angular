@@ -4,6 +4,7 @@ import {Validations} from '../../../../../validators/validations';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ICategory} from '../../../../../models/category';
 import {CategoriesService} from '../../../../../services/categories/categories.service';
+import {CategoriesStore} from "../../../../../state/categories/categories.store";
 
 @Component({
   selector: 'app-create-category',
@@ -20,7 +21,7 @@ export class CreateCategoryComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CreateCategoryComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ICategory, private fb: FormBuilder,
-              private categoriesService: CategoriesService, public snackBar: MatSnackBar) {
+              private categoriesStore: CategoriesStore, public snackBar: MatSnackBar) {
     this.createForm();
     this.form.patchValue(this.data);
   }
@@ -63,7 +64,7 @@ export class CreateCategoryComponent implements OnInit {
 
   tryDelete(value) {
     this.showLoading();
-    this.categoriesService.delete(value);
+    // this.categoriesService.delete(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Category deleted!');
@@ -71,7 +72,7 @@ export class CreateCategoryComponent implements OnInit {
 
   trySave(value) {
     this.showLoading();
-    this.categoriesService.save(value);
+    this.categoriesStore.save(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction Saved!');

@@ -1,67 +1,61 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/index';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument,
+  DocumentChangeAction
+} from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {ICategory} from '../../models/category';
-import {map, switchMap} from "rxjs/internal/operators";
+import {map, mergeMap, switchMap} from "rxjs/internal/operators";
 import {fromPromise} from "rxjs/internal/observable/fromPromise";
 import {ITransaction} from "../../models/transaction";
+import { from } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
 
-  public category: Observable<ICategory>;
-
-  public categories$: Observable<ICategory[]>;
   private categoriesCollection: AngularFirestoreCollection<ICategory>;
   private categoriesDoc: AngularFirestoreDocument<ICategory>;
 
   constructor(private afs: AngularFirestore, private authService: AuthService) {
     this.initializeData();
+    console.log('initialize categories service');
   }
 
   private initializeData() {
-    return this.authService.getCurrentUser()
-      .then(user => {
-        this.categoriesCollection = this.afs.collection<any>(`users/${user.uid}/categories`);
-        this.categories$ = this.categoriesCollection.snapshotChanges().pipe(map(
-          changes => {
-            return changes.map(
-              a => {
-                const data = a.payload.doc.data() as ICategory;
-                data.id = a.payload.doc.id;
-                return data;
-              }
-            );
-          }
-          )
-        );
-      }, err => {
-        console.log(err);
-      });
+    this.authService.getCurrentUser().then(user => {
+      this.categoriesCollection = this.afs.collection<any>(this.getPath(user));
+    });
   }
 
-  addCategory(category: ICategory) {
-    return this.categoriesCollection.add(category);
+  getAllCategories(): Observable<DocumentChangeAction<any>[]> {
+    return this.categoriesCollection.snapshotChanges();
   }
 
-  delete(category: ICategory) {
+  private getPath(user): string {
+    return `users/${user.uid}/categories`;
+  }
+
+  delete(category: ICategory): Observable<any> {
     if (category.id) {
-      return this.categoriesCollection.doc(category.id).delete();
+      return from(this.categoriesCollection.doc(category.id).delete());
     }
   }
 
   getCategory(categoryUid: string) {
-    return this.authService.getCurrentUser()
-      .then(user => {
-        console.log('UID' + user.uid);
-        this.categoriesDoc = this.afs.doc(`users/${user.uid}/categories/${categoryUid}`);
-        this.category = this.categoriesDoc.valueChanges();
-      }, err => {
-        console.log(err);
-      });
+    // return this.authService.getCurrentUser()
+    //   .then(user => {
+    //     console.log('UID' + user.uid);
+    //     this.categoriesDoc = this.afs.doc(`users/${user.uid}/categories/${categoryUid}`);
+    //     this.category = this.categoriesDoc.valueChanges();
+    //   }, err => {
+    //     console.log(err);
+    //   });
 
 
     // return fromPromise(this.authService.getCurrentUser()).pipe(switchMap(res => {
@@ -78,63 +72,63 @@ export class CategoriesService {
     //    });
   }
 
-  save(category: ICategory) {
+  save(category: ICategory): Observable<any> {
     if (category.id) {
-      return this.categoriesCollection.doc(category.id).update(category);
+      return from(this.categoriesCollection.doc(category.id).update(category));
     } else {
-      return this.categoriesCollection.add(category);
+      return from(this.categoriesCollection.add(category));
     }
   }
 
   addDefaultCategories() {
-    return this.initializeData().then(res => {
-      const promises: Promise<any>[] = [];
-      const defaultCategories: ICategory[] = [
-        {
-          name: 'Food',
-          color: '#FF9900'
-        },
-        {
-          name: 'Shopping',
-          color: '#FFD719'
-        },
-        {
-          name: 'Education',
-          color: '#A3EAC2'
-        },
-        {
-          name: 'Recreation',
-          color: '#33FFFF'
-        },
-        {
-          name: 'Housing',
-          color: '#CCCCCC'
-        },
-        {
-          name: 'Others',
-          color: '#000000'
-        },
-        {
-          name: 'Job',
-          color: '#66FF99'
-        },
-        {
-          name: 'Health',
-          color: '#CC0000'
-        },
-        {
-          name: 'Transport',
-          color: '#FF8585'
-        },
-        {
-          name: 'Clothing',
-          color: '#8DD47F'
-        }
-      ];
-      for (const c of defaultCategories) {
-        promises.push(this.addCategory(c));
-      }
-      return promises;
-    });
+    // return this.initializeData().then(res => {
+    //   const promises: Promise<any>[] = [];
+    //   const defaultCategories: ICategory[] = [
+    //     {
+    //       name: 'Food',
+    //       color: '#FF9900'
+    //     },
+    //     {
+    //       name: 'Shopping',
+    //       color: '#FFD719'
+    //     },
+    //     {
+    //       name: 'Education',
+    //       color: '#A3EAC2'
+    //     },
+    //     {
+    //       name: 'Recreation',
+    //       color: '#33FFFF'
+    //     },
+    //     {
+    //       name: 'Housing',
+    //       color: '#CCCCCC'
+    //     },
+    //     {
+    //       name: 'Others',
+    //       color: '#000000'
+    //     },
+    //     {
+    //       name: 'Job',
+    //       color: '#66FF99'
+    //     },
+    //     {
+    //       name: 'Health',
+    //       color: '#CC0000'
+    //     },
+    //     {
+    //       name: 'Transport',
+    //       color: '#FF8585'
+    //     },
+    //     {
+    //       name: 'Clothing',
+    //       color: '#8DD47F'
+    //     }
+    //   ];
+    //   for (const c of defaultCategories) {
+    //     promises.push(this.addCategory(c));
+    //   }
+    //   return promises;
+    // });
   }
 }

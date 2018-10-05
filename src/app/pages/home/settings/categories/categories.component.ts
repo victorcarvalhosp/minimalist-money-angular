@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {CreateCategoryComponent} from './create-category/create-category.component';
 import {ICategory} from '../../../../models/category';
+import {CategoriesStore} from "../../../../state/categories/categories.store";
 
 @Component({
   selector: 'app-categories',
@@ -15,7 +16,7 @@ export class CategoriesComponent implements OnInit {
 
   isSmall: Observable<BreakpointState> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]);
 
-  constructor(private breakpointObserver: BreakpointObserver, public categoriesService: CategoriesService,
+  constructor(private breakpointObserver: BreakpointObserver, public categoriesStore: CategoriesStore,
               public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() {

@@ -22,7 +22,7 @@ export class UserService {
   createUser(user: IUser) {
     return this.usersCollection.doc(user.uid).set(user).then(res => {
       const promises: Promise<any>[] = [];
-      promises.push(this.categoriesService.addDefaultCategories());
+      // promises.push(this.categoriesService.addDefaultCategories());
       promises.push(this.accountsService.addDefaultAccounts());
       promises.push(this.transactionsService.addDefaultTransactions());
       return Promise.all(promises);

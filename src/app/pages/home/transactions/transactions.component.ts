@@ -11,6 +11,7 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/lay
 import {TransactionTypeEnum} from '../../../enums/transaction-type.enum';
 import {AccountsService} from "../../../services/accounts/accounts.service";
 import {TotalsService} from "../../../services/totals/totals.service";
+import {IPeriod} from "../../../models/period";
 
 @Component({
   selector: 'app-transactions',
@@ -29,7 +30,6 @@ export class TransactionsComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsService: TransactionsService, public categoriesService: CategoriesService,
               public dialog: MatDialog, public snackBar: MatSnackBar, public totalsService: TotalsService) {
-    this.totalsService.getTotal(new Date());
   }
 
   openDialogNewTransaction(type: TransactionTypeEnum): void {
@@ -69,8 +69,9 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  handlePeriodLoaded(period) {
+  handlePeriodLoaded(period: IPeriod) {
     this.transactionsService.getTransactionsByDate(period);
+    this.totalsService.getTotals(period.endDate);
     this.transactions = this.transactionsService.transactions$;
   }
 

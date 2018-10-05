@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {AccountsService} from '../../../../services/accounts/accounts.service';
@@ -16,7 +16,9 @@ export class AccountsComponent implements OnInit {
   isSmall: Observable<BreakpointState> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]);
 
   constructor(private breakpointObserver: BreakpointObserver, public accountsService: AccountsService,
-              public dialog: MatDialog, public snackBar: MatSnackBar) { }
+              public dialog: MatDialog, public snackBar: MatSnackBar) {
+    this.accountsService.initializeData();
+  }
 
   ngOnInit() {
   }

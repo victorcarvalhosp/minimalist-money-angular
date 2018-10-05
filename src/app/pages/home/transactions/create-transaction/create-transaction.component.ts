@@ -9,6 +9,7 @@ import {ICategory} from '../../../../models/category';
 import {CategoriesService} from '../../../../services/categories/categories.service';
 import {AppService} from "../../../../services/app/app.service";
 import {AccountsService} from "../../../../services/accounts/accounts.service";
+import {CategoriesStore} from "../../../../state/categories/categories.store";
 
 @Component({
   selector: 'app-create-transaction',
@@ -25,11 +26,12 @@ export class CreateTransactionComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
               public transactionsService: TransactionsService, public snackBar: MatSnackBar,
-              public categoriesService: CategoriesService, public accountsService: AccountsService, private appService: AppService) {
+              public categoriesStore: CategoriesStore, public accountsService: AccountsService, private appService: AppService) {
     console.log('CONSTRUCTOR CALLED');
     this.isMobile = this.appService.isMobile;
     this.createForm();
     this.form.patchValue(this.data);
+    this.accountsService.initializeData();
     this.form.get('category').setValue(this.data.category);
   }
 
@@ -58,6 +60,9 @@ export class CreateTransactionComponent implements OnInit {
           'required': 'Amount is required.',
         },
         'category': {
+          'required': 'Category is required.',
+        },
+        'account': {
           'required': 'Category is required.',
         }
       }
