@@ -1,44 +1,44 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs/index';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {ICategory} from '../../models/category';
-import {CategoriesService} from '../../services/categories/categories.service';
+import {IAccount} from '../../models/account';
+import {AccountsService} from '../../services/accounts/accounts.service';
 import {List} from 'immutable';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesStore {
+export class AccountsStore {
 
-  private _category: BehaviorSubject<ICategory> = new BehaviorSubject<ICategory>({name: ''});
-  private _categories: BehaviorSubject<List<ICategory>> = new BehaviorSubject(List([]));
+  private _account: BehaviorSubject<IAccount> = new BehaviorSubject<IAccount>({name: '', totals: []});
+  private _accounts: BehaviorSubject<List<IAccount>> = new BehaviorSubject(List([]));
 
-  constructor(private afs: AngularFirestore, private categoriesService: CategoriesService) {
+  constructor(private afs: AngularFirestore, private accountsService: AccountsService) {
     this.initializeData();
   }
 
   private initializeData() {
-    this.categoriesService.getAllCategories().subscribe(res => {
-      const categories: ICategory[] = res.map(
+    this.accountsService.getAllAccounts().subscribe(res => {
+      const accounts: IAccount[] = res.map(
         a => {
-          const data = a.payload.doc.data() as ICategory;
+          const data = a.payload.doc.data() as IAccount;
           data.id = a.payload.doc.id;
           return data;
         }
       );
-      this._categories.next(List(categories));
+      this._accounts.next(List(accounts));
     });
   }
 
-  save(category: ICategory): Observable<any> {
-    return this.categoriesService.save(category);
+  save(account: IAccount): Observable<any> {
+    return this.accountsService.save(account);
   }
 
-  delete(category: ICategory): Observable<any> {
-    return this.categoriesService.delete(category);
+  delete(account: IAccount): Observable<any> {
+    return this.accountsService.delete(account);
   }
 
-  get categories() {
-    return this._categories.asObservable();
+  get accounts() {
+    return this._accounts.asObservable();
   }
 }

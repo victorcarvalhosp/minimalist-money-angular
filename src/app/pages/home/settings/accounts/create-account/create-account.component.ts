@@ -4,6 +4,7 @@ import {Validations} from '../../../../../validators/validations';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {IAccount} from '../../../../../models/account';
 import {AccountsService} from '../../../../../services/accounts/accounts.service';
+import {AccountsStore} from "../../../../../state/accounts/accounts.store";
 
 @Component({
   selector: 'app-create-account',
@@ -19,7 +20,7 @@ export class CreateAccountComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CreateAccountComponent>,
               @Inject(MAT_DIALOG_DATA) public data: IAccount, private fb: FormBuilder,
-              private accountsService: AccountsService, public snackBar: MatSnackBar) {
+              private accountsStore: AccountsStore, public snackBar: MatSnackBar) {
     this.createForm();
     this.form.patchValue(this.data);
   }
@@ -58,7 +59,7 @@ export class CreateAccountComponent implements OnInit {
 
   tryDelete(value) {
     this.showLoading();
-    this.accountsService.delete(value);
+    this.accountsStore.delete(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Account deleted!');
@@ -66,7 +67,7 @@ export class CreateAccountComponent implements OnInit {
 
   trySave(value) {
     this.showLoading();
-    this.accountsService.save(value);
+    this.accountsStore.save(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction Saved!');

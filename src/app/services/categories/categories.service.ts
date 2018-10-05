@@ -8,10 +8,7 @@ import {
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {ICategory} from '../../models/category';
-import {map, mergeMap, switchMap} from "rxjs/internal/operators";
-import {fromPromise} from "rxjs/internal/observable/fromPromise";
-import {ITransaction} from "../../models/transaction";
-import { from } from 'rxjs';
+import {from} from 'rxjs';
 
 
 @Injectable({
@@ -28,7 +25,7 @@ export class CategoriesService {
   }
 
   private initializeData() {
-    this.authService.getCurrentUser().then(user => {
+    return this.authService.getCurrentUser().then(user => {
       this.categoriesCollection = this.afs.collection<any>(this.getPath(user));
     });
   }
@@ -81,54 +78,54 @@ export class CategoriesService {
   }
 
   addDefaultCategories() {
-    // return this.initializeData().then(res => {
-    //   const promises: Promise<any>[] = [];
-    //   const defaultCategories: ICategory[] = [
-    //     {
-    //       name: 'Food',
-    //       color: '#FF9900'
-    //     },
-    //     {
-    //       name: 'Shopping',
-    //       color: '#FFD719'
-    //     },
-    //     {
-    //       name: 'Education',
-    //       color: '#A3EAC2'
-    //     },
-    //     {
-    //       name: 'Recreation',
-    //       color: '#33FFFF'
-    //     },
-    //     {
-    //       name: 'Housing',
-    //       color: '#CCCCCC'
-    //     },
-    //     {
-    //       name: 'Others',
-    //       color: '#000000'
-    //     },
-    //     {
-    //       name: 'Job',
-    //       color: '#66FF99'
-    //     },
-    //     {
-    //       name: 'Health',
-    //       color: '#CC0000'
-    //     },
-    //     {
-    //       name: 'Transport',
-    //       color: '#FF8585'
-    //     },
-    //     {
-    //       name: 'Clothing',
-    //       color: '#8DD47F'
-    //     }
-    //   ];
-    //   for (const c of defaultCategories) {
-    //     promises.push(this.addCategory(c));
-    //   }
-    //   return promises;
-    // });
+    return this.initializeData().then(res => {
+      const promises: Promise<any>[] = [];
+      const defaultCategories: ICategory[] = [
+        {
+          name: 'Food',
+          color: '#FF9900'
+        },
+        {
+          name: 'Shopping',
+          color: '#FFD719'
+        },
+        {
+          name: 'Education',
+          color: '#A3EAC2'
+        },
+        {
+          name: 'Recreation',
+          color: '#33FFFF'
+        },
+        {
+          name: 'Housing',
+          color: '#CCCCCC'
+        },
+        {
+          name: 'Others',
+          color: '#000000'
+        },
+        {
+          name: 'Job',
+          color: '#66FF99'
+        },
+        {
+          name: 'Health',
+          color: '#CC0000'
+        },
+        {
+          name: 'Transport',
+          color: '#FF8585'
+        },
+        {
+          name: 'Clothing',
+          color: '#8DD47F'
+        }
+      ];
+      for (const c of defaultCategories) {
+        promises.push(this.save(c).toPromise());
+      }
+      return promises;
+    });
   }
 }

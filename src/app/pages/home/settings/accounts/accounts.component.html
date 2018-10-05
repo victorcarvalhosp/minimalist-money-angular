@@ -7,7 +7,7 @@
 </div>
 <div>
   <mat-nav-list>
-    <mat-list-item (click)="openDialog(c)" *ngFor="let c of accountsService.accounts$ | async">{{c.name}}
+    <mat-list-item (click)="openDialog(c)" *ngFor="let c of accountsStore.accounts | async">{{c.name}}
     </mat-list-item>
   </mat-nav-list>
 </div>
