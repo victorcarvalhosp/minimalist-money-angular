@@ -10,6 +10,7 @@ import {CategoriesService} from '../../../../services/categories/categories.serv
 import {AppService} from "../../../../services/app/app.service";
 import {AccountsService} from "../../../../services/accounts/accounts.service";
 import {CategoriesStore} from "../../../../state/categories/categories.store";
+import {AccountsStore} from "../../../../state/accounts/accounts.store";
 
 @Component({
   selector: 'app-create-transaction',
@@ -26,12 +27,11 @@ export class CreateTransactionComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
               public transactionsService: TransactionsService, public snackBar: MatSnackBar,
-              public categoriesStore: CategoriesStore, public accountsService: AccountsService, private appService: AppService) {
+              public categoriesStore: CategoriesStore, public accountsStore: AccountsStore, private appService: AppService) {
     console.log('CONSTRUCTOR CALLED');
     this.isMobile = this.appService.isMobile;
     this.createForm();
     this.form.patchValue(this.data);
-    this.accountsService.initializeData();
     this.form.get('category').setValue(this.data.category);
   }
 
@@ -85,7 +85,7 @@ export class CreateTransactionComponent implements OnInit {
 
   tryDelete(value) {
     this.showLoading();
-    this.transactionsService.deleteTransaction(value);
+    this.transactionsService.delete(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction deleted!');
@@ -97,7 +97,7 @@ export class CreateTransactionComponent implements OnInit {
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction Saved!');
-    // this.transactionsService.save(value).then(res => {
+    // this.transactionsStore.save(value).then(res => {
     //   console.log('res');
     // });
   }

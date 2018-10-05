@@ -34,7 +34,7 @@
       <mat-form-field class="full-width">
         <mat-select placeholder="Account" formControlName="account"
                     [compareWith]="compareIds">
-          <mat-option *ngFor="let a of (accountsService.accounts$ | async)" [value]="a">
+          <mat-option *ngFor="let a of (accountsStore.accounts | async)" [value]="a">
             {{ a.name }}
           </mat-option>
         </mat-select>

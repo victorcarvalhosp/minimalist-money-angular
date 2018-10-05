@@ -1,11 +1,17 @@
 import {Injectable} from '@angular/core';
-import {ITransaction} from '../../models/transaction';
-import {Observable} from 'rxjs';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {from, Observable} from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument,
+  DocumentChangeAction
+} from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {TransactionTypeEnum} from '../../enums/transaction-type.enum';
 import {IPeriod} from '../../models/period';
-import {map} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
+import {ITransaction} from '../../models/transaction';
+import {AngularFireAuth} from "@angular/fire/auth";
 
 
 @Injectable({
@@ -13,75 +19,72 @@ import {map} from 'rxjs/operators';
 })
 export class TransactionsService {
 
-
-  public transactions$: Observable<ITransaction[]>;
   private transactionsCollection: AngularFirestoreCollection<ITransaction>;
+  private transactionsDoc: AngularFirestoreDocument<ITransaction>;
 
-  constructor(private afs: AngularFirestore, private authService: AuthService) {
+  constructor(private afs: AngularFirestore, private authService: AuthService, private afAuth: AngularFireAuth) {
+    this.initializeData();
+    console.log('initialize transactions service');
   }
 
   private initializeData() {
-    return this.authService.getCurrentUser()
-      .then(user => {
-        this.transactionsCollection = this.afs.collection<any>(`users/${user.uid}/transactions`);
-        this.transactions$ = this.transactionsCollection.valueChanges();
-      }, err => {
-        console.log(err);
-      });
-  }
-
-  getTransactionsByDate(period: IPeriod): Promise<ITransaction[]> {
-    return new Promise((resolve, reject) => {
-      return this.authService.getCurrentUser()
-        .then(user => {
-          this.transactionsCollection = this.getTransactionsCollectionByDate(user, period);
-          this.transactions$ = this.getTransactionsWithIds();
-          this.transactions$.subscribe(value => {
-            resolve(value);
-          });
-        }, err => {
-          console.log(err);
-        });
+    return this.authService.getCurrentUser().then(user => {
+      // this.transactionsCollection = this.afs.collection<any>(this.getPath(user));
     });
   }
 
-  private getTransactionsWithIds(): Observable<ITransaction[]> {
-    return this.transactionsCollection.snapshotChanges().pipe(map(
-      changes => {
-        return changes.map(
-          a => {
-            const data = a.payload.doc.data() as ITransaction;
-            data.id = a.payload.doc.id;
-            data.date = a.payload.doc.get('date').toDate();
-            return data;
-          }
-        );
-      })
-    );
+  getAllTransactions(): Observable<DocumentChangeAction<any>[]> {
+    return this.transactionsCollection.snapshotChanges();
   }
 
-  private getTransactionsCollectionByDate(user, period: IPeriod): AngularFirestoreCollection<ITransaction> {
-    return this.afs.collection<any>(`users/${user.uid}/transactions`,
-      ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
+  getTransactionsByDate(period: IPeriod): Observable<DocumentChangeAction<any>[]> {
+    return this.authService.getCurrentUserObservable().pipe(switchMap(res => {
+      this.transactionsCollection = this.afs.collection<any>(`users/${res.uid}/transactions`,
+        ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
+      return this.transactionsCollection.snapshotChanges();
+    }));
   }
 
-  addTransaction(transaction) {
-    this.transactionsCollection.add(transaction);
+  private getPath(user): string {
+    return `users/${user.uid}/transactions`;
   }
 
-  save(transaction: ITransaction) {
+  delete(transaction: ITransaction): Observable<any> {
     if (transaction.id) {
-      console.log('UPDATE');
-      return this.transactionsCollection.doc(transaction.id).update(transaction);
-    } else {
-      console.log('INSERT');
-      return this.transactionsCollection.add(transaction);
+      return from(this.transactionsCollection.doc(transaction.id).delete());
     }
   }
 
-  deleteTransaction(transaction: ITransaction) {
+  getTransaction(transactionUid: string) {
+    // return this.authService.getCurrentUser()
+    //   .then(user => {
+    //     console.log('UID' + user.uid);
+    //     this.transactionsDoc = this.afs.doc(`users/${user.uid}/transactions/${transactionUid}`);
+    //     this.transaction = this.transactionsDoc.valueChanges();
+    //   }, err => {
+    //     console.log(err);
+    //   });
+
+
+    // return fromPromise(this.authService.getCurrentUser()).pipe(switchMap(res => {
+    //   console.log(res)
+    //   return this.afs.doc<any>(`transactions$/${res.uid}/user_transactions/${transactionUid}`).valueChanges();
+    // }));
+    // console.log('get transaction');
+    //    this.afs.doc<any>(`JP1VKSxi3BX196Clk7eHr1rxmLn1/transactions$/${transactionUid}`).snapshotChanges().pipe(map(res => {
+    //
+    //     console.log(res);
+    //     return res.payload;
+    //   })).subscribe(res => {
+    //     console.log(res);
+    //    });
+  }
+
+  save(transaction: ITransaction): Observable<any> {
     if (transaction.id) {
-      return this.transactionsCollection.doc(transaction.id).delete();
+      return from(this.transactionsCollection.doc(transaction.id).update(transaction));
+    } else {
+      return from(this.transactionsCollection.add(transaction));
     }
   }
 
@@ -119,7 +122,7 @@ export class TransactionsService {
         },
       ];
       for (const c of defaultTransactions) {
-        promises.push(this.save(c));
+        promises.push(this.save(c).toPromise());
       }
       return promises;
     });

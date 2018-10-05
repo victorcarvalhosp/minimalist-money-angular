@@ -22,7 +22,7 @@ export class AccountsService {
     console.log('initialize accounts service');
   }
 
-  private initializeData() {
+  public initializeData() {
     return this.authService.getCurrentUser().then(user => {
       this.accountsCollection = this.afs.collection<any>(this.getPath(user));
     });

@@ -16,6 +16,7 @@ import {CategoriesService} from "../categories/categories.service";
 export class AuthService {
 
   loggedInUser: Observable<IUser | null>;
+  user;
 
   constructor(public afAuth: AngularFireAuth, private router: Router, private afs: AngularFirestore) {
     this.loggedInUser = this.afAuth.authState.pipe(
@@ -67,6 +68,20 @@ export class AuthService {
     });
   }
 
+  getCurrentUserObservable(): Observable<any> {
+      return this.afAuth.authState.pipe(
+        switchMap(user => {
+          if (user) {
+            console.log('return user');
+            return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
+          } else {
+            console.log('return null');
+            return of(null);
+          }
+        })
+      );
+  }
+
   isAuthenticated(): boolean {
     // this.afAuth.auth.onAuthStateChanged(user => {
     //   if(user){
@@ -75,7 +90,6 @@ export class AuthService {
     //     return f
     //   }
     // })
-    Observable.create()
     console.log(this.afAuth.auth.currentUser != null);
     console.log(this.afAuth.auth.currentUser);
     return this.afAuth.auth.currentUser != null;

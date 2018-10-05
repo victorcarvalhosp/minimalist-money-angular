@@ -12,6 +12,7 @@ import {TransactionTypeEnum} from '../../../enums/transaction-type.enum';
 import {AccountsService} from "../../../services/accounts/accounts.service";
 import {TotalsService} from "../../../services/totals/totals.service";
 import {IPeriod} from "../../../models/period";
+import {TransactionsStore} from "../../../state/transactions/transactions.store";
 
 @Component({
   selector: 'app-transactions',
@@ -22,13 +23,10 @@ import {IPeriod} from "../../../models/period";
 export class TransactionsComponent implements OnInit {
 
   isSmall: Observable<BreakpointState> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]);
-
-  category: Observable<ICategory>;
-  transactions: Observable<ITransaction[]>;
   total: number;
 
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
-              public transactionsService: TransactionsService, public categoriesService: CategoriesService,
+              public transactionsStore: TransactionsStore,
               public dialog: MatDialog, public snackBar: MatSnackBar, public totalsService: TotalsService) {
   }
 
@@ -70,9 +68,9 @@ export class TransactionsComponent implements OnInit {
   }
 
   handlePeriodLoaded(period: IPeriod) {
-    this.transactionsService.getTransactionsByDate(period);
-    this.totalsService.getTotals(period.endDate);
-    this.transactions = this.transactionsService.transactions$;
+    this.transactionsStore.getTransactionsByDate(period);
+    // this.totalsService.getTotals(period.endDate);
+    // this.transactions = this.transactionsStore.transactions$;
   }
 
   showDetails(transaction: ITransaction) {
@@ -87,7 +85,7 @@ export class TransactionsComponent implements OnInit {
   toggleRealized(transaction: ITransaction) {
     console.log('toogle realized');
     transaction.realized = !transaction.realized;
-    this.transactionsService.save(transaction);
+    this.transactionsStore.save(transaction);
     this.openSnackBar(transaction.realized ? 'Transaction Realized' : 'Transaction Canceled');
   }
 

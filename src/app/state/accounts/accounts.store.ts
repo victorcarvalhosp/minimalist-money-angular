@@ -14,10 +14,14 @@ export class AccountsStore {
   private _accounts: BehaviorSubject<List<IAccount>> = new BehaviorSubject(List([]));
 
   constructor(private afs: AngularFirestore, private accountsService: AccountsService) {
-    this.initializeData();
+    this.accountsService.initializeData().then(res => {
+      this.initializeData();
+    });
+    console.log('INITIALIZE ACCOUNTS STORE');
   }
 
   private initializeData() {
+    this.accountsService.getAllAccounts();
     this.accountsService.getAllAccounts().subscribe(res => {
       const accounts: IAccount[] = res.map(
         a => {

@@ -24,7 +24,7 @@ export class CategoriesService {
     console.log('initialize categories service');
   }
 
-  private initializeData() {
+  public initializeData() {
     return this.authService.getCurrentUser().then(user => {
       this.categoriesCollection = this.afs.collection<any>(this.getPath(user));
     });

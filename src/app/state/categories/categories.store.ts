@@ -14,7 +14,10 @@ export class CategoriesStore {
   private _categories: BehaviorSubject<List<ICategory>> = new BehaviorSubject(List([]));
 
   constructor(private afs: AngularFirestore, private categoriesService: CategoriesService) {
-    this.initializeData();
+    this.categoriesService.initializeData().then(res => {
+      this.initializeData();
+    });
+    console.log('INITIALIZE CATEGORIES STORE');
   }
 
   private initializeData() {

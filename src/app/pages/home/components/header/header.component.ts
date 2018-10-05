@@ -20,8 +20,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.showBackButton = this.transactionsService.showBackButton;
-    // this.transactionsService.showBackButton.subscribe((res:boolean) => {
+    // this.showBackButton = this.transactionsStore.showBackButton;
+    // this.transactionsStore.showBackButton.subscribe((res:boolean) => {
     //   this.showBackButton = res;
     //   console.log(res);
     // });

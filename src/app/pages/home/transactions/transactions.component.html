@@ -5,11 +5,11 @@
 
   <div class="col" role="main">
     <div class="container-timeline">
-      <div *ngIf="(transactionsService.transactions$ | async)?.length === 0" align="center">
-        <p>No transactions yet in that month</p>
-      </div>
+      <!--<div *ngIf="(transactionsStore.transactions | async)?.length" align="center">-->
+        <!--<p>No transactions yet in that month</p>-->
+      <!--</div>-->
       <ul>
-        <li  *ngFor="let t of transactionsService.transactions$ | async">
+        <li  *ngFor="let t of transactionsStore.transactions | async">
           <div class="row" (click)="showDetails(t)">
             <div style="float: left" class="full-width">
               <div class="title">{{t.name}}</div>

@@ -17,19 +17,19 @@ export class TotalsService {
   private totalsCollection: AngularFirestoreCollection<IAccountAmountAggregation>;
   public totals$: Observable<IAccountAmountAggregation[]>;
 
-  constructor(private afs: AngularFirestore, private authService: AuthService, private accountsService: AccountsService) { }
+  constructor(private afs: AngularFirestore, private authService: AuthService) { }
 
-  getTotals(date: Date): Promise<IAccountAmountAggregation[]> {
-    const totals: IAccountAmountAggregation[] = [];
-    return new Promise((resolve, reject) => {
-      this.authService.getCurrentUser().then(user => {
-        this.accountsService.getAccounts().then(accounts => {
-          this.populateTotals(accounts, user, date, totals);
-          resolve(totals);
-        });
-      });
-    });
-  }
+  // getTotals(date: Date): Promise<IAccountAmountAggregation[]> {
+    // const totals: IAccountAmountAggregation[] = [];
+    // return new Promise((resolve, reject) => {
+    //   this.authService.getCurrentUser().then(user => {
+    //     this.accountsService.getAccounts().then(accounts => {
+    //       this.populateTotals(accounts, user, date, totals);
+    //       resolve(totals);
+    //     });
+    //   });
+    // });
+  // }
 
 
   private populateTotals(accounts, user, date: Date, totals: IAccountAmountAggregation[]) {
