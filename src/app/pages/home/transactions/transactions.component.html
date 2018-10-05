@@ -5,9 +5,11 @@
 
   <div class="col" role="main">
     <div class="container-timeline">
-      <!--<div *ngIf="(transactionsStore.transactions | async)?.length" align="center">-->
-        <!--<p>No transactions yet in that month</p>-->
-      <!--</div>-->
+      <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16" ></mat-spinner>
+
+      <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading" align="center">
+        <p>No transactions yet in that month</p>
+      </div>
       <ul>
         <li  *ngFor="let t of transactionsStore.transactions | async">
           <div class="row" (click)="showDetails(t)">

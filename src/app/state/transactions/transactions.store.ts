@@ -16,15 +16,14 @@ export class TransactionsStore {
     {name: '', type: TransactionTypeEnum.OUTCOME, realized: false, amount: 0, date: new Date() }
     );
   private _transactions: BehaviorSubject<List<ITransaction>> = new BehaviorSubject(List([]));
+  public loading: boolean = true;
 
   constructor(private afs: AngularFirestore, private transactionsService: TransactionsService) {
     // this.initializeData();
-    console.log('INITIALIZE TRANSACTIONS STORE');
   }
 
   public getTransactionsByDate(period: IPeriod) {
-    console.log('FIND BY PERIOD');
-    console.log(period);
+   this.loading = true;
     this.transactionsService.getTransactionsByDate(period).subscribe(res => {
       const transactions: ITransaction[] = res.map(
         a => {
@@ -36,9 +35,7 @@ export class TransactionsStore {
       );
       console.log(transactions);
       this._transactions.next(List(transactions));
-      this._transactions.subscribe(res => {
-        console.log(res);
-      });
+      this.loading = false;
     });
   }
 

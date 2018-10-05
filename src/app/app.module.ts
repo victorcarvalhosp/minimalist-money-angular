@@ -23,7 +23,7 @@ import {
   MatInputModule, MatListModule,
   MatMenuModule,
   MatNativeDateModule, MatOptionModule,
-  MatProgressBarModule, MatSelectModule,
+  MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
   MatSnackBarModule
 } from '@angular/material';
 import {HomeComponent} from './pages/home/home.component';
@@ -94,6 +94,7 @@ import { CreateAccountComponent } from './pages/home/settings/accounts/create-ac
     MatSelectModule,
     MatOptionModule,
     MatListModule,
+    MatProgressSpinnerModule,
     NgxCurrencyModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
