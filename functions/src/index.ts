@@ -7,8 +7,28 @@ admin.initializeApp();
 const db = admin.firestore();
 
 export const helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase!");
+  response.send("Hello from Firebase!");
 });
+
+export const updateCategoriesNamesOnTransactions = functions.firestore
+  .document(`users/{userId}/categories/{categoryId}`)
+  .onUpdate((change, context) => {
+    console.log('BEFORE ==' + change.before.data().name);
+    console.log('AFTER ==' + change.after.data().name);
+    const userId = context.params.userId;
+    const categoryId = context.params.categoryId;
+    const transactionsCollection = db.collection(`users/${userId}/transactions/`).where('category.id', '==', categoryId).get();
+    return transactionsCollection.then(res => {
+        res.forEach(docTransaction => {
+          console.log(docTransaction.data());
+          return admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`).update({
+            id: docTransaction.data().id,
+            category: change.after.data()
+          });
+        });
+    });
+  });
+
 
 export const updateTotalsWhenNewTransaction = functions.firestore
   .document(`users/{userId}/transactions/{transactionId}`)
@@ -18,9 +38,9 @@ export const updateTotalsWhenNewTransaction = functions.firestore
 
     const totalsCollection = db.collection(`users/${userId}/accounts/${accountId}/totals/`);
     return totalsCollection.add({
-              date: snap.data().date,
-              amount: snap.data().amount
-            });
+      date: snap.data().date,
+      amount: snap.data().amount
+    });
 
     // return db.runTransaction(transaction => {
     //   return transaction.get(totalsCollection).then(restDoc => {

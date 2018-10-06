@@ -23,7 +23,6 @@ export class TransactionsService {
   private transactionsDoc: AngularFirestoreDocument<ITransaction>;
 
   constructor(private afs: AngularFirestore, private authService: AuthService, private afAuth: AngularFireAuth) {
-    this.initializeData();
     console.log('initialize transactions service');
   }
 
@@ -84,7 +83,11 @@ export class TransactionsService {
     if (transaction.id) {
       return from(this.transactionsCollection.doc(transaction.id).update(transaction));
     } else {
-      return from(this.transactionsCollection.add(transaction));
+      const idBefore =  this.afs.createId();
+      transaction.id = idBefore;
+      return from(this.transactionsCollection.doc(idBefore).set(transaction));
+
+      // return from(this.transactionsCollection.add(transaction).then());
     }
   }
 

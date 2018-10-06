@@ -9,10 +9,10 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {CreateTransactionComponent} from './create-transaction/create-transaction.component';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {TransactionTypeEnum} from '../../../enums/transaction-type.enum';
-import {AccountsService} from "../../../services/accounts/accounts.service";
-import {TotalsService} from "../../../services/totals/totals.service";
-import {IPeriod} from "../../../models/period";
-import {TransactionsStore} from "../../../state/transactions/transactions.store";
+import {AccountsService} from '../../../services/accounts/accounts.service';
+import {IPeriod} from '../../../models/period';
+import {TransactionsStore} from '../../../state/transactions/transactions.store';
+import {AccountTotalsStore} from '../../../state/account-totals/account-totals.store';
 
 @Component({
   selector: 'app-transactions',
@@ -27,7 +27,7 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsStore: TransactionsStore,
-              public dialog: MatDialog, public snackBar: MatSnackBar, public totalsService: TotalsService) {
+              public dialog: MatDialog, public snackBar: MatSnackBar, public totalsStore: AccountTotalsStore) {
   }
 
   openDialogNewTransaction(type: TransactionTypeEnum): void {
