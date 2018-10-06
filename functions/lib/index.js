@@ -13,6 +13,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.updateCategoriesNamesOnTransactions = functions.firestore
     .document(`users/{userId}/categories/{categoryId}`)
     .onUpdate((change, context) => {
+    const batch = db.batch();
     console.log('BEFORE ==' + change.before.data().name);
     console.log('AFTER ==' + change.after.data().name);
     const userId = context.params.userId;
@@ -21,11 +22,31 @@ exports.updateCategoriesNamesOnTransactions = functions.firestore
     return transactionsCollection.then(res => {
         res.forEach(docTransaction => {
             console.log(docTransaction.data());
-            return admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`).update({
-                id: docTransaction.data().id,
-                category: change.after.data()
-            });
+            const transactionRef = admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`);
+            batch.update(transactionRef, "category", change.after.data());
+            // return admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`).update({
+            //   category: change.after.data()
+            // });
         });
+        return batch.commit();
+    });
+});
+exports.updateAccountsNamesOnTransactions = functions.firestore
+    .document(`users/{userId}/accounts/{accountId}`)
+    .onUpdate((change, context) => {
+    const batch = db.batch();
+    console.log('BEFORE ==' + change.before.data().name);
+    console.log('AFTER ==' + change.after.data().name);
+    const userId = context.params.userId;
+    const categoryId = context.params.categoryId;
+    const transactionsCollection = db.collection(`users/${userId}/transactions/`).where('account.id', '==', categoryId).get();
+    return transactionsCollection.then(res => {
+        res.forEach(docTransaction => {
+            console.log(docTransaction.data());
+            const transactionRef = admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`);
+            batch.update(transactionRef, "account", change.after.data());
+        });
+        return batch.commit();
     });
 });
 exports.updateTotalsWhenNewTransaction = functions.firestore
