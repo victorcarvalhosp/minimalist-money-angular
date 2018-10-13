@@ -28,9 +28,7 @@
         </li>
       </ul>
     </div>
-
-    <div >
-      <p>Total: {{(periodSummaryStore.periodSummary | async).total}}</p>
-    </div>
   </div>
+  <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary" ></app-transactions-footer>
+
 </div>

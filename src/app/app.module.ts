@@ -15,15 +15,20 @@ import {appRoutes} from './app.routes';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MatBottomSheetModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
   MatIconModule,
-  MatInputModule, MatListModule,
+  MatInputModule,
+  MatListModule,
   MatMenuModule,
-  MatNativeDateModule, MatOptionModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
+  MatNativeDateModule,
+  MatOptionModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
   MatSnackBarModule
 } from '@angular/material';
 import {HomeComponent} from './pages/home/home.component';
@@ -40,14 +45,15 @@ import {HeaderComponent} from './pages/home/components/header/header.component';
 import {TransactionTypePipe} from './pipes/transaction-type/transaction-type.pipe';
 import {SpeedDialFabComponent} from './components/speed-dial-fab/speed-dial-fab.component';
 import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
-import { TransactionsHeaderComponent } from './pages/home/transactions/transactions-header/transactions-header.component';
-import { CreateCategoryComponent } from './pages/home/settings/categories/create-category/create-category.component';
+import {TransactionsHeaderComponent} from './pages/home/transactions/transactions-header/transactions-header.component';
+import {CreateCategoryComponent} from './pages/home/settings/categories/create-category/create-category.component';
 import {ColorPickerComponent} from './components/color-picker/color-picker.component'
-import {CurrencyPipe} from "@angular/common";
-import {NgxCurrencyModule} from "ngx-currency";
-import { AccountsComponent } from './pages/home/settings/accounts/accounts.component';
-import { CreateAccountComponent } from './pages/home/settings/accounts/create-account/create-account.component';
-import {HttpClientModule} from "@angular/common/http";
+import {NgxCurrencyModule} from 'ngx-currency';
+import {AccountsComponent} from './pages/home/settings/accounts/accounts.component';
+import {CreateAccountComponent} from './pages/home/settings/accounts/create-account/create-account.component';
+import {HttpClientModule} from '@angular/common/http';
+import {TransactionsFooterComponent} from './pages/home/transactions/transactions-footer/transactions-footer.component';
+import { TransactionsFooterDetailsComponent } from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
 
 @NgModule({
   declarations: [
@@ -71,10 +77,12 @@ import {HttpClientModule} from "@angular/common/http";
     CreateCategoryComponent,
     ColorPickerComponent,
     AccountsComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    TransactionsFooterComponent,
+    TransactionsFooterDetailsComponent,
   ],
   imports: [
-    AngularFireAuthModule, // import,s firebase/auth, only needed for auth features,
+    AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
@@ -96,6 +104,7 @@ import {HttpClientModule} from "@angular/common/http";
     MatOptionModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatBottomSheetModule,
     NgxCurrencyModule,
     HttpClientModule,
     DateFnsModule.forRoot(),

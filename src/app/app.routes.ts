@@ -11,8 +11,9 @@ import {SettingsComponent} from './pages/home/settings/settings.component';
 import {CreateTransactionComponent} from './pages/home/transactions/create-transaction/create-transaction.component';
 import {CategoriesComponent} from './pages/home/settings/categories/categories.component';
 import {CreateCategoryComponent} from './pages/home/settings/categories/create-category/create-category.component';
-import {AccountsComponent} from "./pages/home/settings/accounts/accounts.component";
-import {CreateAccountComponent} from "./pages/home/settings/accounts/create-account/create-account.component";
+import {AccountsComponent} from './pages/home/settings/accounts/accounts.component';
+import {CreateAccountComponent} from './pages/home/settings/accounts/create-account/create-account.component';
+import {TransactionsFooterDetailsComponent} from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
@@ -22,7 +23,8 @@ export const appRoutes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
       {
         path: 'transactions', component: TransactionsComponent, children: [
-          {path: 'new', component: CreateTransactionComponent}
+          {path: 'new', component: CreateTransactionComponent},
+          {path: 'details', component: TransactionsFooterDetailsComponent}
         ]
       },
       {path: 'dashboard', component: DashboardComponent},

@@ -1,0 +1,11 @@
+<div align="right">
+<p><span class="balance-text">previous balance:</span> $ {{(periodSummary | async).previousBalance | onlyInteger}},<span class="cents"> {{(periodSummary | async).previousBalance | onlyDecimalPart}}</span></p>
+<hr/>
+<p class="income-color"><span class="balance-text">total income:</span> $ {{(periodSummary | async).totalIncome | onlyInteger}},<span class="cents"> {{(periodSummary | async).totalIncome | onlyDecimalPart}}</span></p>
+<p class="gray-color"><span class="balance-text">expected income:</span> $ {{(periodSummary | async).expectedTotalIncome | onlyInteger}},<span class="cents"> {{(periodSummary | async).expectedTotalIncome | onlyDecimalPart}}</span></p>
+<p class="outcome-color"><span class="balance-text">total outcome:</span> $ {{(periodSummary | async).totalOutcome | onlyInteger}},<span class="cents"> {{(periodSummary | async).totalOutcome | onlyDecimalPart}}</span></p>
+<p class="gray-color"><span class="balance-text">expected outcome:</span> $ {{(periodSummary | async).expectedTotalOutcome | onlyInteger}},<span class="cents"> {{(periodSummary | async).expectedTotalOutcome | onlyDecimalPart}}</span></p>
+<hr/>
+<p><span class="balance-text">balance:</span> $ {{(periodSummary | async).total | onlyInteger}},<span class="cents"> {{(periodSummary | async).total | onlyDecimalPart}}</span></p>
+<p class="gray-color"><span class="balance-text">expected balance:</span> $ {{(periodSummary | async).expectedTotal | onlyInteger}},<span class="cents"> {{(periodSummary | async).expectedTotal | onlyDecimalPart}}</span></p>
+</div>

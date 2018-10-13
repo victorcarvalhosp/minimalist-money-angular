@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {UpdateSwService} from './services/update-sw.service';
-import {AuthService} from "./services/auth/auth.service";
-import {Router} from "@angular/router";
+import {AuthService} from './services/auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,9 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
   constructor(private updateSw: UpdateSwService, private authService: AuthService, private router: Router) {
+    console.log(this.router.url);
     this.authService.getCurrentUser().then(user => {
-      if (user) {
+      if (user && (this.router.url === '/login' || this.router.url === '/' || this.router.url === '/register')) {
         this.router.navigate(['home', 'transactions']);
       }
     }, (err) => {

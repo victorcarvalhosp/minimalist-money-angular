@@ -33,16 +33,15 @@ export class PeriodSummaryStore {
     const endDateLastMonth: Date = new SubSecondsPipe().transform(period.startDate, 1);
     console.log(endDateLastMonth);
     this.periodSummaryService.getTotalRealized(endDateLastMonth).subscribe((res: any) => {
-      const periodSummary: IPeriodSumary = {previousBalance:  res.total,
-      totalIncome: 0,
-      expectedTotalIncome: 0,
-      totalOutcome: 0,
-      expectedTotalOutcome: 0,
-      total: res.total,
-      expectedTotal: res.total,
-      };
       this.transactionsStore.transactions.subscribe(transactions => {
-        console.log(transactions);
+        const periodSummary: IPeriodSumary = {previousBalance:  res.total,
+          totalIncome: 0,
+          expectedTotalIncome: 0,
+          totalOutcome: 0,
+          expectedTotalOutcome: 0,
+          total: res.total,
+          expectedTotal: res.total,
+        };
         transactions.forEach((transaction: ITransaction) => {
           if (transaction.type === TransactionTypeEnum.OUTCOME) {
             periodSummary.expectedTotal -= transaction.amount;

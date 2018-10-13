@@ -1,0 +1,23 @@
+div {
+  padding: 0 1em;
+}
+
+p {
+  font-weight: bold;
+}
+
+.cents{
+  font-size: 11px;
+}
+
+.panel-sticky {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  height: 50px;
+  z-index: 2;
+}
+
+.balance-text{
+  color: #aaa;
+}
