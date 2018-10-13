@@ -30,10 +30,7 @@
     </div>
 
     <div >
-      <p>{{(totalsStore.accountsSummary | async).total}}</p>
-      <div *ngFor="let total of ((totalsStore.accountsSummary | async).accountsTotals)">
-        <p>Total: {{total.accountName}} {{total.total}}</p>
-      </div>
+      <p>Total: {{(periodSummaryStore.periodSummary | async).total}}</p>
     </div>
   </div>
 </div>

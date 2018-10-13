@@ -13,6 +13,8 @@ import {AccountsService} from '../../../services/accounts/accounts.service';
 import {IPeriod} from '../../../models/period';
 import {TransactionsStore} from '../../../state/transactions/transactions.store';
 import {AccountTotalsStore} from '../../../state/account-totals/account-totals.store';
+import {SubSecondsPipe} from "ngx-date-fns";
+import {PeriodSummaryStore} from "../../../state/period-summary/period-summary.store";
 
 @Component({
   selector: 'app-transactions',
@@ -27,7 +29,7 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsStore: TransactionsStore,
-              public dialog: MatDialog, public snackBar: MatSnackBar, public totalsStore: AccountTotalsStore) {
+              public dialog: MatDialog, public snackBar: MatSnackBar, public periodSummaryStore: PeriodSummaryStore) {
   }
 
   openDialogNewTransaction(type: TransactionTypeEnum): void {
@@ -69,6 +71,7 @@ export class TransactionsComponent implements OnInit {
 
   handlePeriodLoaded(period: IPeriod) {
     this.transactionsStore.getTransactionsByDate(period);
+    this.periodSummaryStore.calculateTotals(period);
     // this.totalsService.getTotals(period.endDate);
     // this.transactions = this.transactionsStore.transactions$;
   }

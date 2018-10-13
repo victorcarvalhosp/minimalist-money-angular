@@ -20,10 +20,11 @@ export class AccountTotalsService {
 
   constructor(private afs: AngularFirestore, private authService: AuthService, private http: HttpClient) { }
 
-  getTotals() {
+  getTotals(date: Date) {
     return this.authService.getCurrentUserObservable().pipe(switchMap(res => {
       const headersWithUser = new HttpHeaders({'user': res.uid});
-      return this.http.get('https://us-central1-minimalist-money.cloudfunctions.net/getAccountsSummary', {headers: headersWithUser});
+      return this.http.get(`https://us-central1-minimalist-money.cloudfunctions.net/getAccountsSummary?date=${date}`,
+        {headers: headersWithUser});
     }));
   }
 

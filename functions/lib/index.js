@@ -20,6 +20,11 @@ exports.getAccountsSummary = functions.https.onRequest((request, response) => __
     try {
         yield cors(request, response, () => __awaiter(this, void 0, void 0, function* () {
             if (request.method === 'GET') {
+                console.log('REQUEST');
+                console.log(request);
+                console.log(request.query);
+                console.log(request.query.date);
+                const date = new Date(request.query.date);
                 const userId = request.headers.user;
                 const totals = [];
                 const accountsRef = db.collection(`users/${userId}/accounts/`);
@@ -31,11 +36,11 @@ exports.getAccountsSummary = functions.https.onRequest((request, response) => __
                     totalOutcome: 0,
                     total: 0,
                     accountsTotals: totals };
-                const transactionsRef = db.collection(`users/${userId}/transactions/`).where('realized', '==', true);
+                const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
                 const snapshotTransactions = yield transactionsRef.get();
                 snapshotTransactions.forEach(transaction => {
                     for (let total of totals) {
-                        if (transaction.data().accountId === total.accountId) {
+                        if (transaction.data().accountId === total.accountId && transaction.data().realized) {
                             if (transaction.data().type === 'INCOME') {
                                 total.totalIncome += transaction.data().amount;
                                 total.total += transaction.data().amount;
@@ -53,6 +58,37 @@ exports.getAccountsSummary = functions.https.onRequest((request, response) => __
                 });
                 console.log(accountsSummary);
                 response.status(200).json(accountsSummary);
+            }
+            else {
+                response.status(500).json({ message: 'Not allowed' });
+            }
+        }));
+    }
+    catch (error) {
+        console.log(error);
+        response.status(500).send(error);
+    }
+}));
+exports.getTotalRealized = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        yield cors(request, response, () => __awaiter(this, void 0, void 0, function* () {
+            if (request.method === 'GET') {
+                const date = new Date(request.query.date);
+                const userId = request.headers.user;
+                const totalRealized = { total: 0 };
+                const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
+                const snapshotTransactions = yield transactionsRef.get();
+                snapshotTransactions.forEach(transaction => {
+                    if (transaction.data().realized) {
+                        if (transaction.data().type === 'INCOME') {
+                            totalRealized.total += transaction.data().amount;
+                        }
+                        else if (transaction.data().type === 'OUTCOME') {
+                            totalRealized.total -= transaction.data().amount;
+                        }
+                    }
+                });
+                response.status(200).json(totalRealized);
             }
             else {
                 response.status(500).json({ message: 'Not allowed' });

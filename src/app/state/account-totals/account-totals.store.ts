@@ -17,7 +17,6 @@ export class AccountTotalsStore {
   private _accountsSummary: BehaviorSubject<IAccountsSumary> = new BehaviorSubject({totalIncome: 0, totalOutcome: 0, total: 0, accountsTotals: []});
 
   constructor(private afs: AngularFirestore, private accountTotalsService: AccountTotalsService) {
-    this.getTotals();
   }
 
   private initializeData() {
@@ -34,8 +33,8 @@ export class AccountTotalsStore {
     // });
   }
 
-  getTotals() {
-    this.accountTotalsService.getTotals().subscribe((res: IAccountsSumary) => {
+  getTotals(date: Date) {
+    this.accountTotalsService.getTotals(date).subscribe((res: IAccountsSumary) => {
       console.log(res);
       this._accountsSummary.next(res);
     });

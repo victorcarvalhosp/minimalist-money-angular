@@ -11,6 +11,11 @@ export const getAccountsSummary = functions.https.onRequest(async(request, respo
   try {
     await cors(request, response, async () => {
       if (request.method === 'GET') {
+        console.log('REQUEST');
+        console.log(request);
+        console.log(request.query);
+        console.log(request.query.date);
+        const date: Date = new Date(request.query.date);
         const userId = request.headers.user;
         const totals = [];
         const accountsRef = db.collection(`users/${userId}/accounts/`);
@@ -23,11 +28,11 @@ export const getAccountsSummary = functions.https.onRequest(async(request, respo
         total: 0,
         accountsTotals: totals};
 
-        const transactionsRef = db.collection(`users/${userId}/transactions/`).where('realized', '==', true);
+        const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
         const snapshotTransactions = await transactionsRef.get();
         snapshotTransactions.forEach(transaction => {
           for (let total of totals) {
-            if (transaction.data().accountId === total.accountId) {
+            if (transaction.data().accountId === total.accountId && transaction.data().realized) {
               if (transaction.data().type === 'INCOME') {
                 total.totalIncome += transaction.data().amount;
                 total.total += transaction.data().amount;
@@ -44,6 +49,36 @@ export const getAccountsSummary = functions.https.onRequest(async(request, respo
         });
         console.log(accountsSummary);
         response.status(200).json(accountsSummary);
+      } else {
+        response.status(500).json({message: 'Not allowed'});
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+
+});
+
+export const getTotalRealized = functions.https.onRequest(async(request, response) => {
+  try {
+    await cors(request, response, async () => {
+      if (request.method === 'GET') {
+        const date: Date = new Date(request.query.date);
+        const userId = request.headers.user;
+        const totalRealized = {total: 0};
+        const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
+        const snapshotTransactions = await transactionsRef.get();
+        snapshotTransactions.forEach(transaction => {
+            if (transaction.data().realized) {
+              if (transaction.data().type === 'INCOME') {
+                totalRealized.total += transaction.data().amount;
+              } else if (transaction.data().type === 'OUTCOME') {
+                totalRealized.total -= transaction.data().amount;
+              }
+          }
+        });
+        response.status(200).json(totalRealized);
       } else {
         response.status(500).json({message: 'Not allowed'});
       }
