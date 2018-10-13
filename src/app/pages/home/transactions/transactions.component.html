@@ -6,7 +6,6 @@
   <div class="col" role="main">
     <div class="container-timeline">
       <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16" ></mat-spinner>
-
       <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading" align="center">
         <p>No transactions yet in that month</p>
       </div>
@@ -29,6 +28,6 @@
       </ul>
     </div>
   </div>
-  <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary" ></app-transactions-footer>
+  <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary" [loading]="periodSummaryStore.loading" ></app-transactions-footer>
 
 </div>

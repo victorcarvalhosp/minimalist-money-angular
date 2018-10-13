@@ -13,6 +13,8 @@ export class TransactionsFooterComponent implements OnInit {
 
   @Input()
   periodSummary: Observable<IPeriodSumary>;
+  @Input()
+  loading: boolean;
 
   constructor(private bottomSheet: MatBottomSheet) { }
 

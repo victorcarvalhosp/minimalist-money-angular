@@ -21,6 +21,7 @@ export class PeriodSummaryStore {
   expectedTotalOutcome:  0,
   total:  0,
   expectedTotal:  0});
+  public loading: boolean = true;
 
   constructor(private afs: AngularFirestore, private periodSummaryService: PeriodSummaryService,
               private transactionsStore: TransactionsStore) {
@@ -30,6 +31,7 @@ export class PeriodSummaryStore {
   }
 
   calculateTotals(period: IPeriod) {
+    this.loading = true;
     const endDateLastMonth: Date = new SubSecondsPipe().transform(period.startDate, 1);
     console.log(endDateLastMonth);
     this.periodSummaryService.getTotalRealized(endDateLastMonth).subscribe((res: any) => {
@@ -61,6 +63,7 @@ export class PeriodSummaryStore {
           console.log(transaction);
         });
         this._periodSummary.next(periodSummary);
+        this.loading = false;
       });
     });
   }
