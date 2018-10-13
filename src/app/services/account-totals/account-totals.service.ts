@@ -8,7 +8,8 @@ import OrderByDirection = firebase.firestore.OrderByDirection;
 import {Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {IAccount} from '../../models/account';
-import {IPeriod} from "../../models/period";
+import {IPeriod} from '../../models/period';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,14 @@ export class AccountTotalsService {
 
   private totalsCollection: AngularFirestoreCollection<IAccountTotal>;
 
-  constructor(private afs: AngularFirestore, private authService: AuthService) { }
+  constructor(private afs: AngularFirestore, private authService: AuthService, private http: HttpClient) { }
+
+  getTotals() {
+    return this.authService.getCurrentUserObservable().pipe(switchMap(res => {
+      const headersWithUser = new HttpHeaders({'user': res.uid});
+      return this.http.get('https://us-central1-minimalist-money.cloudfunctions.net/getAccountsSummary', {headers: headersWithUser});
+    }));
+  }
 
   // getTotalsByDate(date: Date): Observable<DocumentChangeAction<any>[]> {
   //   return this.authService.getCurrentUserObservable().pipe(switchMap(res => {

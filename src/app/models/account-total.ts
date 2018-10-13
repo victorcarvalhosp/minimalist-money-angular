@@ -1,5 +1,7 @@
 export class IAccountTotal {
   date: Date;
-  amount: number;
+  totalIncome: number;
+  totalOutcome: number;
+  total: number;
   accountName?: string;
 }

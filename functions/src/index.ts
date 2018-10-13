@@ -5,9 +5,54 @@ import * as admin from 'firebase-admin';
 //
 admin.initializeApp();
 const db = admin.firestore();
+const cors = require('cors')({origin: true});
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
+export const getAccountsSummary = functions.https.onRequest(async(request, response) => {
+  try {
+    await cors(request, response, async () => {
+      if (request.method === 'GET') {
+        const userId = request.headers.user;
+        const totals = [];
+        const accountsRef = db.collection(`users/${userId}/accounts/`);
+        const snapshotAccounts = await accountsRef.get();
+        snapshotAccounts.forEach(account => {
+          totals.push({accountId: account.data().id, accountName: account.data().name, total: 0, totalIncome: 0, totalOutcome: 0});
+        });
+        const accountsSummary = { totalIncome: 0,
+        totalOutcome: 0,
+        total: 0,
+        accountsTotals: totals};
+
+        const transactionsRef = db.collection(`users/${userId}/transactions/`).where('realized', '==', true);
+        const snapshotTransactions = await transactionsRef.get();
+        snapshotTransactions.forEach(transaction => {
+          for (let total of totals) {
+            if (transaction.data().accountId === total.accountId) {
+              if (transaction.data().type === 'INCOME') {
+                total.totalIncome += transaction.data().amount;
+                total.total += transaction.data().amount;
+                accountsSummary.totalIncome +=  transaction.data().amount;
+                accountsSummary.total += transaction.data().amount;
+              } else if (transaction.data().type === 'OUTCOME') {
+                total.totalOutcome += transaction.data().amount;
+                total.total -= transaction.data().amount;
+                accountsSummary.totalOutcome +=  transaction.data().amount;
+                accountsSummary.total -= transaction.data().amount;
+              }
+            }
+          }
+        });
+        console.log(accountsSummary);
+        response.status(200).json(accountsSummary);
+      } else {
+        response.status(500).json({message: 'Not allowed'});
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+
 });
 
 export const updateCategoriesNamesOnTransactions = functions.firestore
@@ -20,15 +65,15 @@ export const updateCategoriesNamesOnTransactions = functions.firestore
     const categoryId = context.params.categoryId;
     const transactionsCollection = db.collection(`users/${userId}/transactions/`).where('category.id', '==', categoryId).get();
     return transactionsCollection.then(res => {
-        res.forEach(docTransaction => {
-          console.log(docTransaction.data());
-          const transactionRef = admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`);
-          batch.update(transactionRef, "category", change.after.data());
-          // return admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`).update({
-          //   category: change.after.data()
-          // });
-        });
-        return batch.commit();
+      res.forEach(docTransaction => {
+        console.log(docTransaction.data());
+        const transactionRef = admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`);
+        batch.update(transactionRef, "category", change.after.data());
+        // return admin.firestore().doc(`users/${userId}/transactions/${docTransaction.data().id}`).update({
+        //   category: change.after.data()
+        // });
+      });
+      return batch.commit();
     });
   });
 
@@ -55,14 +100,60 @@ export const updateAccountsNamesOnTransactions = functions.firestore
 export const updateTotalsWhenNewTransaction = functions.firestore
   .document(`users/{userId}/transactions/{transactionId}`)
   .onCreate((snap, context) => {
+    const batch = db.batch();
     const userId = context.params.userId;
     const accountId = snap.data().account.id;
 
-    const totalsCollection = db.collection(`users/${userId}/accounts/${accountId}/totals/`);
-    return totalsCollection.add({
-      date: snap.data().date,
-      amount: snap.data().amount
-    });
+
+    if (snap.data().realized) {
+      const lastTotal = db.collection(`users/${userId}/accounts/${accountId}/totals/`).orderBy('date', 'desc').where('date', '<=', snap.data().date).limit(1).get();
+      return lastTotal.then(restotal => {
+        restotal.forEach(total => {
+          console.log(total.data());
+          console.log('TOTAL BEFORE');
+          const newTotalRef = db.collection('users/${userId}/accounts/${accountId}/totals/');
+          if (snap.data().type === 'INCOME') {
+            console.log('NEW TOTAL INCOME CREATED');
+            // batch.create(newTotalRef, { date: snap.data().date, amount: total.data().amount + snap.data().amount});
+            return newTotalRef.add({date: snap.data().date, amount: total.data().amount + snap.data().amount});
+          } else if (snap.data().type === 'OUTCOME') {
+            console.log('NEW TOTAL OUTCOME REALIZED');
+            // batch.create(newTotalRef, { date: snap.data().date, amount: total.data().amount - snap.data().amount});
+            return newTotalRef.add({date: snap.data().date, amount: total.data().amount - snap.data().amount});
+          }
+          return new Promise(resolve => {
+            return true
+          });
+        });
+        return batch.commit();
+      });
+
+      // const totalsCollection = db.collection(`users/${userId}/accounts/${accountId}/totals/`).orderBy('date', 'desc').where('date', '<=', snap.data().date).get();
+      // return totalsCollection.then(res => {
+      //   res.forEach(totalTransaction => {
+      //     console.log(totalTransaction.data());
+      //     const transactionRef = admin.firestore().doc(`users/${userId}/accounts/${accountId}/totals/${totalTransaction.id}`);
+      //     if(snap.data().type === 'INCOME') {
+      //       console.log('NEW INCOME REALIZED');
+      //       batch.update(transactionRef, "amount", totalTransaction.data().amount + snap.data().amount);
+      //     } else if (snap.data().type === 'OUTCOME') {
+      //       console.log('NEW OUTCOME REALIZED');
+      //       batch.update(transactionRef, "amount", totalTransaction.data().amount - snap.data().amount);
+      //     }
+      //   });
+      //   return batch.commit();
+      // });
+    } else {
+      return new Promise(resolve => {
+        return true;
+      });
+    }
+
+
+    // return totalsCollection.add({
+    //   date: snap.data().date,
+    //   amount: snap.data().amount
+    // });
 
     // return db.runTransaction(transaction => {
     //   return transaction.get(totalsCollection).then(restDoc => {

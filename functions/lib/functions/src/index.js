@@ -25,7 +25,7 @@ exports.getAccountsSummary = functions.https.onRequest((request, response) => __
                 const accountsRef = db.collection(`users/${userId}/accounts/`);
                 const snapshotAccounts = yield accountsRef.get();
                 snapshotAccounts.forEach(account => {
-                    totals.push({ accountId: account.data().id, accountName: account.data().name, total: 0, totalIncome: 0, totalOutcome: 0 });
+                    totals.push({ accountId: account.data().id, accountName: account.data().name, amount: 0 });
                 });
                 const accountsSummary = { totalIncome: 0,
                     totalOutcome: 0,
@@ -38,16 +38,17 @@ exports.getAccountsSummary = functions.https.onRequest((request, response) => __
                         if (transaction.data().accountId === total.accountId) {
                             if (transaction.data().type === 'INCOME') {
                                 total.totalIncome += transaction.data().amount;
-                                total.total += transaction.data().amount;
+                                total.amount += transaction.data().amount;
                                 accountsSummary.totalIncome += transaction.data().amount;
                                 accountsSummary.total += transaction.data().amount;
                             }
                             else if (transaction.data().type === 'OUTCOME') {
                                 total.totalOutcome += transaction.data().amount;
-                                total.total -= transaction.data().amount;
+                                total.amount -= transaction.data().amount;
                                 accountsSummary.totalOutcome += transaction.data().amount;
                                 accountsSummary.total -= transaction.data().amount;
                             }
+                            break;
                         }
                     }
                 });

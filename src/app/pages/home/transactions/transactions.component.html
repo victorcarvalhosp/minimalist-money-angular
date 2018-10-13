@@ -29,9 +29,11 @@
       </ul>
     </div>
 
-    <!--<div *ngFor="let total of totalsService.totals$ | async">-->
-      <!--<p>Total: {{total.accountName}} {{total.amount}}</p>-->
-    <!--</div>-->
-
+    <div >
+      <p>{{(totalsStore.accountsSummary | async).total}}</p>
+      <div *ngFor="let total of ((totalsStore.accountsSummary | async).accountsTotals)">
+        <p>Total: {{total.accountName}} {{total.total}}</p>
+      </div>
+    </div>
   </div>
 </div>

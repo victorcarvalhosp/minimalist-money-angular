@@ -47,6 +47,7 @@ import {CurrencyPipe} from "@angular/common";
 import {NgxCurrencyModule} from "ngx-currency";
 import { AccountsComponent } from './pages/home/settings/accounts/accounts.component';
 import { CreateAccountComponent } from './pages/home/settings/accounts/create-account/create-account.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { CreateAccountComponent } from './pages/home/settings/accounts/create-ac
     MatListModule,
     MatProgressSpinnerModule,
     NgxCurrencyModule,
+    HttpClientModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],

@@ -4,17 +4,20 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {List} from 'immutable';
 import {AccountTotalsService} from '../../services/account-totals/account-totals.service';
 import {IAccountTotal} from '../../models/account-total';
+import {IAccountsSumary} from "../../models/accounts-summary";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountTotalsStore {
 
-  private _accountTotal: BehaviorSubject<IAccountTotal> = new BehaviorSubject<IAccountTotal>({amount: 0,
+  private _accountTotal: BehaviorSubject<IAccountTotal> = new BehaviorSubject<IAccountTotal>({totalIncome: 0, totalOutcome: 0, total: 0,
     date: new Date()});
   private _accountTotalTotals: BehaviorSubject<List<IAccountTotal>> = new BehaviorSubject(List([]));
+  private _accountsSummary: BehaviorSubject<IAccountsSumary> = new BehaviorSubject({totalIncome: 0, totalOutcome: 0, total: 0, accountsTotals: []});
 
   constructor(private afs: AngularFirestore, private accountTotalsService: AccountTotalsService) {
+    this.getTotals();
   }
 
   private initializeData() {
@@ -29,6 +32,17 @@ export class AccountTotalsStore {
     //   );
     //   this._accountTotalTotals.next(List(accountTotalTotals));
     // });
+  }
+
+  getTotals() {
+    this.accountTotalsService.getTotals().subscribe((res: IAccountsSumary) => {
+      console.log(res);
+      this._accountsSummary.next(res);
+    });
+  }
+
+  get accountsSummary() {
+    return this._accountsSummary.asObservable();
   }
 
   get accountTotalTotals() {
