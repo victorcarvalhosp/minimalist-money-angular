@@ -10,7 +10,7 @@
         <p>No transactions yet in that month</p>
       </div>
       <ul>
-        <li  *ngFor="let t of transactionsStore.transactions | async">
+        <li  *ngFor="let t of (transactionsStore.transactions | async)">
           <div class="row" (click)="showDetails(t)">
             <div style="float: left" class="full-width">
               <div class="title">{{t.name}}</div>
@@ -29,5 +29,4 @@
     </div>
   </div>
   <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary" [loading]="periodSummaryStore.loading" ></app-transactions-footer>
-
 </div>

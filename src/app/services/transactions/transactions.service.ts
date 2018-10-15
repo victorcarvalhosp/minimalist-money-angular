@@ -11,7 +11,8 @@ import {TransactionTypeEnum} from '../../enums/transaction-type.enum';
 import {IPeriod} from '../../models/period';
 import {map, switchMap} from 'rxjs/operators';
 import {ITransaction} from '../../models/transaction';
-import {AngularFireAuth} from "@angular/fire/auth";
+import {AngularFireAuth} from '@angular/fire/auth';
+import { take } from 'rxjs/operators';
 
 
 @Injectable({
@@ -37,7 +38,7 @@ export class TransactionsService {
   }
 
   getTransactionsByDate(period: IPeriod): Observable<DocumentChangeAction<any>[]> {
-    return this.authService.getCurrentUserObservable().pipe(switchMap(res => {
+    return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
       this.transactionsCollection = this.afs.collection<any>(`users/${res.uid}/transactions`,
         ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
       return this.transactionsCollection.snapshotChanges();

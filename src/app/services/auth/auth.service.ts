@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
 import * as firebase from 'firebase/app';
-import {AngularFireAuth} from "@angular/fire/auth";
-import {switchMap} from "rxjs/internal/operators";
+import {AngularFireAuth} from '@angular/fire/auth';
+import {switchMap, take} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {Router} from "@angular/router";
-import {IUser} from "../../models/credentials";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {UserService} from "../user/user.service";
-import {CategoriesService} from "../categories/categories.service";
+import {Router} from '@angular/router';
+import {IUser} from '../../models/credentials';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -69,11 +67,10 @@ export class AuthService {
   }
 
   getCurrentUserObservable(): Observable<any> {
-      return this.afAuth.authState.pipe(
+      return this.afAuth.authState.pipe(take(1),
         switchMap(user => {
           if (user) {
-            console.log('return user');
-            return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
+            return this.afs.collection<any>(`users`).doc(`${user.uid}`).valueChanges();
           } else {
             console.log('return null');
             return of(null);

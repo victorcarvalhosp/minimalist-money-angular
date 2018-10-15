@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs/index';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {List} from 'immutable';
 import {AccountTotalsService} from '../../services/account-totals/account-totals.service';

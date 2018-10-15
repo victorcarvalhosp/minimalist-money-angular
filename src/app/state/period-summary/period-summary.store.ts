@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/index';
+import {BehaviorSubject} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {IPeriodSumary} from '../../models/period-summary';
 import {PeriodSummaryService} from '../../services/period-summary/period-summary.service';

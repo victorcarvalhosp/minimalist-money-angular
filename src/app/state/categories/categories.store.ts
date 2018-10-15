@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs/index';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {ICategory} from '../../models/category';
 import {CategoriesService} from '../../services/categories/categories.service';
