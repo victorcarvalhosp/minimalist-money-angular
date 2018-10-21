@@ -1,7 +1,7 @@
 <div class="center-col">
   <router-outlet></router-outlet>
   <!--<app-speed-dial-fab (action)="openDialogNewTransaction($event)"></app-speed-dial-fab>-->
-  <app-transactions-header (periodLoaded)="handlePeriodLoaded($event)" (openIncomeDialog)="openDialogNewTransaction($event)" (openOutcomeDialog)="openDialogNewTransaction($event)"></app-transactions-header>
+  <app-transactions-header (openIncomeDialog)="openDialogNewTransaction($event)" (openOutcomeDialog)="openDialogNewTransaction($event)"></app-transactions-header>
 
   <div class="col" role="main">
     <div class="container-timeline">

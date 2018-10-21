@@ -54,6 +54,7 @@ import {CreateAccountComponent} from './pages/home/settings/accounts/create-acco
 import {HttpClientModule} from '@angular/common/http';
 import {TransactionsFooterComponent} from './pages/home/transactions/transactions-footer/transactions-footer.component';
 import { TransactionsFooterDetailsComponent } from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
+import { PeriodComponent } from './components/period/period.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { TransactionsFooterDetailsComponent } from './pages/home/transactions/tr
     CreateAccountComponent,
     TransactionsFooterComponent,
     TransactionsFooterDetailsComponent,
+    PeriodComponent,
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,

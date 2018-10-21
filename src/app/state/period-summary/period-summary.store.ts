@@ -8,6 +8,7 @@ import {SubSecondsPipe} from 'ngx-date-fns';
 import {TransactionsStore} from "../transactions/transactions.store";
 import {ITransaction} from "../../models/transaction";
 import {TransactionTypeEnum} from "../../enums/transaction-type.enum";
+import {PeriodStore} from "../period/period.store";
 
 @Injectable({
   providedIn: 'root'
@@ -24,46 +25,46 @@ export class PeriodSummaryStore {
   public loading: boolean = true;
 
   constructor(private afs: AngularFirestore, private periodSummaryService: PeriodSummaryService,
-              private transactionsStore: TransactionsStore) {
+              private transactionsStore: TransactionsStore, private  periodStore: PeriodStore) {
+    this.calculateTotals();
   }
 
-  private initializeData() {
-  }
-
-  calculateTotals(period: IPeriod) {
+  calculateTotals() {
     this.loading = true;
-    const endDateLastMonth: Date = new SubSecondsPipe().transform(period.startDate, 1);
-    console.log(endDateLastMonth);
-    this.periodSummaryService.getTotalRealized(endDateLastMonth).subscribe((res: any) => {
-      this.transactionsStore.transactions.subscribe(transactions => {
-        const periodSummary: IPeriodSumary = {previousBalance:  res.total,
-          totalIncome: 0,
-          expectedTotalIncome: 0,
-          totalOutcome: 0,
-          expectedTotalOutcome: 0,
-          total: res.total,
-          expectedTotal: res.total,
-        };
-        transactions.forEach((transaction: ITransaction) => {
-          if (transaction.type === TransactionTypeEnum.OUTCOME) {
-            periodSummary.expectedTotal -= transaction.amount;
-            periodSummary.expectedTotalOutcome += transaction.amount;
-            if (transaction.realized) {
-              periodSummary.totalOutcome += transaction.amount;
-              periodSummary.total -= transaction.amount;
+    this.periodStore.period.subscribe( period => {
+      const endDateLastMonth: Date = new SubSecondsPipe().transform(period.startDate, 1);
+      console.log(endDateLastMonth);
+      this.periodSummaryService.getTotalRealized(endDateLastMonth).subscribe((res: any) => {
+        this.transactionsStore.transactions.subscribe(transactions => {
+          const periodSummary: IPeriodSumary = {previousBalance:  res.total,
+            totalIncome: 0,
+            expectedTotalIncome: 0,
+            totalOutcome: 0,
+            expectedTotalOutcome: 0,
+            total: res.total,
+            expectedTotal: res.total,
+          };
+          transactions.forEach((transaction: ITransaction) => {
+            if (transaction.type === TransactionTypeEnum.OUTCOME) {
+              periodSummary.expectedTotal -= transaction.amount;
+              periodSummary.expectedTotalOutcome += transaction.amount;
+              if (transaction.realized) {
+                periodSummary.totalOutcome += transaction.amount;
+                periodSummary.total -= transaction.amount;
+              }
+            } else if (transaction.type === TransactionTypeEnum.INCOME) {
+              periodSummary.expectedTotal += transaction.amount;
+              periodSummary.expectedTotalIncome += transaction.amount;
+              if (transaction.realized) {
+                periodSummary.totalIncome += transaction.amount;
+                periodSummary.total += transaction.amount;
+              }
             }
-          } else if (transaction.type === TransactionTypeEnum.INCOME) {
-            periodSummary.expectedTotal += transaction.amount;
-            periodSummary.expectedTotalIncome += transaction.amount;
-            if (transaction.realized) {
-              periodSummary.totalIncome += transaction.amount;
-              periodSummary.total += transaction.amount;
-            }
-          }
-          console.log(transaction);
+            console.log(transaction);
+          });
+          this._periodSummary.next(periodSummary);
+          this.loading = false;
         });
-        this._periodSummary.next(periodSummary);
-        this.loading = false;
       });
     });
   }
