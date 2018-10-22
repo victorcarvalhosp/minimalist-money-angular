@@ -1,4 +1,33 @@
-<app-period></app-period>
-<p>
-  dashboard works! 2
-</p>
+<div class="center-col">
+  <div class="center-col panel-sticky">
+    <div class="Aligner">
+      <app-period ></app-period>
+    </div>
+  </div>
+  <div class="col" role="main">
+    <div class="container-timeline" align="center">
+      <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16" ></mat-spinner>
+      <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading" align="center">
+        <p>No transactions yet in that month</p>
+      </div>
+      <div style="display: block" *ngIf="(transactionsStore.transactions | async)?.size > 0 && !transactionsStore.loading" >
+        <canvas baseChart
+                [colors]="chartColors"
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType"
+                [options]="barChartOptions"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"
+                [legend]="false"></canvas>
+
+
+        <div *ngFor="let category of doughnutChartLabels; let i = index" >
+
+          <p><span [ngStyle]="{color: chartColors[0].backgroundColor[i]}" style="font-weight: bold;">#</span> {{category}} $ {{doughnutChartData[i] | onlyInteger }},<span >{{doughnutChartData[i] | onlyDecimalPart}}</span></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

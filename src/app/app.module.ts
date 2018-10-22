@@ -55,6 +55,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {TransactionsFooterComponent} from './pages/home/transactions/transactions-footer/transactions-footer.component';
 import { TransactionsFooterDetailsComponent } from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
 import { PeriodComponent } from './components/period/period.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { PeriodComponent } from './components/period/period.component';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     BrowserModule,
+    ChartsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
