@@ -24,7 +24,6 @@ export class UserService {
       const promises: Promise<any>[] = [];
       promises.push(this.categoriesService.addDefaultCategories());
       promises.push(this.accountsService.addDefaultAccounts());
-      promises.push(this.transactionsService.addDefaultTransactions());
       return Promise.all(promises);
     }, err => {
       console.log(err);
