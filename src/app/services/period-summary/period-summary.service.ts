@@ -19,9 +19,7 @@ export class PeriodSummaryService {
   constructor(private afs: AngularFirestore, private authService: AuthService, private http: HttpClient) { }
 
   getTotalRealized(date: Date) {
-    console.log('period summary service');
     return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
-      console.log('PERIOD SUMMARY AFTER GET CURRENT USER');
       const headersWithUser = new HttpHeaders({'user': res.uid});
       return this.http.get(`https://us-central1-minimalist-money.cloudfunctions.net/getTotalRealized?date=${date}`,
         {headers: headersWithUser});

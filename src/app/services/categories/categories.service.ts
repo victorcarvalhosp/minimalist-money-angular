@@ -21,7 +21,6 @@ export class CategoriesService {
 
   constructor(private afs: AngularFirestore, private authService: AuthService) {
     this.initializeData();
-    console.log('initialize categories service');
   }
 
   public initializeData() {

@@ -19,7 +19,6 @@ export class AccountsService {
 
   constructor(private afs: AngularFirestore, private authService: AuthService) {
     this.initializeData();
-    console.log('initialize accounts service');
   }
 
   public initializeData() {

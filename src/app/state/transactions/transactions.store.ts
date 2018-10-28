@@ -36,7 +36,6 @@ export class TransactionsStore {
            return data;
          }
        );
-       console.log(transactions);
        this._transactions.next(List(transactions));
        this.loading = false;
      });

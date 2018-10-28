@@ -24,7 +24,6 @@ export class TransactionsService {
   private transactionsDoc: AngularFirestoreDocument<ITransaction>;
 
   constructor(private afs: AngularFirestore, private authService: AuthService, private afAuth: AngularFireAuth) {
-    console.log('initialize transactions service');
   }
 
   private initializeData() {

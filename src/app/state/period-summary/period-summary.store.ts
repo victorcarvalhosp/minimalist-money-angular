@@ -33,7 +33,6 @@ export class PeriodSummaryStore {
     this.loading = true;
     this.periodStore.period.subscribe( period => {
       const endDateLastMonth: Date = new SubSecondsPipe().transform(period.startDate, 1);
-      console.log(endDateLastMonth);
       this.periodSummaryService.getTotalRealized(endDateLastMonth).subscribe((res: any) => {
         this.transactionsStore.transactions.subscribe(transactions => {
           const periodSummary: IPeriodSumary = {previousBalance:  res.total,

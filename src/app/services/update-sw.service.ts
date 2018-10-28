@@ -8,7 +8,6 @@ import {MatSnackBar} from "@angular/material";
 export class UpdateSwService {
 
   constructor(private swUpdate: SwUpdate, private snackbar: MatSnackBar) {
-    console.log('verificar SW');
     this.swUpdate.available.subscribe(evt => {
       const snack = this.snackbar.open('Update Available', 'Reload');
 

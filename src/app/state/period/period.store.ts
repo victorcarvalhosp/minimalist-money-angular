@@ -38,8 +38,6 @@ export class PeriodStore {
 
   public changeMonth(months: number) {
     const period = this._period.value;
-    console.log(this._period.value);
-    console.log(period);
     period.datePeriod = new AddMonthsPipe().transform(period.datePeriod, months);
     this.setStartAndEndDates(period);
   }

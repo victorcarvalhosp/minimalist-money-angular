@@ -17,7 +17,6 @@ export class AccountsStore {
     this.accountsService.initializeData().then(res => {
       this.initializeData();
     });
-    console.log('INITIALIZE ACCOUNTS STORE');
   }
 
   private initializeData() {

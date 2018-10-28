@@ -11,10 +11,6 @@ export const getAccountsSummary = functions.https.onRequest(async(request, respo
   try {
     await cors(request, response, async () => {
       if (request.method === 'GET') {
-        console.log('REQUEST');
-        console.log(request);
-        console.log(request.query);
-        console.log(request.query.date);
         const date: Date = new Date(request.query.date);
         const userId = request.headers.user;
         const totals = [];
