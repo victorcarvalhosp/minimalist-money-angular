@@ -30,6 +30,15 @@ export class AuthService {
     );
   }
 
+  doRecoverPassword(email: string) {
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(res => {
+          resolve(res);
+        }, err => reject(err));
+    });
+  }
+
   doLogin(value) {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)

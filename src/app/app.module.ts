@@ -56,6 +56,7 @@ import {TransactionsFooterComponent} from './pages/home/transactions/transaction
 import { TransactionsFooterDetailsComponent } from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
 import { PeriodComponent } from './components/period/period.component';
 import {ChartsModule} from 'ng2-charts';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import {ChartsModule} from 'ng2-charts';
     TransactionsFooterComponent,
     TransactionsFooterDetailsComponent,
     PeriodComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,

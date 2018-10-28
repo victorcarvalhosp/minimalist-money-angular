@@ -14,10 +14,12 @@ import {CreateCategoryComponent} from './pages/home/settings/categories/create-c
 import {AccountsComponent} from './pages/home/settings/accounts/accounts.component';
 import {CreateAccountComponent} from './pages/home/settings/accounts/create-account/create-account.component';
 import {TransactionsFooterDetailsComponent} from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
+import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password.component";
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
   {path: 'register', component: RegisterComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'login', component: LoginComponent},
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [

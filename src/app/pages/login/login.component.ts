@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         console.log(err);
         this.errorMessage = err.message;
         this.hideLoading();
-      })
+      });
   }
 
   private showLoading() {
