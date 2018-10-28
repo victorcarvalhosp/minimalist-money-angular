@@ -4,13 +4,13 @@ Personal Finances Progressive Web App using Angular6 and firebase
 https://victorcarvalhosp.github.io/minimalist-money-angular-6/
 
 ## Progress to v0.1
-- [ ] Landing Page
-- [ ] Register User
-- [ ] Login
-- [ ] Create accounts
-- [ ] Create categories
-- [ ] Add income
-- [ ] Add outcome
+- [X] Landing Page
+- [X] Register User
+- [X] Login
+- [X] Create accounts
+- [X] Create categories
+- [X] Add income
+- [X] Add outcome
 
 
 
