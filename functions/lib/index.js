@@ -20,10 +20,6 @@ exports.getAccountsSummary = functions.https.onRequest((request, response) => __
     try {
         yield cors(request, response, () => __awaiter(this, void 0, void 0, function* () {
             if (request.method === 'GET') {
-                console.log('REQUEST');
-                console.log(request);
-                console.log(request.query);
-                console.log(request.query.date);
                 const date = new Date(request.query.date);
                 const userId = request.headers.user;
                 const totals = [];
