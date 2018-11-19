@@ -53,10 +53,11 @@ import {AccountsComponent} from './pages/home/settings/accounts/accounts.compone
 import {CreateAccountComponent} from './pages/home/settings/accounts/create-account/create-account.component';
 import {HttpClientModule} from '@angular/common/http';
 import {TransactionsFooterComponent} from './pages/home/transactions/transactions-footer/transactions-footer.component';
-import { TransactionsFooterDetailsComponent } from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
-import { PeriodComponent } from './components/period/period.component';
+import {TransactionsFooterDetailsComponent} from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
+import {PeriodComponent} from './components/period/period.component';
 import {ChartsModule} from 'ng2-charts';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import {ForgotPasswordComponent} from './pages/forgot-password/forgot-password.component';
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     MatBottomSheetModule,
     NgxCurrencyModule,
     HttpClientModule,
+    FileUploadModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],

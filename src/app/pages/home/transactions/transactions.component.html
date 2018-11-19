@@ -4,6 +4,12 @@
   <app-transactions-header (openIncomeDialog)="openDialogNewTransaction($event)" (openOutcomeDialog)="openDialogNewTransaction($event)"></app-transactions-header>
 
   <div class="col" role="main">
+    <div ng2FileDrop
+         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+         (fileOver)="fileOverBase($event)"
+         (onFileDrop)="dropped($event)"
+         [uploader]="uploader"
+         class="well my-drop-zone">
     <div class="container-timeline">
       <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16" ></mat-spinner>
       <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading" align="center">
@@ -27,6 +33,7 @@
         </li>
       </ul>
     </div>
+  </div>
   </div>
   <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary" [loading]="periodSummaryStore.loading" ></app-transactions-footer>
 </div>

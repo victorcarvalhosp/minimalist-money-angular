@@ -16,17 +16,20 @@ import {AccountTotalsStore} from '../../../state/account-totals/account-totals.s
 import {SubSecondsPipe} from "ngx-date-fns";
 import {PeriodSummaryStore} from "../../../state/period-summary/period-summary.store";
 import {map, switchMap} from "rxjs/operators";
+import {FileUploader, } from "ng2-file-upload";
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TransactionsComponent implements OnInit {
 
   isSmall: Observable<BreakpointState> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]);
   total: number;
+  const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+
 
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsStore: TransactionsStore,
@@ -34,6 +37,23 @@ export class TransactionsComponent implements OnInit {
     // this.transactionsStore.getTransactionsByDate();
     // this.periodSummaryStore.calculateTotals();
 
+  }
+
+  public uploader:FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver:boolean = false;
+  public hasAnotherDropZoneOver:boolean = false;
+
+  public fileOverBase(e:any):void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public dropped(event: any) {
+    console.log(event);
+
+  }
+
+  public fileOverAnother(e:any):void {
+    this.hasAnotherDropZoneOver = e;
   }
 
   openDialogNewTransaction(type: TransactionTypeEnum): void {
