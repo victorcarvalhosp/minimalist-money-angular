@@ -15,8 +15,10 @@ import {TransactionsStore} from '../../../state/transactions/transactions.store'
 import {AccountTotalsStore} from '../../../state/account-totals/account-totals.store';
 import {SubSecondsPipe} from "ngx-date-fns";
 import {PeriodSummaryStore} from "../../../state/period-summary/period-summary.store";
-import {map, switchMap} from "rxjs/operators";
+import {map, switchMap, finalize} from "rxjs/operators";
 import {FileUploader, } from "ng2-file-upload";
+import {AngularFireStorage} from "@angular/fire/storage";
+
 
 @Component({
   selector: 'app-transactions',
@@ -28,28 +30,47 @@ export class TransactionsComponent implements OnInit {
 
   isSmall: Observable<BreakpointState> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]);
   total: number;
-  const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+  URL: any = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsStore: TransactionsStore,
-              public dialog: MatDialog, public snackBar: MatSnackBar, public periodSummaryStore: PeriodSummaryStore) {
+              public dialog: MatDialog, public snackBar: MatSnackBar, public periodSummaryStore: PeriodSummaryStore, private storage: AngularFireStorage) {
     // this.transactionsStore.getTransactionsByDate();
     // this.periodSummaryStore.calculateTotals();
 
   }
 
-  public uploader:FileUploader = new FileUploader({url: URL});
+  public uploader:FileUploader = new FileUploader({url: this.URL});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<string>;
 
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
   }
 
-  public dropped(event: any) {
+  public dropped(event: FileList) {
     console.log(event);
+    const file = event[0];
+    const filePath = 'name-your-file-path-here';
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
 
+    // observe percentage changes
+    this.uploadPercent = task.percentageChanges();
+    // get notified when the download URL is available
+    task.snapshotChanges().pipe(
+      finalize(() => this.downloadURL = fileRef.getDownloadURL() )
+    )
+      .subscribe();
+
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      console.log(fileReader.result);
+    }
+    fileReader.readAsText(file);
   }
 
   public fileOverAnother(e:any):void {

@@ -115,6 +115,7 @@ import {FileUploadModule} from "ng2-file-upload";
     NgxCurrencyModule,
     HttpClientModule,
     FileUploadModule,
+    AngularFireStorageModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],
