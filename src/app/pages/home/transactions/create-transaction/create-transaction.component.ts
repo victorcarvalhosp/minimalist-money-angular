@@ -11,6 +11,7 @@ import {AppService} from "../../../../services/app/app.service";
 import {AccountsService} from "../../../../services/accounts/accounts.service";
 import {CategoriesStore} from "../../../../state/categories/categories.store";
 import {AccountsStore} from "../../../../state/accounts/accounts.store";
+import {TransactionsStore} from "../../../../state/transactions/transactions.store";
 
 @Component({
   selector: 'app-create-transaction',
@@ -26,26 +27,35 @@ export class CreateTransactionComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
-              public transactionsService: TransactionsService, public snackBar: MatSnackBar,
+              public transactionService: TransactionsStore, public snackBar: MatSnackBar,
               public categoriesStore: CategoriesStore, public accountsStore: AccountsStore, private appService: AppService) {
     console.log('CONSTRUCTOR CALLED');
     this.isMobile = this.appService.isMobile;
     this.createForm();
     this.form.patchValue(this.data);
     this.form.get('category').setValue(this.data.category);
+    if (this.data.reconciled) {
+      this.form.get('amount').disable();
+      this.form.get('realized').disable();
+      this.form.get('account').disable();
+      this.form.get('date').disable();
+    }
   }
 
 
   createForm() {
     this.form = this.fb.group({
       id: [''],
-      name: ['', Validators.compose([Validators.required])],
+      name: ['',  Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       date: ['', Validators.compose([Validators.required])],
       type: ['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
       account: ['', Validators.compose([Validators.required])],
       realized: [''],
+      preReconciled: [false],
+      reconciled: [false],
+      ofxTransactionId: ['']
     });
     this.createValidatorsMessages();
   }
@@ -85,7 +95,7 @@ export class CreateTransactionComponent implements OnInit {
 
   tryDelete(value) {
     this.showLoading();
-    this.transactionsService.delete(value);
+    this.transactionService.delete(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction deleted!');
@@ -93,13 +103,17 @@ export class CreateTransactionComponent implements OnInit {
 
   trySave(value) {
     this.showLoading();
-    this.transactionsService.save(value);
+    this.transactionService.save(value);
     this.hideLoading();
-    this.closeDialog();
+    this.closeDialogAfterSave(value);
     this.openSnackBar('Transaction Saved!');
     // this.transactionsStore.save(value).then(res => {
     //   console.log('res');
     // });
+  }
+
+  closeDialogAfterSave(value) {
+    this.dialogRef.close(value);
   }
 
   closeDialog() {

@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { TransactionsService } from './transactions.service';
 
-describe('TransactionsService', () => {
+describe('TransactionsOfxService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [TransactionsService]

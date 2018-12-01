@@ -1,15 +1,21 @@
-<h4>Categories</h4>
-<div>
-  <button mat-button (click)="openNewCategoryDialog()">
-    <mat-icon>add</mat-icon>
-    Create New Category
-  </button>
-</div>
-<div>
-  <mat-nav-list>
-    <mat-list-item (click)="openDialog(c)" *ngFor="let c of categoriesStore.categories | async"><span
-      style="font-weight: bold"
-      [ngStyle]="{'color': c.color}">#</span>{{c.name}}
-    </mat-list-item>
-  </mat-nav-list>
+<div class="container">
+  <div class="layout">
+    <div class="full-width">
+      <h4>Categories</h4>
+      <div>
+        <button mat-button (click)="openNewCategoryDialog()">
+          <mat-icon>add</mat-icon>
+          Create New Category
+        </button>
+      </div>
+      <div>
+        <mat-nav-list>
+          <mat-list-item (click)="openDialog(c)" *ngFor="let c of categoriesStore.categories | async"><span
+            style="font-weight: bold"
+            [ngStyle]="{'color': c.color}">#</span>{{c.name}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </div>
 </div>

@@ -18,6 +18,10 @@ body {
   max-width: 650px;
 }
 
+.container-850{
+  max-width: 850px;
+}
+
 .center-col{
   margin: 0 auto;
 }
@@ -172,4 +176,25 @@ body {
 
 .mat-icon.big {
   font-size: 24px;
+}
+
+.title{
+  font-weight: bold;
+}
+
+.info{
+  font-size: 11px;
+  color: mat-color($gray-color);
+}
+.type{
+  font-size: 11px;
+  color: mat-color($gray-color);
+  display: block;
+}
+
+.amount{
+  float: right;
+}
+.amount span{
+  font-size: 11px;
 }

@@ -1,13 +1,18 @@
-<h4>Accounts</h4>
-<div>
-  <button mat-button (click)="openNewAccountDialog()">
-    <mat-icon>add</mat-icon>
-    Create New Account
-  </button>
-</div>
-<div>
-  <mat-nav-list>
-    <mat-list-item (click)="openDialog(c)" *ngFor="let c of accountsStore.accounts | async">{{c.name}}
-    </mat-list-item>
-  </mat-nav-list>
+<div class="container">
+  <div class="layout">
+    <div class="full-width">
+      <h4>Accounts</h4>
+      <div>
+        <button mat-button (click)="openNewAccountDialog()">
+          <mat-icon>add</mat-icon>
+          Create New Account
+        </button>
+      </div>
+      <div>
+        <mat-nav-list>
+          <mat-list-item (click)="openDialog(c)" *ngFor="let c of accountsStore.accounts | async">{{c.name}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
 </div>

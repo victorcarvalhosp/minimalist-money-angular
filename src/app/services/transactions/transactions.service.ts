@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {
+  Action,
   AngularFirestore,
   AngularFirestoreCollection,
   AngularFirestoreDocument,
-  DocumentChangeAction
+  DocumentChangeAction, DocumentSnapshot
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {TransactionTypeEnum} from '../../enums/transaction-type.enum';
@@ -54,7 +55,10 @@ export class TransactionsService {
     }
   }
 
-  getTransaction(transactionUid: string) {
+  getTransaction(transactionUid: string): Observable<Action<DocumentSnapshot<any>>> {
+    return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
+      return this.afs.doc(`users/${res.uid}/transactions/${transactionUid}`).snapshotChanges();
+    }));
     // return this.authService.getCurrentUser()
     //   .then(user => {
     //     console.log('UID' + user.uid);

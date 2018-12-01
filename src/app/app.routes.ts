@@ -15,6 +15,8 @@ import {AccountsComponent} from './pages/home/settings/accounts/accounts.compone
 import {CreateAccountComponent} from './pages/home/settings/accounts/create-account/create-account.component';
 import {TransactionsFooterDetailsComponent} from './pages/home/transactions/transactions-footer/transactions-footer-details/transactions-footer-details.component';
 import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password.component";
+import {ReconciliationComponent} from "./pages/home/reconciliation/reconciliation.component";
+import {OfxTransactionsRulesComponent} from "./pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component";
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
@@ -30,6 +32,8 @@ export const appRoutes: Routes = [
         ]
       },
       {path: 'dashboard', component: DashboardComponent},
+      {path: 'reconciliation', component: ReconciliationComponent},
+      {path: 'ofx-transactions-rules', component: OfxTransactionsRulesComponent},
       {path: 'settings', component: SettingsComponent},
       {path: 'categories', component: CategoriesComponent, children: [
           {path: 'new', component: CreateCategoryComponent}

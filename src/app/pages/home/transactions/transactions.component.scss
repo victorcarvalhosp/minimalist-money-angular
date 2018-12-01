@@ -1,7 +1,10 @@
 @import "../../../../variables.scss";
 
 
-.my-drop-zone { border: dotted 3px lightgray; }
+.my-drop-zone {
+  //border: dotted 3px lightgray;
+
+}
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }
 
@@ -9,28 +12,9 @@
 app-transactions {
   width: 100%;
 
-  .title{
-    font-weight: bold;
-  }
-
-  .info{
-    font-size: 11px;
-    color: mat-color($gray-color);
-  }
-  .type{
-    font-size: 11px;
-    color: mat-color($gray-color);
-  }
-
   .col-amount{
     float: right;
     min-width: 70px;
-  }
-  .amount{
-    float: right;
-  }
-  .amount span{
-    font-size: 11px;
   }
 
   .container-timeline ul {

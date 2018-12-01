@@ -1,9 +1,13 @@
-<router-outlet></router-outlet>
-<mat-nav-list>
-    <mat-list-item (click)="goToCategories()"> Categories </mat-list-item>
-    <mat-list-item (click)="goToAccounts()"> Accounts </mat-list-item>
-    <mat-list-item (click)="doSignOut()"> Sign out </mat-list-item>
-  </mat-nav-list>
+<div class="container">
+  <div class="layout">
+    <router-outlet></router-outlet>
+    <mat-nav-list>
+      <mat-list-item (click)="goToCategories()"> Categories</mat-list-item>
+      <mat-list-item (click)="goToAccounts()"> Accounts</mat-list-item>
+      <mat-list-item (click)="doSignOut()"> Sign out</mat-list-item>
+    </mat-nav-list>
+  </div>
+</div>
 
 
 

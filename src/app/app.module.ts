@@ -58,6 +58,13 @@ import {PeriodComponent} from './components/period/period.component';
 import {ChartsModule} from 'ng2-charts';
 import {ForgotPasswordComponent} from './pages/forgot-password/forgot-password.component';
 import {FileUploadModule} from "ng2-file-upload";
+import { ReconciliationComponent } from './pages/home/reconciliation/reconciliation.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {TransactionColorDirective} from "./directives/transaction-color/transaction-color.directive";
+import { OfxTransactionsRulesComponent } from './pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component';
+import {OfxIfClausePipe} from "./pipes/ofx-if-clause/ofx-if-clause.pipe";
+import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
+
 
 @NgModule({
   declarations: [
@@ -71,6 +78,7 @@ import {FileUploadModule} from "ng2-file-upload";
     SettingsComponent,
     TransactionsHeaderComponent,
     TransactionCircleColorDirective,
+    TransactionColorDirective,
     OnlyIntegerPipePipe,
     OnlyDecimalPartPipePipe,
     CreateTransactionComponent,
@@ -86,6 +94,10 @@ import {FileUploadModule} from "ng2-file-upload";
     TransactionsFooterDetailsComponent,
     PeriodComponent,
     ForgotPasswordComponent,
+    ReconciliationComponent,
+    OfxTransactionsRulesComponent,
+    OfxIfClausePipe,
+    OperatorTypePipe,
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,
@@ -116,6 +128,7 @@ import {FileUploadModule} from "ng2-file-upload";
     HttpClientModule,
     FileUploadModule,
     AngularFireStorageModule,
+    DragDropModule,
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],

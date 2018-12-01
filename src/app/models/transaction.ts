@@ -14,5 +14,7 @@ export interface ITransaction {
   account?: IAccount;
   recurring?: boolean;
   recurringDontShowParcel?: boolean;
-
+  preReconciled?: boolean;
+  reconciled?: boolean;
+  ofxTransactionId?: string;
 }

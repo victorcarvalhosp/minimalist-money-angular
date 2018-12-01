@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { CategoriesService } from './categories.service';
 
-describe('CategoriesService', () => {
+describe('OfxTransactionsRulesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CategoriesService]

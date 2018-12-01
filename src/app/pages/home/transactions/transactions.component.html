@@ -1,41 +1,48 @@
-<div class="center-col">
-  <router-outlet></router-outlet>
-  <!--<app-speed-dial-fab (action)="openDialogNewTransaction($event)"></app-speed-dial-fab>-->
-  <app-transactions-header (openIncomeDialog)="openDialogNewTransaction($event)" (openOutcomeDialog)="openDialogNewTransaction($event)"></app-transactions-header>
+<div class="container">
+  <div class="layout">
+    <div class="center-col full-width">
+      <router-outlet></router-outlet>
+      <!--<app-speed-dial-fab (action)="openDialogNewTransaction($event)"></app-speed-dial-fab>-->
+      <app-transactions-header (openIncomeDialog)="openDialogNewTransaction($event)"
+                               (openOutcomeDialog)="openDialogNewTransaction($event)"></app-transactions-header>
 
-  <div class="col" role="main">
-    <div>{{ uploadPercent | async }}</div>
-    <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
-    <div ng2FileDrop
-         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-         (fileOver)="fileOverBase($event)"
-         (onFileDrop)="dropped($event)"
-         [uploader]="uploader"
-         class="well my-drop-zone">
-    <div class="container-timeline">
-      <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16" ></mat-spinner>
-      <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading" align="center">
-        <p>No transactions yet in that month</p>
-      </div>
-      <ul>
-        <li  *ngFor="let t of (transactionsStore.transactions | async)">
-          <div class="row" (click)="showDetails(t)">
-            <div style="float: left" class="full-width">
-              <div class="title">{{t.name}}</div>
-              <div class="info">{{t.description}}</div>
-              <div class="type"><span *ngIf="t.category" style="font-weight: bold"
-                                      [ngStyle]="{'color': t.category?.color}">#</span>{{t.category?.name}}
-              </div>
+      <div class="col" role="main">
+        <div>{{ uploadPercent | async }}</div>
+        <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+        <div ng2FileDrop
+             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+             (fileOver)="fileOverBase($event)"
+             (onFileDrop)="dropped($event)"
+             [uploader]="uploader"
+             class="well my-drop-zone">
+          <div class="container-timeline">
+            <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16"></mat-spinner>
+            <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading"
+                 align="center">
+              <p>No transactions yet in that month</p>
             </div>
-            <div class="col-amount">
-              <div class="amount">$ {{t.amount | onlyInteger }},<span >{{t.amount | onlyDecimalPart}}</span></div>
-            </div>
+            <ul>
+              <li *ngFor="let t of (transactionsStore.transactions | async)">
+                <div class="row" (click)="showDetails(t)">
+                  <div style="float: left" class="full-width">
+                    <div class="title">{{t.name}}</div>
+                    <div class="info">{{t.description}}</div>
+                    <div class="type"><span *ngIf="t.category" style="font-weight: bold"
+                                            [ngStyle]="{'color': t.category?.color}">#</span>{{t.category?.name}}
+                    </div>
+                  </div>
+                  <div class="col-amount">
+                    <div class="amount">$ {{t.amount | onlyInteger }},<span>{{t.amount | onlyDecimalPart}}</span></div>
+                  </div>
+                </div>
+                <span (click)="toggleRealized(t)" [appTransactionCircleColor]="t" class="number circle"><span>{{t.date | date: 'dd'}}</span></span>
+              </li>
+            </ul>
           </div>
-          <span (click)="toggleRealized(t)" [appTransactionCircleColor]="t" class="number circle"><span>{{t.date | date: 'dd'}}</span></span>
-        </li>
-      </ul>
+        </div>
+      </div>
+      <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary"
+                               [loading]="periodSummaryStore.loading"></app-transactions-footer>
     </div>
   </div>
-  </div>
-  <app-transactions-footer [periodSummary]="periodSummaryStore.periodSummary" [loading]="periodSummaryStore.loading" ></app-transactions-footer>
 </div>

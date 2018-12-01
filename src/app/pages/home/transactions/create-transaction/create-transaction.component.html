@@ -70,7 +70,7 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button *ngIf="form.get('id').value !== ''" type="button" mat-icon-button (click)="tryDelete(form.value)"
+  <button *ngIf="form.get('id').value !== '' && form.get('reconciled').value != true" type="button" mat-icon-button (click)="tryDelete(form.value)"
           title="Delete transaction">
     <mat-icon>delete</mat-icon>
   </button>
