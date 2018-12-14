@@ -27,7 +27,7 @@ import {
   MatNativeDateModule,
   MatOptionModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatRippleModule,
   MatSelectModule,
   MatSnackBarModule
 } from '@angular/material';
@@ -64,6 +64,7 @@ import {TransactionColorDirective} from "./directives/transaction-color/transact
 import { OfxTransactionsRulesComponent } from './pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component';
 import {OfxIfClausePipe} from "./pipes/ofx-if-clause/ofx-if-clause.pipe";
 import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
+import {CreateOfxTransactionRuleComponent} from "./pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component";
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
     OfxTransactionsRulesComponent,
     OfxIfClausePipe,
     OperatorTypePipe,
+    CreateOfxTransactionRuleComponent,
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,
@@ -124,6 +126,7 @@ import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
     MatListModule,
     MatProgressSpinnerModule,
     MatBottomSheetModule,
+    MatRippleModule,
     NgxCurrencyModule,
     HttpClientModule,
     FileUploadModule,

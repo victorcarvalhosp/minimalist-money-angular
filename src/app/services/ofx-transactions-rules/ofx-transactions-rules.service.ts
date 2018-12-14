@@ -7,7 +7,7 @@ import {
   DocumentChangeAction
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
-import {IOfxTransactionsRule} from "../../models/ofx-transactions-rules";
+import {IOfxTransactionRule} from "../../models/ofx-transaction-rule";
 
 
 @Injectable({
@@ -15,8 +15,8 @@ import {IOfxTransactionsRule} from "../../models/ofx-transactions-rules";
 })
 export class OfxTransactionsRulesService {
 
-  private ofxTransactionsRulesCollection: AngularFirestoreCollection<IOfxTransactionsRule>;
-  private ofxTransactionsRulesDoc: AngularFirestoreDocument<IOfxTransactionsRule>;
+  private ofxTransactionsRulesCollection: AngularFirestoreCollection<IOfxTransactionRule>;
+  private ofxTransactionsRulesDoc: AngularFirestoreDocument<IOfxTransactionRule>;
 
   constructor(private afs: AngularFirestore, private authService: AuthService) {
     this.initializeData();
@@ -36,7 +36,7 @@ export class OfxTransactionsRulesService {
     return `users/${user.uid}/ofx_transactions_rules`;
   }
 
-  delete(category: IOfxTransactionsRule): Observable<any> {
+  delete(category: IOfxTransactionRule): Observable<any> {
     if (category.id) {
       return from(this.ofxTransactionsRulesCollection.doc(category.id).delete());
     }
@@ -67,7 +67,7 @@ export class OfxTransactionsRulesService {
     //    });
   }
 
-  save(category: IOfxTransactionsRule): Observable<any> {
+  save(category: IOfxTransactionRule): Observable<any> {
     if (category.id) {
       return from(this.ofxTransactionsRulesCollection.doc(category.id).update(category));
     } else {

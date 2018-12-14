@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
           uid: res.user.uid,
           email: res.user.email,
           creationDate: new Date()
-        }
+        };
         this.userService.createUser(user).then(res => {
           this.authService.doLogin(value).then(login => {
             this.router.navigate(['../home/transactions']);
