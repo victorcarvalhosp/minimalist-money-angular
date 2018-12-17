@@ -33,7 +33,7 @@ export class OfxTransactionsRulesService {
   }
 
   private getPath(user): string {
-    return `users/${user.uid}/ofx_transactions_rules`;
+    return `users/${user.uid}/ofxTransactionsRules`;
   }
 
   delete(category: IOfxTransactionRule): Observable<any> {
@@ -67,11 +67,13 @@ export class OfxTransactionsRulesService {
     //    });
   }
 
-  save(category: IOfxTransactionRule): Observable<any> {
-    if (category.id) {
-      return from(this.ofxTransactionsRulesCollection.doc(category.id).update(category));
+  save(ofxTransactionRule: IOfxTransactionRule): Observable<any> {
+    if (ofxTransactionRule.id) {
+      return from(this.ofxTransactionsRulesCollection.doc(ofxTransactionRule.id).update(ofxTransactionRule));
     } else {
-      return from(this.ofxTransactionsRulesCollection.add(category));
+      const idBefore =  this.afs.createId();
+      ofxTransactionRule.id = idBefore;
+      return from(this.ofxTransactionsRulesCollection.add(ofxTransactionRule));
     }
   }
 

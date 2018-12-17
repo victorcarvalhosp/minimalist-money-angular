@@ -17,6 +17,7 @@ import {TransactionsFooterDetailsComponent} from './pages/home/transactions/tran
 import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password.component";
 import {ReconciliationComponent} from "./pages/home/reconciliation/reconciliation.component";
 import {OfxTransactionsRulesComponent} from "./pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component";
+import {CreateOfxTransactionRuleComponent} from "./pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component";
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
@@ -33,7 +34,9 @@ export const appRoutes: Routes = [
       },
       {path: 'dashboard', component: DashboardComponent},
       {path: 'reconciliation', component: ReconciliationComponent},
-      {path: 'ofx-transactions-rules', component: OfxTransactionsRulesComponent},
+      {path: 'ofx-transactions-rules', component: OfxTransactionsRulesComponent, children: [
+          {path: 'new', component: CreateOfxTransactionRuleComponent}
+        ]},
       {path: 'settings', component: SettingsComponent},
       {path: 'categories', component: CategoriesComponent, children: [
           {path: 'new', component: CreateCategoryComponent}

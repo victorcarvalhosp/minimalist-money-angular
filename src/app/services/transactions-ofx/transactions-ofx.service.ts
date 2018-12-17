@@ -40,7 +40,7 @@ export class TransactionsOfxService {
 
   getTransactionsByDate(period: IPeriod): Observable<DocumentChangeAction<any>[]> {
     return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
-      this.transactionsCollection = this.afs.collection<any>(`users/${res.uid}/transactions-ofx`,
+      this.transactionsCollection = this.afs.collection<any>(`users/${res.uid}/transactionsOfx`,
         ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
       return this.transactionsCollection.snapshotChanges();
     }));
@@ -48,13 +48,13 @@ export class TransactionsOfxService {
 
   getTransactionsByBankAccountIdAndBankTransactionId(bankTransactionId: string): Observable<DocumentChangeAction<any>[]> {
     return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
-      return this.afs.collection<any>(`users/${res.uid}/transactions-ofx`,
+      return this.afs.collection<any>(`users/${res.uid}/transactionsOfx`,
         ref => ref.where('bankTransactionId', '==', bankTransactionId)).snapshotChanges();
     }));
   }
 
   private getPath(user): string {
-    return `users/${user.uid}/transactions-ofx`;
+    return `users/${user.uid}/transactionsOfx`;
   }
 
   delete(transaction: ITransactionOfx): Observable<any> {
@@ -65,7 +65,7 @@ export class TransactionsOfxService {
 
   getTransaction(transactionUid: string): Observable<Action<DocumentSnapshot<any>>> {
     return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
-      return this.afs.doc(`users/${res.uid}/transactions-ofx/${transactionUid}`).snapshotChanges();
+      return this.afs.doc(`users/${res.uid}/transactionsOfx/${transactionUid}`).snapshotChanges();
     }));
   }
 

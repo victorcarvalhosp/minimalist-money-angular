@@ -18,7 +18,8 @@ export class OfxTransactionsRulesStore {
     ifFieldClause: OfxIfClauseEnum.NAME,
     ifOperator: OperatorTypeEnum.IS_EQUAL_TO,
     ifValueClause: '',
-    actions: null
+    thenValueCategory: null,
+    thenValueName: ''
   });
   private _ofxTransactionsRules: BehaviorSubject<List<IOfxTransactionRule>> = new BehaviorSubject(List([]));
 
@@ -59,7 +60,7 @@ export class OfxTransactionsRulesStore {
       value.forEach((rule: IOfxTransactionRule) => {
         // Implement custom operators later
         if (ofxTransaction[getOfxIfClauseObjectField(rule.ifFieldClause)] === rule.ifValueClause) {
-          transaction = Object.assign(transaction, rule.actions);
+          transaction.category = rule.thenValueCategory;
         }
       });
     });

@@ -57,14 +57,14 @@ import {TransactionsFooterDetailsComponent} from './pages/home/transactions/tran
 import {PeriodComponent} from './components/period/period.component';
 import {ChartsModule} from 'ng2-charts';
 import {ForgotPasswordComponent} from './pages/forgot-password/forgot-password.component';
-import {FileUploadModule} from "ng2-file-upload";
+import {FileUploadModule} from 'ng2-file-upload';
 import { ReconciliationComponent } from './pages/home/reconciliation/reconciliation.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {TransactionColorDirective} from "./directives/transaction-color/transaction-color.directive";
+import {TransactionColorDirective} from './directives/transaction-color/transaction-color.directive';
 import { OfxTransactionsRulesComponent } from './pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component';
-import {OfxIfClausePipe} from "./pipes/ofx-if-clause/ofx-if-clause.pipe";
+import {OfxIfClausePipe} from './pipes/ofx-if-clause/ofx-if-clause.pipe';
 import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
-import {CreateOfxTransactionRuleComponent} from "./pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component";
+import {CreateOfxTransactionRuleComponent} from './pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component';
 
 
 @NgModule({
@@ -99,7 +99,7 @@ import {CreateOfxTransactionRuleComponent} from "./pages/home/reconciliation/ofx
     OfxTransactionsRulesComponent,
     OfxIfClausePipe,
     OperatorTypePipe,
-    CreateOfxTransactionRuleComponent,
+    CreateOfxTransactionRuleComponent
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,
