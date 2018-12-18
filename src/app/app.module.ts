@@ -65,6 +65,7 @@ import { OfxTransactionsRulesComponent } from './pages/home/reconciliation/ofx-t
 import {OfxIfClausePipe} from './pipes/ofx-if-clause/ofx-if-clause.pipe';
 import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
 import {CreateOfxTransactionRuleComponent} from './pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component';
+import { ReconciliationHeaderComponent } from './pages/home/reconciliation/reconciliation-header/reconciliation-header.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import {CreateOfxTransactionRuleComponent} from './pages/home/reconciliation/ofx
     OfxTransactionsRulesComponent,
     OfxIfClausePipe,
     OperatorTypePipe,
-    CreateOfxTransactionRuleComponent
+    CreateOfxTransactionRuleComponent,
+    ReconciliationHeaderComponent
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,

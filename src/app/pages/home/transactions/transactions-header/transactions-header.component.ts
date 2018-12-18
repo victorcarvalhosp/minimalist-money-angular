@@ -3,6 +3,7 @@ import {AddMonthsPipe, LastDayOfMonthPipe, StartOfMonthPipe} from 'ngx-date-fns'
 import {IPeriod} from '../../../../models/period';
 import {TransactionTypeEnum} from '../../../../enums/transaction-type.enum';
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-transactions-header',
@@ -17,7 +18,7 @@ export class TransactionsHeaderComponent {
   @Output()
   openOutcomeDialog: EventEmitter<TransactionTypeEnum> = new EventEmitter<TransactionTypeEnum>();
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
@@ -27,6 +28,10 @@ export class TransactionsHeaderComponent {
 
   handleOpenOutcomeDialog() {
     this.openOutcomeDialog.emit(TransactionTypeEnum.OUTCOME);
+  }
+
+  redirectToReconciliation() {
+    this.router.navigate(['home', 'reconciliation']);
   }
 
 }
