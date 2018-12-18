@@ -61,6 +61,7 @@ export class OfxTransactionsRulesStore {
         // Implement custom operators later
         if (ofxTransaction[getOfxIfClauseObjectField(rule.ifFieldClause)] === rule.ifValueClause) {
           transaction.category = rule.thenValueCategory;
+          transaction.name = rule.thenValueName;
         }
       });
     });

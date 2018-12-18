@@ -5,13 +5,13 @@
         <mat-icon>add</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="handleOpenIncomeDialog()">
-          <mat-icon>add</mat-icon>
-          <span>Income</span>
-        </button>
         <button mat-menu-item (click)="handleOpenOutcomeDialog()">
           <mat-icon>remove</mat-icon>
           <span>Outcome</span>
+        </button>
+        <button mat-menu-item (click)="handleOpenIncomeDialog()">
+          <mat-icon>add</mat-icon>
+          <span>Income</span>
         </button>
       </mat-menu>
     </div>
