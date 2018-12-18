@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ITransaction} from '../../../../models/transaction';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Validations} from '../../../../validators/validations';
@@ -12,6 +12,9 @@ import {AccountsService} from "../../../../services/accounts/accounts.service";
 import {CategoriesStore} from "../../../../state/categories/categories.store";
 import {AccountsStore} from "../../../../state/accounts/accounts.store";
 import {TransactionsStore} from "../../../../state/transactions/transactions.store";
+import {CreateCategoryComponent} from "../../settings/categories/create-category/create-category.component";
+import {Observable} from "rxjs";
+import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-create-transaction',
@@ -24,12 +27,14 @@ export class CreateTransactionComponent implements OnInit {
   loading: boolean = false;
   categories: ICategory[];
   isMobile: boolean = false;
+  isSmall: Observable<BreakpointState> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]);
+
 
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
               public transactionService: TransactionsStore, public snackBar: MatSnackBar,
-              public categoriesStore: CategoriesStore, public accountsStore: AccountsStore, private appService: AppService) {
-    console.log('CONSTRUCTOR CALLED');
+              public categoriesStore: CategoriesStore, public accountsStore: AccountsStore, private appService: AppService,
+              public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
     this.isMobile = this.appService.isMobile;
     this.createForm();
     this.form.patchValue(this.data);
@@ -46,13 +51,13 @@ export class CreateTransactionComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       id: [''],
-      name: ['',  Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       date: ['', Validators.compose([Validators.required])],
       type: ['', Validators.compose([Validators.required])],
-      category: ['', Validators.compose([Validators.required])],
+      category: [null, Validators.compose([Validators.required])],
       account: ['', Validators.compose([Validators.required])],
-      realized: [''],
+      realized: [true],
       preReconciled: [false],
       reconciled: [false],
       ofxTransactionId: ['']
@@ -126,6 +131,34 @@ export class CreateTransactionComponent implements OnInit {
   openSnackBar(message: string) {
     this.snackBar.open(message, 'OK', {
       duration: 2000,
+    });
+  }
+
+  openNewCategoryDialog() {
+    const category: ICategory = {
+      name: '',
+    };
+    const dialogRef = this.dialog.open(CreateCategoryComponent, {
+      width: '50%',
+      maxWidth: '100wh',
+      maxHeight: '100vh',
+      disableClose: true,
+      data: category
+    });
+
+    const smallDialogSubscription = this.isSmall.subscribe(size => {
+      if (size.matches) {
+        dialogRef.updateSize('100%', '100%');
+      } else {
+        dialogRef.updateSize('50%');
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.form.value.category = result;
+      console.log(this.form.value);
+      smallDialogSubscription.unsubscribe();
     });
   }
 

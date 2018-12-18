@@ -74,11 +74,15 @@ export class CreateCategoryComponent implements OnInit {
     this.showLoading();
     this.categoriesStore.save(value);
     this.hideLoading();
-    this.closeDialog();
-    this.openSnackBar('Transaction Saved!');
+    this.closeDialogAfterSave(value);
+    this.openSnackBar('Category Saved!');
     // this.categoriesService.save(value).then(res => {
     //   console.log('res');
     // });
+  }
+
+  closeDialogAfterSave(value: ICategory) {
+    this.dialogRef.close(value);
   }
 
   closeDialog() {

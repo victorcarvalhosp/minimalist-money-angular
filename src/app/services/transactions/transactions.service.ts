@@ -90,8 +90,6 @@ export class TransactionsService {
       const idBefore =  this.afs.createId();
       transaction.id = idBefore;
       return from(this.transactionsCollection.doc(idBefore).set(transaction));
-
-      // return from(this.transactionsCollection.add(transaction).then());
     }
   }
 

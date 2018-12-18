@@ -43,8 +43,8 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div>
-      <mat-form-field class="full-width">
+    <div class="full-width">
+      <mat-form-field style="width: 90%;" >
         <mat-select placeholder="Category" formControlName="category"
                     [compareWith]="compareIds">
           <mat-select-trigger>
@@ -58,6 +58,9 @@
           {{ getError('category') }}
         </mat-error>
       </mat-form-field>
+      <button mat-icon-button (click)="openNewCategoryDialog()" type="button">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
     <div>
       <mat-form-field class="full-width">

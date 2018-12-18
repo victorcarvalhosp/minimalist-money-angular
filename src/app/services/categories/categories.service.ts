@@ -9,6 +9,7 @@ import {
 import {AuthService} from '../auth/auth.service';
 import {ICategory} from '../../models/category';
 import {from} from 'rxjs';
+import {switchMap, take} from "rxjs/operators";
 
 
 @Injectable({
@@ -25,7 +26,8 @@ export class CategoriesService {
 
   public initializeData() {
     return this.authService.getCurrentUser().then(user => {
-      this.categoriesCollection = this.afs.collection<any>(this.getPath(user));
+      this.categoriesCollection = this.afs.collection<any>(this.getPath(user),
+        ref => ref.orderBy('name'));
     });
   }
 
@@ -72,7 +74,9 @@ export class CategoriesService {
     if (category.id) {
       return from(this.categoriesCollection.doc(category.id).update(category));
     } else {
-      return from(this.categoriesCollection.add(category));
+      const idBefore =  this.afs.createId();
+      category.id = idBefore;
+      return from(this.categoriesCollection.doc(idBefore).set(category));
     }
   }
 
