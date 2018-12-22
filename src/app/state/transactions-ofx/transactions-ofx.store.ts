@@ -39,14 +39,8 @@ export class TransactionsOfxStore {
       fileReader.onload = () => {
         this.readAndSaveOfxFile(fileReader, importOfx.account);
       };
-      fileReader.readAsText(file);
+      fileReader.readAsText(file._file);
     }
-    const file = importOfx.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      this.readAndSaveOfxFile(fileReader);
-    };
-    fileReader.readAsText(file);
   }
 
   private readAndSaveOfxFile(fileReader, account: IAccount) {

@@ -8,7 +8,7 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/lay
 import {TransactionTypeEnum} from '../../../enums/transaction-type.enum';
 import {TransactionsStore} from '../../../state/transactions/transactions.store';
 import {PeriodSummaryStore} from '../../../state/period-summary/period-summary.store';
-import {FileUploader,} from 'ng2-file-upload';
+import {FileUploader} from 'ng2-file-upload';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {Router} from '@angular/router';
 import {TransactionsOfxStore} from '../../../state/transactions-ofx/transactions-ofx.store';
