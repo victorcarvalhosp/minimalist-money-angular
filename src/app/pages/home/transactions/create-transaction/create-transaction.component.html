@@ -70,6 +70,16 @@
         <mat-datepicker #myDatepicker touchUi="{{isMobile}}"></mat-datepicker>
       </mat-form-field>
     </div>
+    <div class="full-width">
+      <mat-slide-toggle class="full-width" formControlName="repeat" (change)="toggleNumberParcelsToOneWhenDontRepeat()">Repeat</mat-slide-toggle>
+      <mat-form-field class="full-width" *ngIf="form.value.repeat">
+        <input cdkFocusRegionStart matInput placeholder="Repeat how many times: " type="text" formControlName="parcels">
+        <mat-error>
+          {{ getError('parcels') }}
+        </mat-error>
+      </mat-form-field>
+      <mat-checkbox *ngIf="form.value.repeat" formControlName="showParcels">show parcels</mat-checkbox>
+    </div>
   </form>
 </div>
 <div mat-dialog-actions>

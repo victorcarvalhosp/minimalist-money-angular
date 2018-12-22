@@ -13,7 +13,8 @@ import {IPeriod} from '../../models/period';
 import {map, switchMap} from 'rxjs/operators';
 import {ITransaction} from '../../models/transaction';
 import {AngularFireAuth} from '@angular/fire/auth';
-import { take } from 'rxjs/operators';
+import {take} from 'rxjs/operators';
+import {List} from "immutable";
 
 
 @Injectable({
@@ -83,11 +84,28 @@ export class TransactionsService {
     //    });
   }
 
+  saveParcels(transactions: ITransaction[]): Observable<any> {
+    const batch = this.afs.firestore.batch();
+    transactions.forEach(transaction => {
+      if (transaction.id) {
+        const userRef = this.transactionsCollection.doc(transaction.id).ref;
+        batch.update(userRef, {...transaction});
+      } else {
+        const idBefore = this.afs.createId();
+        transaction.id = idBefore;
+        const userRef = this.transactionsCollection.doc(transaction.id).ref;
+        console.log('CADASTRAR NOVO');
+        batch.set(userRef, {...transaction});
+      }
+    });
+    return from(batch.commit());
+  }
+
   save(transaction: ITransaction): Observable<any> {
     if (transaction.id) {
       return from(this.transactionsCollection.doc(transaction.id).update(transaction));
     } else {
-      const idBefore =  this.afs.createId();
+      const idBefore = this.afs.createId();
       transaction.id = idBefore;
       return from(this.transactionsCollection.doc(idBefore).set(transaction));
     }

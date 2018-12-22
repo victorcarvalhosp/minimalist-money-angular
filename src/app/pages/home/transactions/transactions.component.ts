@@ -1,29 +1,18 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Observable} from 'rxjs';
-import {TransactionsService} from '../../../services/transactions/transactions.service';
 import {ITransaction} from '../../../models/transaction';
-import {CategoriesService} from '../../../services/categories/categories.service';
-import {ICategory} from '../../../models/category';
 import {HomeService} from '../services/home.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {CreateTransactionComponent} from './create-transaction/create-transaction.component';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {TransactionTypeEnum} from '../../../enums/transaction-type.enum';
-import {AccountsService} from '../../../services/accounts/accounts.service';
-import {IPeriod} from '../../../models/period';
 import {TransactionsStore} from '../../../state/transactions/transactions.store';
-import {AccountTotalsStore} from '../../../state/account-totals/account-totals.store';
-import {SubSecondsPipe} from 'ngx-date-fns';
 import {PeriodSummaryStore} from '../../../state/period-summary/period-summary.store';
-import {map, switchMap, finalize} from 'rxjs/operators';
-import {FileUploader, } from 'ng2-file-upload';
+import {FileUploader,} from 'ng2-file-upload';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {parse as parseOFX} from 'ofx-js';
-import {Router} from "@angular/router";
-import {TransactionsOfxStore} from "../../../state/transactions-ofx/transactions-ofx.store";
-
-
-
+import {Router} from '@angular/router';
+import {TransactionsOfxStore} from '../../../state/transactions-ofx/transactions-ofx.store';
+import {ImportOfxFileDetailsComponent} from "../reconciliation/import-ofx-file-details/import-ofx-file-details.component";
 
 @Component({
   selector: 'app-transactions',
@@ -44,7 +33,10 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, public homeService: HomeService,
               public transactionsStore: TransactionsStore,
-              public dialog: MatDialog, public snackBar: MatSnackBar, public periodSummaryStore: PeriodSummaryStore, private storage: AngularFireStorage, private router: Router,
+              public dialog: MatDialog, public snackBar: MatSnackBar,
+              public periodSummaryStore: PeriodSummaryStore,
+              private storage: AngularFireStorage,
+              private router: Router,
               public transactionsOfxStore: TransactionsOfxStore) {
     // this.transactionsStore.getTransactionsByDate();
     // this.periodSummaryStore.calculateTotals();
@@ -56,8 +48,35 @@ export class TransactionsComponent implements OnInit {
   }
 
   public dropped(event: FileList) {
-    this.transactionsOfxStore.importOfxFile(event);
-    this.router.navigate(['/home/reconciliation']);
+    const dialogRef = this.dialog.open(ImportOfxFileDetailsComponent, {
+      width: '50%',
+      maxWidth: '100wh',
+      maxHeight: '100vh',
+      disableClose: true,
+      data: event
+    });
+    const smallDialogSubscription = this.makeDialogResponsive(dialogRef);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result.id) {
+        this.transactionsOfxStore.addTransactionToOfxTransactions(result);
+      }
+      smallDialogSubscription.unsubscribe();
+      // this.animal = result;
+    });
+    // this.transactionsOfxStore.importOfxFile(event);
+    // this.router.navigate(['/home/reconciliation']);
+  }
+
+  private makeDialogResponsive(dialogRef) {
+    return this.isSmall.subscribe(size => {
+      console.log(size);
+      if (size.matches) {
+        dialogRef.updateSize('100%', '100%');
+      } else {
+        dialogRef.updateSize('50%');
+      }
+    });
   }
 
   public fileOverAnother(e: any): void {

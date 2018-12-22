@@ -1,5 +1,6 @@
 import {TransactionTypeEnum} from '../enums/transaction-type.enum';
 import {ITransaction} from './transaction';
+import {IAccount} from "./account";
 
 export interface ITransactionOfx {
   id?: string;
@@ -8,6 +9,7 @@ export interface ITransactionOfx {
   type: TransactionTypeEnum;
   reconciled?: boolean;
   amount: number;
+  account: IAccount;
   date: Date;
   transactions: ITransaction[];
 }

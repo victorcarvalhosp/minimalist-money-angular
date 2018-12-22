@@ -1,6 +1,6 @@
 import {IAccountTotal} from './account-total';
 
-export class IAccount {
+export interface IAccount {
   id?: string;
   name: string;
   totals: IAccountTotal[];

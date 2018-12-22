@@ -6,9 +6,10 @@ import {TransactionsService} from '../../services/transactions/transactions.serv
 import {List} from 'immutable';
 import {IPeriod} from '../../models/period';
 import {TransactionTypeEnum} from '../../enums/transaction-type.enum';
-import {PeriodStore} from "../period/period.store";
-import {map,take} from "rxjs/operators";
-import {TransactionsOfxStore} from "../transactions-ofx/transactions-ofx.store";
+import {PeriodStore} from '../period/period.store';
+import {map, take} from 'rxjs/operators';
+import {TransactionsOfxStore} from '../transactions-ofx/transactions-ofx.store';
+import {AddMonthsPipe} from 'ngx-date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,12 @@ export class TransactionsStore {
     {name: '', type: TransactionTypeEnum.OUTCOME, realized: false, amount: 0, date: new Date()}
   );
   private _transactions: BehaviorSubject<List<ITransaction>> = new BehaviorSubject(List([]));
-  public loading: boolean = true;
+  public loading = true;
 
-  constructor(private afs: AngularFirestore, private transactionsService: TransactionsService, private periodStore: PeriodStore) {
+  constructor(private afs: AngularFirestore,
+              private transactionsService: TransactionsService,
+              private periodStore: PeriodStore,
+              private addMonths: AddMonthsPipe) {
     // this.initializeData();
     this.getTransactionsByDate();
   }
@@ -45,9 +49,18 @@ export class TransactionsStore {
   }
 
   save(transaction: ITransaction): Observable<any> {
-    console.log('SAVE STORE');
-    console.log(transaction);
-    return this.transactionsService.save(transaction).pipe(take(1));
+    if (transaction.repeat) {
+      console.log('ENTROU NO SAVE REPEAT');
+      const transactions: ITransaction[] = [];
+      for (let i = 0; transaction.parcels > i; i++) {
+        console.log('PUSH TRANSACTION TO LIST');
+        transaction.date = this.addMonths.transform(transaction.date, i);
+        transactions.push({...transaction, parcel: i + 1});
+      }
+      return this.transactionsService.saveParcels(transactions);
+    } else {
+      return this.transactionsService.save(transaction).pipe(take(1));
+    }
   }
 
   delete(transaction: ITransaction): Observable<any> {
@@ -62,17 +75,17 @@ export class TransactionsStore {
     return this.transactionsService.getTransaction(transactionUid);
   }
 
-  //CREATE TRANSACTION AND RETURN OBSERVABLE HERE LATER
-  updateConfirmReconciledTransactions(transactions: ITransaction[]){
+  // CREATE TRANSACTION AND RETURN OBSERVABLE HERE LATER
+  updateConfirmReconciledTransactions(transactions: ITransaction[]) {
     this.updateReconciledValueTransactions(transactions, true);
   }
 
-  //CREATE TRANSACTION AND RETURN OBSERVABLE HERE LATER
-  updateCancelReconciledTransactions(transactions: ITransaction[]){
+  // CREATE TRANSACTION AND RETURN OBSERVABLE HERE LATER
+  updateCancelReconciledTransactions(transactions: ITransaction[]) {
     this.updateReconciledValueTransactions(transactions, false);
   }
 
-  //CREATE TRANSACTION AND RETURN OBSERVABLE HERE LATER
+  // CREATE TRANSACTION AND RETURN OBSERVABLE HERE LATER
   private updateReconciledValueTransactions(transactions: ITransaction[], valueReconciled: boolean) {
     transactions.forEach(t => {
       this.getTransaction(t.id).pipe(take(1)).subscribe((res: any) => {

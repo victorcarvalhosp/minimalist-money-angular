@@ -1,20 +1,17 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ITransaction} from '../../../../models/transaction';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Validations} from '../../../../validators/validations';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {TransactionsService} from '../../../../services/transactions/transactions.service';
 import {ICategory} from '../../../../models/category';
-import {CategoriesService} from '../../../../services/categories/categories.service';
-import {AppService} from "../../../../services/app/app.service";
-import {AccountsService} from "../../../../services/accounts/accounts.service";
-import {CategoriesStore} from "../../../../state/categories/categories.store";
-import {AccountsStore} from "../../../../state/accounts/accounts.store";
-import {TransactionsStore} from "../../../../state/transactions/transactions.store";
-import {CreateCategoryComponent} from "../../settings/categories/create-category/create-category.component";
-import {Observable} from "rxjs";
-import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
+import {AppService} from '../../../../services/app/app.service';
+import {CategoriesStore} from '../../../../state/categories/categories.store';
+import {AccountsStore} from '../../../../state/accounts/accounts.store';
+import {TransactionsStore} from '../../../../state/transactions/transactions.store';
+import {CreateCategoryComponent} from '../../settings/categories/create-category/create-category.component';
+import {Observable} from 'rxjs';
+import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-create-transaction',
@@ -32,7 +29,7 @@ export class CreateTransactionComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CreateTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ITransaction, private fb: FormBuilder, private db: AngularFirestore,
-              public transactionService: TransactionsStore, public snackBar: MatSnackBar,
+              public transactionStore: TransactionsStore, public snackBar: MatSnackBar,
               public categoriesStore: CategoriesStore, public accountsStore: AccountsStore, private appService: AppService,
               public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
     this.isMobile = this.appService.isMobile;
@@ -57,6 +54,9 @@ export class CreateTransactionComponent implements OnInit {
       type: ['', Validators.compose([Validators.required])],
       category: [null, Validators.compose([Validators.required])],
       account: ['', Validators.compose([Validators.required])],
+      repeat: [false],
+      parcels: [1],
+      showParcels: [false],
       realized: [true],
       preReconciled: [false],
       reconciled: [false],
@@ -78,7 +78,10 @@ export class CreateTransactionComponent implements OnInit {
           'required': 'Category is required.',
         },
         'account': {
-          'required': 'Category is required.',
+          'required': 'Account is required.',
+        },
+        'parcels': {
+          'required': 'Number of parcels is required.',
         }
       }
     );
@@ -100,7 +103,7 @@ export class CreateTransactionComponent implements OnInit {
 
   tryDelete(value) {
     this.showLoading();
-    this.transactionService.delete(value);
+    this.transactionStore.delete(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction deleted!');
@@ -108,7 +111,7 @@ export class CreateTransactionComponent implements OnInit {
 
   trySave(value) {
     this.showLoading();
-    this.transactionService.save(value);
+    this.transactionStore.save(value);
     this.hideLoading();
     this.closeDialogAfterSave(value);
     this.openSnackBar('Transaction Saved!');
@@ -160,6 +163,13 @@ export class CreateTransactionComponent implements OnInit {
       console.log(this.form.value);
       smallDialogSubscription.unsubscribe();
     });
+  }
+
+  toggleNumberParcelsToOneWhenDontRepeat() {
+    console.log(this.form.controls['repeat'].value);
+    if (!this.form.value.repeat) {
+      this.form.controls['parcels'].setValue(1);
+    }
   }
 
   compareIds(item1: any, item2: any): boolean {

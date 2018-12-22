@@ -12,8 +12,10 @@ export interface ITransaction {
   date: Date;
   category?: ICategory;
   account?: IAccount;
-  recurring?: boolean;
-  recurringDontShowParcel?: boolean;
+  repeat?: boolean;
+  parcels?: number;
+  parcel?: number;
+  recurringShowParcel?: boolean;
   preReconciled?: boolean;
   reconciled?: boolean;
   ofxTransactionId?: string;

@@ -13,6 +13,8 @@ import {TransactionsStore} from "../transactions/transactions.store";
 import {map, switchMap, take} from "rxjs/operators";
 import { throwError } from 'rxjs';
 import {ICategory} from "../../models/category";
+import {IImportOfx} from "../../models/import-ofx";
+import {IAccount} from "../../models/account";
 
 
 @Injectable({
@@ -31,8 +33,15 @@ export class TransactionsOfxStore {
     this.getTransactionsByDate();
   }
 
-  public importOfxFile(event: FileList) {
-    const file = event[0];
+  public importOfxFile(importOfx: IImportOfx) {
+    for (const file of importOfx.files) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.readAndSaveOfxFile(fileReader, importOfx.account);
+      };
+      fileReader.readAsText(file);
+    }
+    const file = importOfx.files[0];
     const fileReader = new FileReader();
     fileReader.onload = () => {
       this.readAndSaveOfxFile(fileReader);
@@ -40,7 +49,7 @@ export class TransactionsOfxStore {
     fileReader.readAsText(file);
   }
 
-  private readAndSaveOfxFile(fileReader) {
+  private readAndSaveOfxFile(fileReader, account: IAccount) {
     let ofxString: string = '';
     ofxString = fileReader.result + ' ';
     console.log(ofxString);
@@ -77,6 +86,7 @@ export class TransactionsOfxStore {
                 type: transactionType,
                 date: new Date(formatedDate),
                 amount: amountAlwaysPositive,
+                account: account,
                 bankTransactionId: bankTransactionId,
                 transactions: []
               };

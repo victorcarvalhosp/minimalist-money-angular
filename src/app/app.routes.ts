@@ -18,6 +18,7 @@ import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password.c
 import {ReconciliationComponent} from "./pages/home/reconciliation/reconciliation.component";
 import {OfxTransactionsRulesComponent} from "./pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component";
 import {CreateOfxTransactionRuleComponent} from "./pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component";
+import {ImportOfxFileDetailsComponent} from "./pages/home/reconciliation/import-ofx-file-details/import-ofx-file-details.component";
 
 export const appRoutes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
@@ -33,17 +34,26 @@ export const appRoutes: Routes = [
         ]
       },
       {path: 'dashboard', component: DashboardComponent},
-      {path: 'reconciliation', component: ReconciliationComponent},
-      {path: 'ofx-transactions-rules', component: OfxTransactionsRulesComponent, children: [
+      {
+        path: 'reconciliation', component: ReconciliationComponent, children: [
+          {path: 'importOfx', component: ImportOfxFileDetailsComponent}]
+      },
+      {
+        path: 'ofx-transactions-rules', component: OfxTransactionsRulesComponent, children: [
           {path: 'new', component: CreateOfxTransactionRuleComponent}
-        ]},
+        ]
+      },
       {path: 'settings', component: SettingsComponent},
-      {path: 'categories', component: CategoriesComponent, children: [
+      {
+        path: 'categories', component: CategoriesComponent, children: [
           {path: 'new', component: CreateCategoryComponent}
-        ]},
-      {path: 'accounts', component: AccountsComponent, children: [
+        ]
+      },
+      {
+        path: 'accounts', component: AccountsComponent, children: [
           {path: 'new', component: CreateAccountComponent}
-        ]}
+        ]
+      }
     ]
   },
 ];

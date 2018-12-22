@@ -28,7 +28,7 @@ import {
   MatOptionModule,
   MatProgressBarModule,
   MatProgressSpinnerModule, MatRippleModule,
-  MatSelectModule,
+  MatSelectModule, MatSlideToggleModule,
   MatSnackBarModule
 } from '@angular/material';
 import {HomeComponent} from './pages/home/home.component';
@@ -36,7 +36,7 @@ import {TransactionsComponent} from './pages/home/transactions/transactions.comp
 import {DashboardComponent} from './pages/home/dashboard/dashboard.component';
 import {SettingsComponent} from './pages/home/settings/settings.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
-import {DateFnsModule} from 'ngx-date-fns';
+import {AddMonthsPipe, DateFnsModule} from 'ngx-date-fns';
 import {TransactionCircleColorDirective} from './directives/transaction-circle-color/transaction-circle-color.directive';
 import {OnlyIntegerPipePipe} from './pipes/only-integer-pipe.pipe';
 import {OnlyDecimalPartPipePipe} from './pipes/only-decimal-part-pipe.pipe';
@@ -66,6 +66,7 @@ import {OfxIfClausePipe} from './pipes/ofx-if-clause/ofx-if-clause.pipe';
 import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
 import {CreateOfxTransactionRuleComponent} from './pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component';
 import { ReconciliationHeaderComponent } from './pages/home/reconciliation/reconciliation-header/reconciliation-header.component';
+import { ImportOfxFileDetailsComponent } from './pages/home/reconciliation/import-ofx-file-details/import-ofx-file-details.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { ReconciliationHeaderComponent } from './pages/home/reconciliation/recon
     OfxIfClausePipe,
     OperatorTypePipe,
     CreateOfxTransactionRuleComponent,
-    ReconciliationHeaderComponent
+    ReconciliationHeaderComponent,
+    ImportOfxFileDetailsComponent
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,
@@ -129,6 +131,7 @@ import { ReconciliationHeaderComponent } from './pages/home/reconciliation/recon
     MatProgressSpinnerModule,
     MatBottomSheetModule,
     MatRippleModule,
+    MatSlideToggleModule,
     NgxCurrencyModule,
     HttpClientModule,
     FileUploadModule,
@@ -137,7 +140,7 @@ import { ReconciliationHeaderComponent } from './pages/home/reconciliation/recon
     DateFnsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js')
   ],
-  providers: [],
+  providers: [AddMonthsPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
