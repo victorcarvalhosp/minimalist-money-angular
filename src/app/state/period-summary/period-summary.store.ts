@@ -59,7 +59,6 @@ export class PeriodSummaryStore {
                 periodSummary.total += transaction.amount;
               }
             }
-            console.log(transaction);
           });
           this._periodSummary.next(periodSummary);
           this.loading = false;

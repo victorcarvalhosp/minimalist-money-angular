@@ -57,10 +57,6 @@ export class TransactionsComponent implements OnInit {
     });
     const smallDialogSubscription = this.makeDialogResponsive(dialogRef);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result.id) {
-        this.transactionsOfxStore.addTransactionToOfxTransactions(result);
-      }
       smallDialogSubscription.unsubscribe();
       // this.animal = result;
     });

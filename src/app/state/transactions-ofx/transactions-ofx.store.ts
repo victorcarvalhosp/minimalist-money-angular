@@ -27,6 +27,8 @@ export class TransactionsOfxStore {
   );
   private _transactions: BehaviorSubject<List<ITransactionOfx>> = new BehaviorSubject(List([]));
   public loading: boolean = true;
+  public loadingOfx: boolean = false;
+
 
   constructor(private afs: AngularFirestore, private transactionsOfxService: TransactionsOfxService, private periodStore: PeriodStore, private transactionsStore: TransactionsStore) {
     // this.initializeData();
@@ -34,6 +36,7 @@ export class TransactionsOfxStore {
   }
 
   public importOfxFile(importOfx: IImportOfx) {
+    this.loadingOfx = true;
     for (const file of importOfx.files) {
       const fileReader = new FileReader();
       fileReader.onload = () => {
@@ -48,6 +51,7 @@ export class TransactionsOfxStore {
     ofxString = fileReader.result + ' ';
     console.log(ofxString);
     parseOFX(ofxString).then(ofxData => {
+      this.loadingOfx = true;
       console.log(ofxData);
       let transactionStatement;
       let accountId;
@@ -89,7 +93,8 @@ export class TransactionsOfxStore {
           });
         });
       }
-      // do something...
+      this.loadingOfx = false;
+
     });
   }
 
