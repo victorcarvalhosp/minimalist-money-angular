@@ -8,6 +8,9 @@ import {
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {IOfxTransactionRule} from "../../models/ofx-transaction-rule";
+import {switchMap, take} from "rxjs/operators";
+import {ITransactionOfx} from "../../models/transaction-ofx";
+import {getOfxIfClauseObjectField} from "../../enums/ofxIfClause.enum";
 
 
 @Injectable({
@@ -30,6 +33,15 @@ export class OfxTransactionsRulesService {
 
   getAllOfxTransactionsRules(): Observable<DocumentChangeAction<any>[]> {
     return this.ofxTransactionsRulesCollection.snapshotChanges();
+  }
+
+
+  getRulesForTransaction(ofxTransaction: ITransactionOfx): Observable<DocumentChangeAction<any>[]> {
+    return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
+       this.ofxTransactionsRulesCollection = this.afs.collection<any>(`${this.getPath(res)}`,
+        ref => ref.where('ifValueClause', '==', ofxTransaction.name));
+      return this.ofxTransactionsRulesCollection.snapshotChanges();
+    }));
   }
 
   private getPath(user): string {

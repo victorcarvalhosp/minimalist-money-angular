@@ -23,7 +23,7 @@ import {IAccount} from "../../models/account";
 export class TransactionsOfxStore {
 
   private _transaction: BehaviorSubject<ITransactionOfx> = new BehaviorSubject<ITransactionOfx>(
-    {name: '', type: TransactionTypeEnum.OUTCOME, date: new Date(), amount: 0, transactions: []}
+    {name: '', type: TransactionTypeEnum.OUTCOME, date: new Date(), amount: 0, transactions: [], account: null}
   );
   private _transactions: BehaviorSubject<List<ITransactionOfx>> = new BehaviorSubject(List([]));
   public loading: boolean = true;

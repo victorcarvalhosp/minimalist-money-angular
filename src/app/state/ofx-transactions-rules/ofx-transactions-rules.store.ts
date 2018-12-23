@@ -31,15 +31,19 @@ export class OfxTransactionsRulesStore {
 
   private initializeData() {
     this.ofxTransactionsRulesService.getAllOfxTransactionsRules().subscribe(res => {
-      const ofxTransactionsRules: IOfxTransactionRule[] = res.map(
-        a => {
-          const data = a.payload.doc.data() as IOfxTransactionRule;
-          data.id = a.payload.doc.id;
-          return data;
-        }
-      );
+      const ofxTransactionsRules = this.mapPayload(res);
       this._ofxTransactionsRules.next(List(ofxTransactionsRules));
     });
+  }
+
+  private mapPayload(res) {
+    return res.map(
+      a => {
+        const data = a.payload.doc.data() as IOfxTransactionRule;
+        data.id = a.payload.doc.id;
+        return data;
+      }
+    );
   }
 
   save(ofxTransactionsRule: IOfxTransactionRule): Observable<any> {
@@ -55,19 +59,48 @@ export class OfxTransactionsRulesStore {
   }
 
   applyRules(ofxTransaction: ITransactionOfx, transaction: ITransaction) {
-    this.ofxTransactionsRules.subscribe(value => {
-      console.log(value);
-      value.forEach((rule: IOfxTransactionRule) => {
-        // Implement custom operators later
+    this._ofxTransactionsRules.subscribe(value => {
+      value.some((rule: IOfxTransactionRule) => {
+        // Implement custom operators later(if needed)
         if (ofxTransaction[getOfxIfClauseObjectField(rule.ifFieldClause)] === rule.ifValueClause) {
           transaction.category = rule.thenValueCategory;
           transaction.name = rule.thenValueName;
+          return true;
         }
       });
     });
-    // transaction.category = {color: '#66FF99',
-    //   id: '13c0qc8X04zX2rhThQxg',
-    //   name: 'Job'
-    // };
+    // I don't know yet why this code below doesn't work as expected...
+    // this.ofxTransactionsRulesService.getRulesForTransaction(ofxTransaction).subscribe(res => {
+    //   console.log(res);
+    //   const ofxTransactionsRules = this.mapPayload(res);
+    //   ofxTransactionsRules.forEach((rule: IOfxTransactionRule) => {
+    //     console.log(rule);
+    //     // Implement custom operators later
+    //     if (ofxTransaction[getOfxIfClauseObjectField(rule.ifFieldClause)] === rule.ifValueClause) {
+    //       console.log('entrou if ');
+    //       console.log(rule.thenValueCategory);
+    //       transaction.category = rule.thenValueCategory;
+    //       transaction.name = rule.thenValueName;
+    //     }
+    //   });
+    // });
+  }
+
+
+  createNewRule(transaction: ITransaction, ofxTransaction: ITransactionOfx) {
+    this.ofxTransactionsRulesService.getRulesForTransaction(ofxTransaction).subscribe(res => {
+        const ofxTransactionsRules = this.mapPayload(res);
+        console.log(ofxTransactionsRules);
+        if (ofxTransactionsRules.length === 0) {
+          const ofxTransactionRule = {
+            ifFieldClause: OfxIfClauseEnum.NAME,
+            ifOperator: OperatorTypeEnum.IS_EQUAL_TO,
+            ifValueClause: ofxTransaction.name,
+            thenValueCategory: transaction.category,
+            thenValueName: transaction.name
+          };
+          this.save(ofxTransactionRule);
+        }
+      });
   }
 }
