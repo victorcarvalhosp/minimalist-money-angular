@@ -67,6 +67,8 @@ import { OperatorTypePipe } from './pipes/operator-type/operator-type.pipe';
 import {CreateOfxTransactionRuleComponent} from './pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component';
 import { ReconciliationHeaderComponent } from './pages/home/reconciliation/reconciliation-header/reconciliation-header.component';
 import { ImportOfxFileDetailsComponent } from './pages/home/reconciliation/import-ofx-file-details/import-ofx-file-details.component';
+import { WelcomeComponent } from './pages/home/welcome/welcome.component';
+import { SplashComponent } from './pages/splash/splash.component';
 
 
 @NgModule({
@@ -103,7 +105,9 @@ import { ImportOfxFileDetailsComponent } from './pages/home/reconciliation/impor
     OperatorTypePipe,
     CreateOfxTransactionRuleComponent,
     ReconciliationHeaderComponent,
-    ImportOfxFileDetailsComponent
+    ImportOfxFileDetailsComponent,
+    WelcomeComponent,
+    SplashComponent
   ],
   imports: [
     AngularFireAuthModule, // importComponent,s firebase/auth, only needed for auth features,

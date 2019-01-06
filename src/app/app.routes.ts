@@ -19,9 +19,11 @@ import {ReconciliationComponent} from "./pages/home/reconciliation/reconciliatio
 import {OfxTransactionsRulesComponent} from "./pages/home/reconciliation/ofx-transactions-rules/ofx-transactions-rules.component";
 import {CreateOfxTransactionRuleComponent} from "./pages/home/reconciliation/ofx-transactions-rules/create-ofx-transaction-rule/create-ofx-transaction-rule.component";
 import {ImportOfxFileDetailsComponent} from "./pages/home/reconciliation/import-ofx-file-details/import-ofx-file-details.component";
+import {SplashComponent} from "./pages/splash/splash.component";
 
 export const appRoutes: Routes = [
-  {path: '', component: LandingPageComponent, pathMatch: 'full'},
+  {path: '', component: SplashComponent},
+  {path: 'site', component: LandingPageComponent, pathMatch: 'full'},
   {path: 'register', component: RegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'login', component: LoginComponent},

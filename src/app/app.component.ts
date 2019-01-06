@@ -12,8 +12,10 @@ export class AppComponent {
   constructor(private updateSw: UpdateSwService, private authService: AuthService, private router: Router) {
     console.log(this.router.url);
     this.authService.getCurrentUser().then(user => {
-      if (user && (this.router.url === '/login' || this.router.url === '/register')) {
+      if (user && (this.router.url === '/login' || this.router.url === '/register'  || this.router.url === '/')) {
         this.router.navigate(['home', 'transactions']);
+      } else {
+        this.router.navigate(['site']);
       }
     }, (err) => {
       console.log('user not logged in');

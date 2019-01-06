@@ -13,6 +13,7 @@ export interface ITransaction {
   category?: ICategory;
   account?: IAccount;
   repeat?: boolean;
+  idParcels?: string;
   parcels?: number;
   parcel?: number;
   recurringShowParcel?: boolean;

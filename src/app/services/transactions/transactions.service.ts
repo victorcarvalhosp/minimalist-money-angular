@@ -86,13 +86,15 @@ export class TransactionsService {
 
   saveParcels(transactions: ITransaction[]): Observable<any> {
     const batch = this.afs.firestore.batch();
+    const idParcels = this.afs.createId();
     transactions.forEach(transaction => {
       if (transaction.id) {
-        const userRef = this.transactionsCollection.doc(transaction.id).ref;
-        batch.update(userRef, {...transaction});
+        const transactionsRef = this.transactionsCollection.doc(transaction.id).ref;
+        batch.update(transactionsRef, {...transaction});
       } else {
         const idBefore = this.afs.createId();
         transaction.id = idBefore;
+        transaction.idParcels = idParcels;
         const userRef = this.transactionsCollection.doc(transaction.id).ref;
         console.log('CADASTRAR NOVO');
         batch.set(userRef, {...transaction});

@@ -55,7 +55,11 @@ export class TransactionsStore {
       for (let i = 0; transaction.parcels > i; i++) {
         console.log('PUSH TRANSACTION TO LIST');
         transaction.date = this.addMonths.transform(transaction.date, i);
-        transactions.push({...transaction, parcel: i + 1});
+        if (i === 0 && transaction.realized) {
+          transactions.push({...transaction, parcel: i + 1});
+        } else {
+          transactions.push({...transaction, parcel: i + 1, realized: false});
+        }
       }
       return this.transactionsService.saveParcels(transactions);
     } else {

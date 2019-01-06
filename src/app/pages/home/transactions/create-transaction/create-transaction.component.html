@@ -9,7 +9,7 @@
 </div>
 <h2 mat-dialog-title>{{form.value.type | transactionType}}</h2>
 <div mat-dialog-content>
-  <form [formGroup]="form">
+    <form [formGroup]="form">
     <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
     <div>
       <mat-form-field class="full-width">
@@ -70,7 +70,7 @@
         <mat-datepicker #myDatepicker touchUi="{{isMobile}}"></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="full-width">
+    <div class="full-width" *ngIf="!form.value.id">
       <mat-slide-toggle class="full-width" formControlName="repeat" (change)="toggleNumberParcelsToOneWhenDontRepeat()">Repeat</mat-slide-toggle>
       <mat-form-field class="full-width" *ngIf="form.value.repeat">
         <input cdkFocusRegionStart matInput placeholder="Repeat how many times: " type="text" formControlName="parcels">
