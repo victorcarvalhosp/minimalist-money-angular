@@ -16,7 +16,7 @@ export interface ITransaction {
   idParcels?: string;
   parcels?: number;
   parcel?: number;
-  recurringShowParcel?: boolean;
+  showParcels?: boolean;
   preReconciled?: boolean;
   reconciled?: boolean;
   ofxTransactionId?: string;

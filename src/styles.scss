@@ -209,3 +209,13 @@ body {
 .period-name {
   width: 110px;
 }
+
+.material-icon-font{
+  font-family: 'Material Icons';
+}
+
+.subtitle {
+  margin-left: 2px;
+  font-size: 12px;
+  color: mat-color($gray-color);
+}

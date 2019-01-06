@@ -25,7 +25,7 @@
               <li *ngFor="let t of (transactionsStore.transactions | async)">
                 <div class="row" (click)="showDetails(t)">
                   <div style="float: left" class="full-width">
-                    <div class="title">{{t.name}}</div>
+                    <div class="title">{{t.name}} <span class="subtitle" *ngIf="t.repeat && t.showParcels">{{t.parcel}}/{{t.parcels}}</span><span title="This is a recurring transaction" *ngIf="t.repeat && !t.showParcels" class="material-icon-font subtitle">repeat</span></div>
                     <div class="info">{{t.description}}</div>
                     <div class="type"><span *ngIf="t.category" style="font-weight: bold"
                                             [ngStyle]="{'color': t.category?.color}">#</span>{{t.category?.name}}

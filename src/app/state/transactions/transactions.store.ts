@@ -50,10 +50,8 @@ export class TransactionsStore {
 
   save(transaction: ITransaction): Observable<any> {
     if (transaction.repeat) {
-      console.log('ENTROU NO SAVE REPEAT');
       const transactions: ITransaction[] = [];
       for (let i = 0; transaction.parcels > i; i++) {
-        console.log('PUSH TRANSACTION TO LIST');
         transaction.date = this.addMonths.transform(transaction.date, i);
         if (i === 0 && transaction.realized) {
           transactions.push({...transaction, parcel: i + 1});
