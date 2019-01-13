@@ -5,16 +5,16 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
   AngularFirestoreDocument,
-  DocumentChangeAction, DocumentSnapshot
+  DocumentChangeAction,
+  DocumentSnapshot
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth/auth.service';
 import {TransactionTypeEnum} from '../../enums/transaction-type.enum';
 import {IPeriod} from '../../models/period';
-import {map, switchMap} from 'rxjs/operators';
+import {switchMap, take} from 'rxjs/operators';
 import {ITransaction} from '../../models/transaction';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {take} from 'rxjs/operators';
-import {List} from "immutable";
+import {UserStore} from "../../state/user/user.store";
 
 
 @Injectable({
@@ -25,7 +25,7 @@ export class TransactionsService {
   private transactionsCollection: AngularFirestoreCollection<ITransaction>;
   private transactionsDoc: AngularFirestoreDocument<ITransaction>;
 
-  constructor(private afs: AngularFirestore, private authService: AuthService, private afAuth: AngularFireAuth) {
+  constructor(private afs: AngularFirestore, private authService: AuthService, private afAuth: AngularFireAuth, private userStore: UserStore) {
   }
 
   private initializeData() {
@@ -34,20 +34,18 @@ export class TransactionsService {
     });
   }
 
+  get path(): string {
+    return `users/${localStorage.getItem('uid')}/transactions`;
+  }
+
   getAllTransactions(): Observable<DocumentChangeAction<any>[]> {
     return this.transactionsCollection.snapshotChanges();
   }
 
   getTransactionsByDate(period: IPeriod): Observable<DocumentChangeAction<any>[]> {
-    return this.authService.getCurrentUserObservable().pipe(take(1), switchMap(res => {
-      this.transactionsCollection = this.afs.collection<any>(`users/${res.uid}/transactions`,
-        ref => ref.where('date', '<=', period.endDate).where('date', '>=', period.startDate));
-      return this.transactionsCollection.snapshotChanges();
-    }));
-  }
-
-  private getPath(user): string {
-    return `users/${user.uid}/transactions`;
+    return this.afs.collection(this.path,
+        ref => ref.where('date', '<=', period.endDate)
+      .where('date', '>=', period.startDate)).snapshotChanges();
   }
 
   delete(transaction: ITransaction): Observable<any> {
@@ -105,11 +103,11 @@ export class TransactionsService {
 
   save(transaction: ITransaction): Observable<any> {
     if (transaction.id) {
-      return from(this.transactionsCollection.doc(transaction.id).update(transaction));
+      return from(this.afs.collection(this.path).doc(transaction.id).update(transaction));
     } else {
       const idBefore = this.afs.createId();
       transaction.id = idBefore;
-      return from(this.transactionsCollection.doc(idBefore).set(transaction));
+      return from(this.afs.collection(this.path).doc(idBefore).set(transaction));
     }
   }
 

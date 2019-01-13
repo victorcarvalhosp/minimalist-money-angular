@@ -13,15 +13,16 @@ import {AngularFirestore} from '@angular/fire/firestore';
 })
 export class AuthService {
 
-  loggedInUser: Observable<IUser | null>;
-  user;
-
   constructor(public afAuth: AngularFireAuth, private router: Router, private afs: AngularFirestore) {
-    this.loggedInUser = this.afAuth.authState.pipe(
+  }
+
+  public getLoggedInUser(): Observable<IUser> {
+    return this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          console.log('return user');
-          return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
+          if (user.uid) {
+            return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
+          }
         } else {
           console.log('return null');
           return of(null);
@@ -40,12 +41,7 @@ export class AuthService {
   }
 
   doLogin(value) {
-    return new Promise<any>((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-        .then(res => {
-          resolve(res);
-        }, err => reject(err));
-    });
+    return this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password);
   }
 
   doRegister(value) {
@@ -65,7 +61,7 @@ export class AuthService {
 
   getCurrentUser() {
     return new Promise<any>((resolve, reject) => {
-      const user = firebase.auth().onAuthStateChanged(function (user) {
+      const user = this.afAuth.auth.onAuthStateChanged(function (user) {
         if (user) {
           resolve(user);
         } else {
@@ -75,29 +71,17 @@ export class AuthService {
     });
   }
 
-  getCurrentUserObservable(): Observable<any> {
-      return this.afAuth.authState.pipe(take(1),
-        switchMap(user => {
-          if (user) {
-            return this.afs.collection<any>(`users`).doc(`${user.uid}`).valueChanges();
-          } else {
-            console.log('return null');
-            return of(null);
-          }
-        })
-      );
+  getCurrentUserObservable(): Observable<IUser> {
+    return this.afAuth.authState.pipe(take(1),
+      switchMap(user => {
+        if (user) {
+          return this.afs.collection<IUser>(`users`).doc(`${user.uid}`).valueChanges();
+        } else {
+          console.log('return null');
+          return of(null);
+        }
+      })
+    );
   }
 
-  isAuthenticated(): boolean {
-    // this.afAuth.auth.onAuthStateChanged(user => {
-    //   if(user){
-    //     return true;
-    //   }else{
-    //     return f
-    //   }
-    // })
-    console.log(this.afAuth.auth.currentUser != null);
-    console.log(this.afAuth.auth.currentUser);
-    return this.afAuth.auth.currentUser != null;
-  }
 }

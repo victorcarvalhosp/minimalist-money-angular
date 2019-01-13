@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  tryLogin(value){
+  tryLogin(value) {
     this.showLoading();
     this.authService.doLogin(value)
       .then(res => {

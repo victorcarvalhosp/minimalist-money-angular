@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {UpdateSwService} from './services/update-sw.service';
 import {AuthService} from './services/auth/auth.service';
 import {Router} from '@angular/router';
+import {UserStore} from "./state/user/user.store";
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private authService: AuthService, private router: Router, private userStore: UserStore) {
+    this.userStore.setLoggedInUserOnStore().subscribe(user => {
+      if (user) {
+        this.router.navigate(['home', 'transactions']);
+      } else {
+        this.router.navigate(['site']);
+      }
+    });
+  }
 }
