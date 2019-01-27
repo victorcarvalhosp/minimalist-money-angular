@@ -5,32 +5,27 @@ import {List} from 'immutable';
 import {AccountTotalsService} from '../../services/account-totals/account-totals.service';
 import {IAccountTotal} from '../../models/account-total';
 import {IAccountsSumary} from "../../models/accounts-summary";
+import {PeriodStore} from "../period/period.store";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountTotalsStore {
 
-  private _accountTotal: BehaviorSubject<IAccountTotal> = new BehaviorSubject<IAccountTotal>({totalIncome: 0, totalOutcome: 0, total: 0,
+  private _accountTotal: BehaviorSubject<IAccountTotal> = new BehaviorSubject<IAccountTotal>({accountId: null, totalIncome: 0, totalOutcome: 0, total: 0,
     date: new Date()});
   private _accountTotalTotals: BehaviorSubject<List<IAccountTotal>> = new BehaviorSubject(List([]));
   private _accountsSummary: BehaviorSubject<IAccountsSumary> = new BehaviorSubject({totalIncome: 0, totalOutcome: 0, total: 0, accountsTotals: []});
 
-  constructor(private afs: AngularFirestore, private accountTotalsService: AccountTotalsService) {
+  constructor(private afs: AngularFirestore, private accountTotalsService: AccountTotalsService,
+              private  periodStore: PeriodStore) {
+    this.initializeData();
   }
 
   private initializeData() {
-    // this.accountTotalsService.getAllAccountTotals();
-    // this.accountTotalsService.getAllAccountTotals().subscribe(res => {
-    //   const accountTotalTotals: IAccountTotal[] = res.map(
-    //     a => {
-    //       const data = a.payload.doc.data() as IAccountTotal;
-    //       data.id = a.payload.doc.id;
-    //       return data;
-    //     }
-    //   );
-    //   this._accountTotalTotals.next(List(accountTotalTotals));
-    // });
+    this.periodStore.period.subscribe( period => {
+      this.getTotals(period.endDate);
+    });
   }
 
   getTotals(date: Date) {

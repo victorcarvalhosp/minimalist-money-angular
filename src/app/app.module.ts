@@ -16,7 +16,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatBottomSheetModule,
-  MatButtonModule,
+  MatButtonModule, MatCardModule,
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
@@ -136,6 +136,7 @@ import { SplashComponent } from './pages/splash/splash.component';
     MatBottomSheetModule,
     MatRippleModule,
     MatSlideToggleModule,
+    MatCardModule,
     NgxCurrencyModule,
     HttpClientModule,
     FileUploadModule,

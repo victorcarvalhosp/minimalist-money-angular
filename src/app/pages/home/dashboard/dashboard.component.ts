@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {TransactionsStore} from "../../../state/transactions/transactions.store";
 import {TransactionTypeEnum} from "../../../enums/transaction-type.enum";
+import {AccountTotalsStore} from "../../../state/account-totals/account-totals.store";
 
 @Component({
   selector: 'app-dashboard',
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log(e);
   }
 
-  constructor(public transactionsStore: TransactionsStore) {
+  constructor(public transactionsStore: TransactionsStore, public accountTotalsStore: AccountTotalsStore) {
     this.subscription = this.transactionsStore.transactions.subscribe(transactions => {
       console.log('INSIDE SUBSCRIBE');
       this.doughnutChartLabels = [];

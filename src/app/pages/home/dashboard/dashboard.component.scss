@@ -1,3 +1,17 @@
 app-dashboard {
   width: 100%;
 }
+
+mat-card{
+  max-width: 350px;
+}
+
+.flex-space{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.margin10{
+  margin: 10px 0 10px 0;
+}

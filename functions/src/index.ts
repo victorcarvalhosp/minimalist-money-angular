@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {parse as parseOFX} from 'ofx-js/ofx.js';
+import {IAccountTotal} from "../../src/app/models/account-total";
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
@@ -8,29 +9,32 @@ admin.initializeApp({projectId: 'minimalist-money'});
 const db = admin.firestore();
 const cors = require('cors')({origin: true});
 
-
 export const getAccountsSummary = functions.https.onRequest(async(request, response) => {
   try {
     await cors(request, response, async () => {
       if (request.method === 'GET') {
         const date: Date = new Date(request.query.date);
+        console.log(date);
         const userId = request.headers.user;
-        const totals = [];
+        const accountsTotals: IAccountTotal[] = [];
         const accountsRef = db.collection(`users/${userId}/accounts/`);
         const snapshotAccounts = await accountsRef.get();
         snapshotAccounts.forEach(account => {
-          totals.push({accountId: account.data().id, accountName: account.data().name, total: 0, totalIncome: 0, totalOutcome: 0});
+          accountsTotals.push({accountId: account.data().id, accountName: account.data().name, total: 0,
+            totalIncome: 0, totalOutcome: 0, date: date});
         });
         const accountsSummary = { totalIncome: 0,
         totalOutcome: 0,
         total: 0,
-        accountsTotals: totals};
+        accountsTotals: accountsTotals};
 
         const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
         const snapshotTransactions = await transactionsRef.get();
         snapshotTransactions.forEach(transaction => {
-          for (let total of totals) {
-            if (transaction.data().accountId === total.accountId && transaction.data().realized) {
+          for (let total of accountsTotals) {
+            console.log('BUSCANDOOOO');
+            console.log(total.accountId + ' === ' + transaction.data().account.id );
+            if (transaction.data().account.id === total.accountId && transaction.data().realized) {
               if (transaction.data().type === 'INCOME') {
                 total.totalIncome += transaction.data().amount;
                 total.total += transaction.data().amount;

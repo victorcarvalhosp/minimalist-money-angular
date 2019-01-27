@@ -3,5 +3,6 @@ export class IAccountTotal {
   totalIncome: number;
   totalOutcome: number;
   total: number;
+  accountId: string;
   accountName?: string;
 }

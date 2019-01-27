@@ -13,47 +13,82 @@ const admin = require("firebase-admin");
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
-admin.initializeApp();
+admin.initializeApp({ projectId: 'minimalist-money' });
 const db = admin.firestore();
 const cors = require('cors')({ origin: true });
 exports.getAccountsSummary = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
     try {
         yield cors(request, response, () => __awaiter(this, void 0, void 0, function* () {
             if (request.method === 'GET') {
+                const date = new Date(request.query.date);
+                console.log(date);
                 const userId = request.headers.user;
-                const totals = [];
+                const accountsTotals = [];
                 const accountsRef = db.collection(`users/${userId}/accounts/`);
                 const snapshotAccounts = yield accountsRef.get();
                 snapshotAccounts.forEach(account => {
-                    totals.push({ accountId: account.data().id, accountName: account.data().name, amount: 0 });
+                    accountsTotals.push({ accountId: account.data().id, accountName: account.data().name, total: 0,
+                        totalIncome: 0, totalOutcome: 0, date: date });
                 });
                 const accountsSummary = { totalIncome: 0,
                     totalOutcome: 0,
                     total: 0,
-                    accountsTotals: totals };
-                const transactionsRef = db.collection(`users/${userId}/transactions/`).where('realized', '==', true);
+                    accountsTotals: accountsTotals };
+                const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
                 const snapshotTransactions = yield transactionsRef.get();
                 snapshotTransactions.forEach(transaction => {
-                    for (let total of totals) {
-                        if (transaction.data().accountId === total.accountId) {
+                    for (let total of accountsTotals) {
+                        console.log('BUSCANDOOOO');
+                        console.log(total.accountId + ' === ' + transaction.data().account.id);
+                        if (transaction.data().account.id === total.accountId && transaction.data().realized) {
                             if (transaction.data().type === 'INCOME') {
                                 total.totalIncome += transaction.data().amount;
-                                total.amount += transaction.data().amount;
+                                total.total += transaction.data().amount;
                                 accountsSummary.totalIncome += transaction.data().amount;
                                 accountsSummary.total += transaction.data().amount;
                             }
                             else if (transaction.data().type === 'OUTCOME') {
                                 total.totalOutcome += transaction.data().amount;
-                                total.amount -= transaction.data().amount;
+                                total.total -= transaction.data().amount;
                                 accountsSummary.totalOutcome += transaction.data().amount;
                                 accountsSummary.total -= transaction.data().amount;
                             }
-                            break;
                         }
                     }
                 });
                 console.log(accountsSummary);
                 response.status(200).json(accountsSummary);
+            }
+            else {
+                response.status(500).json({ message: 'Not allowed' });
+            }
+        }));
+    }
+    catch (error) {
+        console.log(error);
+        response.status(500).send(error);
+    }
+}));
+exports.getTotalRealized = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        yield cors(request, response, () => __awaiter(this, void 0, void 0, function* () {
+            if (request.method === 'GET') {
+                const date = new Date(request.query.date);
+                const userId = request.headers.user;
+                const totalRealized = { total: 0 };
+                const transactionsRef = db.collection(`users/${userId}/transactions/`).where("date", "<=", date);
+                const snapshotTransactions = yield transactionsRef.get();
+                snapshotTransactions.forEach(transaction => {
+                    if (transaction.data().realized) {
+                        if (transaction.data().type === 'INCOME') {
+                            totalRealized.total += transaction.data().amount;
+                        }
+                        else if (transaction.data().type === 'OUTCOME') {
+                            totalRealized.total -= transaction.data().amount;
+                        }
+                    }
+                });
+                response.status(200).json(totalRealized);
             }
             else {
                 response.status(500).json({ message: 'Not allowed' });

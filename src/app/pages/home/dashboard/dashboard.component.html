@@ -8,11 +8,24 @@
       </div>
       <div class="col" role="main">
         <div class="container-timeline" align="center">
+          <mat-card>
+            <div *ngFor="let account of (accountTotalsStore.accountsSummary | async)?.accountsTotals">
+              <div class="flex-space margin10">
+                <div>
+                  {{account.accountName}}
+                </div>
+                <div>
+                  $ {{account.total | onlyInteger }},<span>{{account.total | onlyDecimalPart}}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
           <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16"></mat-spinner>
           <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading"
                align="center">
             <p>No transactions yet in that month</p>
           </div>
+
           <div style="display: block"
                *ngIf="(transactionsStore.transactions | async)?.size > 0 && !transactionsStore.loading">
             <canvas baseChart
