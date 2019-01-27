@@ -22,16 +22,16 @@ import {UserStore} from "../../state/user/user.store";
 })
 export class TransactionsService {
 
-  private transactionsCollection: AngularFirestoreCollection<ITransaction>;
-  private transactionsDoc: AngularFirestoreDocument<ITransaction>;
-
   constructor(private afs: AngularFirestore, private authService: AuthService, private afAuth: AngularFireAuth, private userStore: UserStore) {
   }
 
   private initializeData() {
     return this.authService.getCurrentUser().then(user => {
-      // this.transactionsCollection = this.afs.collection<any>(this.getPath(user));
     });
+  }
+
+  get transactionsCollection(): AngularFirestoreCollection<any> {
+    return this.afs.collection<any>(this.path);
   }
 
   get path(): string {
@@ -44,8 +44,8 @@ export class TransactionsService {
 
   getTransactionsByDate(period: IPeriod): Observable<DocumentChangeAction<any>[]> {
     return this.afs.collection(this.path,
-        ref => ref.where('date', '<=', period.endDate)
-      .where('date', '>=', period.startDate)).snapshotChanges();
+      ref => ref.where('date', '<=', period.endDate)
+        .where('date', '>=', period.startDate)).snapshotChanges();
   }
 
   delete(transaction: ITransaction): Observable<any> {

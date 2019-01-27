@@ -11,12 +11,16 @@ import {UserStore} from "./state/user/user.store";
 })
 export class AppComponent {
   constructor(private authService: AuthService, private router: Router, private userStore: UserStore) {
-    this.userStore.setLoggedInUserOnStore().subscribe(user => {
-      if (user) {
-        this.router.navigate(['home', 'transactions']);
-      } else {
+    this.userStore.setLoggedInUserOnStore().subscribe(
+      user => {
+        if (user) {
+          this.router.navigate(['home', 'transactions']);
+        } else {
+          this.router.navigate(['site']);
+        }
+      },
+      err => {
         this.router.navigate(['site']);
-      }
-    });
+      });
   }
 }

@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserService} from "../../services/user/user.service";
 import {IUser} from "../../models/credentials";
+import {UserStore} from "../../state/user/user.store";
 
 @Component({
   selector: 'app-login',
@@ -22,14 +23,15 @@ export class LoginComponent implements OnInit {
 
   constructor(public authService: AuthService,
               private router: Router,
-              private fb: FormBuilder, private db: AngularFirestore, private userService: UserService) {
+              private fb: FormBuilder, private db: AngularFirestore,
+              private userService: UserService, private userStore: UserStore) {
     this.createForm();
   }
 
   createForm() {
     this.loginForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['',Validators.compose([Validators.required, Validators.minLength(6)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       updateOn: 'blur'
     });
     this.createValidatorsMessages();
@@ -54,9 +56,11 @@ export class LoginComponent implements OnInit {
     this.showLoading();
     this.authService.doLogin(value)
       .then(res => {
-        this.router.navigate(['../home/transactions']);
-        this.errorMessage = '';
-        this.hideLoading();
+        this.userStore.setLoggedInUserOnStore().subscribe(res => {
+          this.router.navigate(['../home/transactions']);
+          this.errorMessage = '';
+          this.hideLoading();
+        });
       }, err => {
         console.log(err);
         this.errorMessage = err.message;

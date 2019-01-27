@@ -26,7 +26,6 @@ export class TransactionsStore {
               private transactionsService: TransactionsService,
               private periodStore: PeriodStore,
               private addMonths: AddMonthsPipe) {
-    // this.initializeData();
     this.getTransactionsByDate();
   }
 
@@ -49,14 +48,15 @@ export class TransactionsStore {
   }
 
   save(transaction: ITransaction): Observable<any> {
-    if (transaction.repeat) {
+    if (transaction.repeat && !transaction.id) {
       const transactions: ITransaction[] = [];
       for (let i = 0; transaction.parcels > i; i++) {
-        transaction.date = this.addMonths.transform(transaction.date, i);
+        const newTransaction: ITransaction = {...transaction};
+        newTransaction.date = this.addMonths.transform(transaction.date, i);
         if (i === 0 && transaction.realized) {
-          transactions.push({...transaction, parcel: i + 1});
+          transactions.push({...newTransaction, parcel: i + 1});
         } else {
-          transactions.push({...transaction, parcel: i + 1, realized: false});
+          transactions.push({...newTransaction, parcel: i + 1, realized: false});
         }
       }
       return this.transactionsService.saveParcels(transactions);
