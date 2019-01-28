@@ -1,7 +1,12 @@
 # MinimalistMoney
 
-Personal Finances Progressive Web App using Angular6 and firebase
-https://victorcarvalhosp.github.io/minimalist-money-angular-6/
+Personal Finances Progressive Web App using Angular7 and firebase
+
+
+Firebase(PWA) -> https://minimalist-money.firebaseapp.com/
+
+GH Pages -> https://victorcarvalhosp.github.io/minimalist-money-angular/
+
 
 ## Progress to v0.1
 - [X] Landing Page
@@ -11,6 +16,14 @@ https://victorcarvalhosp.github.io/minimalist-money-angular-6/
 - [X] Create categories
 - [X] Add income
 - [X] Add outcome
+## Progress to 1.0
+ - [X] Recurring transactions
+ - [X] .Ofx import
+ - [X] .ofx rules
+ - [X] Bank reconciliation
+## Progress to 1.1
+ - [ ] Edit/remove all recurring transactions at once
+ - [ ] Refactoring store/service code
 
 
 
@@ -47,5 +60,5 @@ and after:
 `npx ngh --dir=dist/<PROJECT_NAME>`
 
 In my case:
-`ng build --prod --base-href "https://victorcarvalhosp.github.io/minimalist-money-angular-6/"`
+`ng build --prod --base-href "https://victorcarvalhosp.github.io/minimalist-money-angular/"`
 and after `npx ngh --dir=dist/minimalist-money`
