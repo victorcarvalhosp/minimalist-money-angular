@@ -57,8 +57,8 @@ This project uses angular-cli-ghpages, so to deploy a new version you need to do
 
 `ng build --prod --base-href "https://<GIT_USERNAME>.github.io/<REPOSITORY_NAME>/"`
 and after:
-`npx ngh --dir=dist/<PROJECT_NAME>`
+`npx angular-cli-ghpages --dir=dist/<PROJECT_NAME>`
 
 In my case:
 `ng build --prod --base-href "https://victorcarvalhosp.github.io/minimalist-money-angular/"`
-and after `npx ngh --dir=dist/minimalist-money`
+and after `npx angular-cli-ghpages --dir=dist/minimalist-money`

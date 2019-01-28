@@ -1,0 +1,66 @@
+@import "../../../../variables.scss";
+
+app-reconciliation {
+  width: 100%;
+
+  .cdk-drag-placeholder{
+    font-size: 8px;
+  }
+
+  .ofx-transactions-drop.cdk-drop-list-dragging{
+    display: block;
+  }
+
+  .ofx-transactions-drop.cdk-drop-list-dragging button, ofx-transactions-drop.cdk-drop-list-dragging .type{
+    display: none;
+  }
+
+  .show-buttons-only-on-hover-area .show-only-on-hover{
+    opacity: 0;
+  }
+
+  .show-buttons-only-on-hover-area:hover .show-only-on-hover{
+    opacity: 100;
+  }
+
+  .reconciliation-icon{
+    cursor: pointer;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .small-button{
+    font-size: 11px;
+    line-height: 10px;
+    padding: 0;
+  }
+
+  .small-icon{
+    font-size: 18px;
+    line-height: 0.8;
+  }
+
+  .reconciled-background{
+    background-color: #F5F5F5;
+  }
+
+  .day{
+    margin-left: -14px;
+    position: absolute;
+    font-size: 10px;
+    margin-top: 6px;
+  }
+
+  .hover-reconciled {
+    border: 2px solid black;
+    //background: repeating-linear-gradient(
+    //    45deg,
+    //    #F5F5F5,
+    //    #F5F5F5 10px,
+    //    #fff 10px,
+    //    #fff 20px
+    //);
+  }
+
+}

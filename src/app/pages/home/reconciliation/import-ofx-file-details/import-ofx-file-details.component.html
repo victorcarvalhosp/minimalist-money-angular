@@ -1,0 +1,32 @@
+<form [formGroup]="form" (submit)="importOfxFiles()">
+  <div *ngIf="uploader?.queue?.length <= 0">
+    <input type="file" ng2FileSelect [uploader]="uploader" multiple  />
+    <p>Queue length: {{ uploader?.queue?.length }}</p>
+  </div>
+  <div *ngIf="uploader?.queue?.length > 0">
+    <div *ngFor="let item of uploader.queue">
+      <p >
+        {{item.file.name}}
+      </p>
+      <button type="button"
+              (click)="item.remove()">Remove
+      </button>
+    </div>
+
+    <div>
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Account" formControlName="account"
+                    [compareWith]="compareIds">
+          <mat-option *ngFor="let a of (accountsStore.accounts | async)" [value]="a">
+            {{ a.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          {{ getError('account') }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button type="submit">Import</button>
+  </div>
+</form>
+

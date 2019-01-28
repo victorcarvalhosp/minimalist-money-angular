@@ -1,0 +1,15 @@
+<div class="Aligner" align="center">
+  <div>
+    <button mat-button (click)="handlePreviousMonth()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+  </div>
+  <div class="period-name">
+    <p>{{(periodStore.period | async).datePeriod | date: 'MMM, y'}}</p>
+  </div>
+  <div>
+    <button mat-button (click)="handleNextMonth()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</div>

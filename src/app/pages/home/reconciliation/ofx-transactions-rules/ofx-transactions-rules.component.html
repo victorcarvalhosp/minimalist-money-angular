@@ -1,0 +1,27 @@
+<div style="height:32px; width:auto">
+  <button mat-icon-button class="top-left-icon" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="container">
+  <div class="layout">
+    <div class="full-width">
+      <h4>Ofx Transactions Rules</h4>
+      <div>
+        <button mat-button (click)="openNewOfxTransactionRuleDialog()">
+          <mat-icon>add</mat-icon>
+          Create New Rule
+        </button>
+      </div>
+      <div>
+        <mat-nav-list>
+          <mat-list-item (click)="openDialog(r)" *ngFor="let r of ofxTransactionsRulesStore.ofxTransactionsRules | async">
+            {{r.ifFieldClause | ofxIfClausePipe}} {{r.ifOperator | operatorType}} {{r.ifValueClause}}
+            so
+            Category = {{r.thenValueCategory.name}} and name = {{r.thenValueName}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </div>
+</div>

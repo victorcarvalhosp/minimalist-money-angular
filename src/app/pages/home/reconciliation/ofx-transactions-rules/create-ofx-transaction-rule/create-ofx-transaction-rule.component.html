@@ -1,0 +1,55 @@
+<div style="height:32px; width:auto">
+  <button mat-icon-button class="top-left-icon" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <button [disabled]="loading || !form.valid" class="top-right-icon" type="button" mat-icon-button
+          (click)="trySave(form.value)">
+    <mat-icon>send</mat-icon>
+  </button>
+</div>
+<h2 mat-dialog-title>Create Ofx Transaction Rule</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+    <div class="row">
+      <div class="full-width">
+        <mat-form-field class="full-width">
+          <input cdkFocusRegionStart matInput placeholder="If ofx transaction name equals to:" type="text" formControlName="ifValueClause">
+          <mat-error>
+            {{ getError('ifValueClause') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <mat-form-field class="full-width">
+        <mat-select placeholder="then category equals to: " formControlName="thenValueCategory"
+                    [compareWith]="compareIds">
+          <mat-select-trigger>
+            <span [ngStyle]="{color: form.value.thenValueCategory?.color}">#</span>{{form.value.thenValueCategory?.name}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let c of (categoriesStore.categories | async)" [value]="c">
+            <span [ngStyle]="{color: c.color}"># </span>{{ c.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          {{ getError('thenValueCategory') }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="full-width">
+      <mat-form-field class="full-width">
+        <input cdkFocusRegionStart matInput placeholder="and transaction name equals to:" type="text" formControlName="thenValueName">
+        <mat-error>
+          {{ getError('thenValueName') }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button *ngIf="form.get('id').value !== ''" type="button" mat-icon-button (click)="tryDelete(form.value)"
+          title="Delete category">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

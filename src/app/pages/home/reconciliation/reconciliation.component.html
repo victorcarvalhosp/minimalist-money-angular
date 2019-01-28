@@ -1,0 +1,124 @@
+<div class="container container-850">
+  <div class="layout">
+    <div class="center-col full-width">
+      <app-reconciliation-header (openIncomeDialog)="openDialogNewTransaction($event)"
+                                 (openOfxTransactionRulesDialog)="openOfxTransactionRulesDialog()"
+                                 (openOutcomeDialog)="openDialogNewTransaction($event)"
+                                 (openImportOfxDialog)="openDialogImportOfx()"></app-reconciliation-header>
+      <div class="col" role="main">
+        <mat-spinner *ngIf="transactionsOfxStore.loadingOfx" [diameter]="16"></mat-spinner>
+        <div class="container container-850" *ngIf="!transactionsOfxStore.loadingOfx">
+          <div class="layout">
+            <div class="col col-main container-timeline" role="main">
+              <h2>Bank Transactions</h2>
+              <div *ngIf="(transactionsOfxStore.transactions | async)?.size === 0 && !transactionsOfxStore.loading"
+                   align="center">
+                <p>No ofx transactions yet in that month</p>
+              </div>
+              <mat-spinner *ngIf="transactionsOfxStore.loading" [diameter]="16"></mat-spinner>
+              <div *ngIf="!transactionsOfxStore.loading">
+                <div *ngFor="let t of (transactionsOfxStore.transactions | async)" (mouseenter)="changeStyles(t.id)"
+                     style="float: left; display: block; min-height: 65px;"
+                     [ngClass]="[t.reconciled ? 'reconciled-background' : '', selectedOfxTransactionId === t.id ? 'hover-reconciled' : '']"
+                     class="show-buttons-only-on-hover-area full-width">
+                  <div id="{{t.id}}"
+                       cdkDropList
+                       style="padding-bottom: 10px;"
+                       class="ofx-transactions-drop"
+                       [cdkDropListDisabled]="t.reconciled"
+                       [cdkDropListConnectedTo]="transactionsOfxIds"
+                       (cdkDropListDropped)="drop(t, $event)">
+
+                    <div style="float: left; display: block" class="full-width">
+                      <span class="day">{{t.date | date: 'dd'}}</span>
+                      <span class="title">{{t.name}}
+                      <mat-icon matRipple class="gray-color reconciliation-icon"
+                                *ngIf="getTotalReconcilied(t) === t.amount && !t.reconciled"
+                                title="Click to confirm reconciliation"
+                                (click)="confirmReconciliation(t)">check_circle_outline</mat-icon>
+
+                      <mat-icon matRipple class="income-color reconciliation-icon" *ngIf="t.reconciled"
+                                title="Click to cancel reconciliation"
+                                (click)="cancelReconciliation(t)">check_circle</mat-icon>
+                  </span><span [appTransactionColor]="t" class="amount"
+                               style="float: right">$ {{t.amount | onlyInteger }},<span>{{t.amount | onlyDecimalPart}}</span></span>
+                    </div>
+                    <span *ngIf="t.transactions?.length === 0" class="type">Drag and drop here to reconciliate </span>
+                    <span *ngIf="t.transactions?.length > 0" class="type">Reconciliated with: </span>
+                    <span class="type" *ngFor="let transaction of t.transactions">{{transaction.name}}
+                <span class="amount" style="float: right">$ {{transaction.amount | onlyInteger }},<span>{{transaction.amount | onlyDecimalPart}}</span></span>
+                <button mat-button class="show-only-on-hover small-button" *ngIf="!t.reconciled" type="button"
+                        (click)="removeTransactionFromOfxTransactions(t, transaction)">Remove
+                </button>
+              </span>
+                  </div>
+                  <div style="float: left; display: block;padding-bottom: 20px;margin-top: -10px;" class="full-width">
+              <span *ngIf="t.transactions?.length > 1" class="type amount"
+                    style="float: right;border-top: 1px solid black;">$ {{getTotalReconcilied(t) | onlyInteger }},<span>{{getTotalReconcilied(t) | onlyDecimalPart}}</span></span>
+                    <button mat-button class="show-only-on-hover small-button" type="button" *ngIf="!t.reconciled"
+                            (click)="createNewTransactionWithOfxData(t)">
+                      Create New Transaction
+                    </button>
+
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-complementary" role="main">
+
+            </div>
+
+            <div class="col col-main container-timeline" role="main">
+              <h2>MnMoney Transactions</h2>
+              <mat-spinner *ngIf="transactionsStore.loading" [diameter]="16"></mat-spinner>
+              <div *ngIf="!transactionsStore.loading">
+                <div *ngIf="(transactionsStore.transactions | async)?.size === 0 && !transactionsStore.loading"
+                     align="center">
+                  <p>No ofx transactions yet in that month</p>
+                </div>
+                <div
+                  cdkDropList
+                  [cdkDropListData]="(transactionsStore.transactions | async)"
+                  [cdkDropListConnectedTo]="transactionsOfxIds"
+                  class="example-list full-width">
+                  <div (mouseenter)="changeStyles(item.ofxTransactionId)" cdkDrag [cdkDragDisabled]="item.preReconciled"
+                       class="drag-transaction-item show-buttons-only-on-hover-area"
+                       *ngFor="let item of (transactionsStore.transactions | async)"
+                       style="display: block; min-height: 65px;"
+                       [ngClass]="[item.reconciled ? 'reconciled-background' : '', selectedOfxTransactionId === item.ofxTransactionId ? 'hover-reconciled': '']">
+
+                    <div style="float: left; display: block" class="full-width">
+                      <span class="day">{{item.date | date: 'dd'}}</span>
+
+                      <span class="title">{{item.name}} <mat-icon *ngIf="item.preReconciled || item.reconciled"
+                                                                  [ngClass]="item.reconciled ? 'income-color' : 'gray-color'"
+                                                                  class="small-icon">check</mat-icon>
+
+
+                  <button mat-button class="show-only-on-hover small-button"
+                          type="button" (click)="editTransaction(item)">Edit</button>
+                </span>
+                      <span [appTransactionColor]="item" class="amount" style="float: right">$ {{item.amount | onlyInteger }},<span>{{item.amount | onlyDecimalPart}}</span></span>
+                    </div>
+                    <div class="type"><span *ngIf="item.category" style="font-weight: bold"
+                                            [ngStyle]="{'color': item.category?.color}">#</span>{{item.category?.name}}
+                    </div>
+
+                    <p *cdkDragPreview style="font-size: 8px;">{{item.name}}</p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
