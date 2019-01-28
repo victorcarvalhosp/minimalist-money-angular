@@ -1,18 +1,18 @@
 {
   "configVersion": 1,
-  "index": "https://victorcarvalhosp.github.io/minimalist-money-angular-6/index.html",
+  "index": "https://victorcarvalhosp.github.io/minimalist-money-angular/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/favicon.ico",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/index.html",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/main.f01b193b999182118f93.js",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/polyfills.7a0e6866a34e280f48e7.js",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/runtime.a66f828dca56eeb90e02.js",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/styles.f32038e057e9fe93fe21.css"
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/favicon.ico",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/index.html",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/main.238b3d3c42a2ea02a7e4.js",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/polyfills.444c96e2953f4e00e254.js",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/runtime.ec2944dd8b20ec099bf3.js",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/styles.564835cb795f7c031a42.css"
       ],
       "patterns": []
     },
@@ -21,36 +21,38 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "urls": [
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-128x128.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-144x144.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-152x152.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-192x192.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-384x384.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-512x512.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-72x72.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-96x96.png",
-        "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/img/piggy.png"
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-128x128.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-144x144.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-152x152.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-192x192.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-384x384.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-512x512.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-72x72.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-96x96.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/img/piggy.png",
+        "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/img/screenshot_1.png"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/assets/img/piggy.png": "e3fd30b02206776f6383648cb259cce83bc2c4de",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/index.html": "271ac8da9d1384f4d2140e2bea23380ecb983016",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/main.f01b193b999182118f93.js": "fcb107d4e25e547e9a4d5690564fc4b77e1edba6",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/polyfills.7a0e6866a34e280f48e7.js": "9f0b8341c0a0caec1581da2f255eb5dbb8e12303",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
-    "https://victorcarvalhosp.github.io/minimalist-money-angular-6/styles.f32038e057e9fe93fe21.css": "cd0f9251f8ea752fc80738a535f65c2ee1e04111"
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/img/piggy.png": "e3fd30b02206776f6383648cb259cce83bc2c4de",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/assets/img/screenshot_1.png": "f00a191d69a19ca2c30320bce5f230b5353692dc",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/index.html": "091b6289c664524330ca8b7f18dc6053142cd930",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/main.238b3d3c42a2ea02a7e4.js": "9872f368f3b0a6d9644c62694962850734757a81",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/polyfills.444c96e2953f4e00e254.js": "6946e10a03311677a01490b8e91741668e64e17e",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/runtime.ec2944dd8b20ec099bf3.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
+    "https://victorcarvalhosp.github.io/minimalist-money-angular/styles.564835cb795f7c031a42.css": "82bf3108d9a77eace8af4da44a9011e8fea70017"
   },
   "navigationUrls": [
     {
