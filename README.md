@@ -22,6 +22,7 @@ GH Pages -> https://victorcarvalhosp.github.io/minimalist-money-angular/
  - [X] .ofx rules
  - [X] Bank reconciliation
 ## Progress to 1.1
+ - [ ] Accounts tranfers
  - [ ] Edit/remove all recurring transactions at once
  - [ ] Refactoring store/service code
 
