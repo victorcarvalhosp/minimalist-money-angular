@@ -23,7 +23,8 @@ export class AccountsService {
 
   public initializeData() {
     return this.authService.getCurrentUser().then(user => {
-      this.accountsCollection = this.afs.collection<any>(this.getPath(user));
+      this.accountsCollection = this.afs.collection<any>(this.getPath(user),
+        ref => ref.orderBy('name'));
     });
   }
 
