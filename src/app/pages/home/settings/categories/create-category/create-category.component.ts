@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Validations} from '../../../../../validators/validations';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ICategory} from '../../../../../models/category';
-import {CategoriesService} from '../../../../../services/categories/categories.service';
 import {CategoriesStore} from "../../../../../state/categories/categories.store";
 
 @Component({
@@ -64,7 +63,7 @@ export class CreateCategoryComponent implements OnInit {
 
   tryDelete(value) {
     this.showLoading();
-    // this.categoriesService.delete(value);
+    this.categoriesStore.delete(value);
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Category deleted!');
@@ -76,9 +75,6 @@ export class CreateCategoryComponent implements OnInit {
     this.hideLoading();
     this.closeDialogAfterSave(value);
     this.openSnackBar('Category Saved!');
-    // this.categoriesService.save(value).then(res => {
-    //   console.log('res');
-    // });
   }
 
   closeDialogAfterSave(value: ICategory) {

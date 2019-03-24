@@ -71,9 +71,6 @@ export class CreateAccountComponent implements OnInit {
     this.hideLoading();
     this.closeDialog();
     this.openSnackBar('Transaction Saved!');
-    // this.accountsService.save(value).then(res => {
-    //   console.log('res');
-    // });
   }
 
   closeDialog() {
